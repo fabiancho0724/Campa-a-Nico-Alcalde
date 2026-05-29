@@ -1,0 +1,6 @@
+{
+  "name": "Tunja Campaña 2026",
+  "description": "Campaña Política Nicolás Cortés, Alcaldía de Tunja 2026 - 2029.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

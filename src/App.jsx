@@ -6,7 +6,7 @@ import Proposals from './components/Proposals';
 import NewsFeed from './components/NewsFeed';
 import Agenda from './components/Agenda';
 import InteractiveMap from './components/InteractiveMap';
-import TunjaLogo from './components/TunjaLogo'; // New Tunja Logo
+import BrandLogos from './components/BrandLogos';
 import { 
   Vote, Sliders, GraduationCap, Newspaper, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
@@ -45,10 +45,10 @@ export default function App() {
           {/* Logos Header - Click para volver a la portada */}
           <div 
             onClick={() => setViewMode('landing')}
-            style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', cursor: 'pointer' }}
             title="Volver a la portada"
           >
-            <TunjaLogo height="35px" variant="dark" />
+            <BrandLogos variant="header" />
           </div>
 
           {/* Menú de Navegación de Pestañas (Desktop) */}
@@ -218,8 +218,10 @@ export default function App() {
       }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', margin: '0 auto', maxWidth: '1400px' }}>
           <div>
-            <TunjaLogo height="25px" variant="dark" />
-            <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+              <BrandLogos variant="header" />
+            </div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
               Plataforma de transparencia en gestión pública y desarrollo urbano.
             </p>
           </div>

@@ -4,34 +4,35 @@
 /* Sistema de diseño moderno interactivo - TUNJA 2.0 */
 :root {
   /* Fondo principal y secundarios */
-  --bg-primary: #F4F6F8;       /* Blanco hueso / Off-white */
-  --bg-dark: #121619;          /* Gris grafito muy oscuro */
-  --bg-secondary: #FFFFFF;     /* Blanco puro para cards */
-  --bg-overlay: rgba(18, 22, 25, 0.6);
+  --bg-primary: #F7F9FA;       /* Light neutral background for Vercel/Linear feel */
+  --bg-dark: #0A0A0A;          /* Deep black */
+  --bg-secondary: #FFFFFF;     /* Pure white for cards */
+  --bg-overlay: rgba(10, 10, 10, 0.6);
   --bg-card: #FFFFFF;
-  --bg-card-hover: #F9FAFB;
-  --border-color: rgba(33, 37, 41, 0.06); /* Borde suave */
+  --bg-card-hover: #FCFDFD;
+  --border-color: rgba(0, 0, 0, 0.08); /* Soft thin border */
   
-  /* Paleta Tunja 2.0 - Elegante, Institucional, Tecnológica */
-  --primary: #005C6E;          /* Azul Petróleo */
-  --primary-hover: #004553;
-  --primary-glow: rgba(0, 92, 110, 0.15);
+  /* Paleta Tunja 2.0 - Innovación, Smart City */
+  --primary: #0F4C81;          /* Azul tecnológico profundo */
+  --primary-hover: #0C3C66;
+  --primary-glow: rgba(15, 76, 129, 0.15);
   
-  --secondary: #1F2937;        /* Gris Grafito */
-  --secondary-hover: #111827;
-  --secondary-glow: rgba(31, 41, 55, 0.15);
+  --secondary: #00B8D9;        /* Turquesa / Cyan */
+  --secondary-hover: #00A0BE;
+  --secondary-glow: rgba(0, 184, 217, 0.15);
   
-  --accent: #0284C7;           /* Light Blue accent */
+  --accent: #6D5DFC;           /* Morado moderno */
   --accent-red: #EF4444;       
-  --accent-green: #10B981;     
-  --accent-gold: #D4AF37;
+  --accent-green: #22C55E;     /* Verde énfasis */
+  --accent-gold: #F59E0B;
   
-  --gradient-main: linear-gradient(135deg, var(--primary) 0%, #033C48 100%);
-  --gradient-dark: linear-gradient(135deg, var(--secondary) 0%, #000000 100%);
+  --gradient-main: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --gradient-dark: linear-gradient(135deg, #0A0A0A 0%, #171717 100%);
+  --gradient-accent: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
   
-  --text-primary: #1F2937;     /* Gris grafito texto */
-  --text-secondary: #6B7280;   /* Gris medio */
-  --text-muted: #9CA3AF;       /* Gris claro */
+  --text-primary: #171717;     /* Dark gray/black text */
+  --text-secondary: #52525B;   /* Slate medium */
+  --text-muted: #A1A1AA;       /* Slate light */
   
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;

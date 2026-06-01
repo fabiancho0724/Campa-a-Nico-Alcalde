@@ -175,17 +175,19 @@ export default function LandingPage({ onEnterApp }) {
                 </button>
               </div>
 
-              {/* Data points (Live) */}
-              <div style={{ display: 'flex', gap: '2.5rem', marginTop: '4rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '2.5rem' }}>
-                 <div>
-                    <h4 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', color: '#FFFFFF', lineHeight: '1' }}>$534<span style={{ fontSize: '1.2rem', color: '#A1A1AA' }}>M</span></h4>
-                    <p style={{ color: '#71717A', fontSize: '0.85rem', marginTop: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '500' }}>Presupuesto Auditado</p>
-                 </div>
-                 <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }}></div>
-                 <div>
-                    <h4 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', color: '#FFFFFF', lineHeight: '1' }}>{simulatedParticipants.toLocaleString()}</h4>
-                    <p style={{ color: '#71717A', fontSize: '0.85rem', marginTop: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.5px', fontWeight: '500' }}>Veedores Conectados</p>
-                 </div>
+              {/* Análisis del Panorama */}
+              <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '2.5rem' }}>
+                <p style={{ color: '#E4E4E7', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '300' }}>
+                  El análisis financiero del panorama actual nos deja una conclusión clara: Tunja no puede seguir gobernada bajo las fórmulas del pasado si pretende obtener resultados distintos. Frente a la rigidez presupuestal y la desatención de los sectores clave, surge la urgencia de una administración con energía renovada, visión de futuro y las manos libres de la política tradicional.
+                </p>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <div style={{ flex: 1, borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
+                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg" alt="Catedral Basílica de Tunja" style={{ width: '100%', height: '160px', objectFit: 'cover', display: 'block' }} />
+                  </div>
+                  <div style={{ flex: 1, borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
+                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg" alt="Lugares Turísticos de Tunja" style={{ width: '100%', height: '160px', objectFit: 'cover', display: 'block' }} />
+                  </div>
+                </div>
               </div>
             </div>
 

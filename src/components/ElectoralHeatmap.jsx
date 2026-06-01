@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Polygon, Popup, useMap, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, Popup, Tooltip, useMap, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useState, useEffect } from 'react';
 import { 
@@ -15,14 +15,14 @@ const MAPBOX_STYLE = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}
 // Datos expandidos (simulados geográficamente para demostración de Tunja)
 // En un caso real estos vendrían de un GeoJSON o API de la Registraduría
 const tunjaElectoralZones = [
-  { id: 1, name: 'Comuna 1 (Norte)', type: 'Comuna', votosValidos: 8500, votosPH: 1950, candidatoGanador: 'Rodolfo H.', diffSegundo: 400, participacion: 62.5, absPonderada: 37.5, potencialHist: 0.2, coords: [[5.560, -73.340], [5.565, -73.355], [5.550, -73.360], [5.545, -73.345]] },
-  { id: 2, name: 'Comuna 2 (Nororiente)', type: 'Comuna', votosValidos: 7200, votosPH: 1800, candidatoGanador: 'Pacto Histórico', diffSegundo: 120, participacion: 58.2, absPonderada: 41.8, potencialHist: 0.25, coords: [[5.548, -73.340], [5.540, -73.330], [5.535, -73.345], [5.542, -73.350]] },
-  { id: 3, name: 'Comuna 3 (Oriente)', type: 'Comuna', votosValidos: 8100, votosPH: 1980, candidatoGanador: 'Rodolfo H.', diffSegundo: 310, participacion: 59.8, absPonderada: 40.2, potencialHist: 0.18, coords: [[5.540, -73.330], [5.530, -73.325], [5.525, -73.340], [5.535, -73.345]] },
-  { id: 4, name: 'Comuna 4 (Occidente)', type: 'Comuna', votosValidos: 7800, votosPH: 1650, candidatoGanador: 'Rodolfo H.', diffSegundo: 550, participacion: 61.2, absPonderada: 38.8, potencialHist: 0.15, coords: [[5.550, -73.360], [5.540, -73.370], [5.530, -73.365], [5.542, -73.350]] },
-  { id: 5, name: 'Comuna 5 (Centro)', type: 'Comuna', votosValidos: 9500, votosPH: 2200, candidatoGanador: 'Rodolfo H.', diffSegundo: 280, participacion: 64.5, absPonderada: 35.5, potencialHist: 0.22, coords: [[5.542, -73.350], [5.535, -73.345], [5.525, -73.355], [5.530, -73.365]] },
-  { id: 6, name: 'Comuna 6 (Suroriente)', type: 'Comuna', votosValidos: 10200, votosPH: 3850, candidatoGanador: 'Pacto Histórico', diffSegundo: 850, participacion: 56.4, absPonderada: 43.6, potencialHist: 0.35, coords: [[5.525, -73.340], [5.510, -73.335], [5.505, -73.350], [5.520, -73.355]] },
-  { id: 7, name: 'Comuna 7 (Sur)', type: 'Comuna', votosValidos: 12500, votosPH: 4100, candidatoGanador: 'Pacto Histórico', diffSegundo: 1100, participacion: 55.8, absPonderada: 44.2, potencialHist: 0.38, coords: [[5.520, -73.355], [5.505, -73.350], [5.495, -73.365], [5.515, -73.370]] },
-  { id: 8, name: 'Comuna 8 (Suroccidente)', type: 'Comuna', votosValidos: 8800, votosPH: 2350, candidatoGanador: 'Rodolfo H.', diffSegundo: 150, participacion: 59.5, absPonderada: 40.5, potencialHist: 0.28, coords: [[5.530, -73.365], [5.520, -73.380], [5.505, -73.375], [5.515, -73.370]] }
+  { id: 1, name: 'Comuna 1 (Norte)', type: 'Comuna', votosValidos: 8500, votosSenado: 1950, votosCamara: 1850, candidatoGanador: 'Pacto Histórico', diffSegundo: 400, participacion: 62.5, absPonderada: 37.5, potencialHist: 0.2, barrios: ['Muiscas', 'Suamox', 'Capitolio', 'Urb. La Entrada', 'Asís', 'El Tránsito'], coords: [[5.560, -73.340], [5.565, -73.355], [5.550, -73.360], [5.545, -73.345]] },
+  { id: 2, name: 'Comuna 2 (Nororiente)', type: 'Comuna', votosValidos: 7200, votosSenado: 1800, votosCamara: 1720, candidatoGanador: 'Pacto Histórico', diffSegundo: 120, participacion: 58.2, absPonderada: 41.8, potencialHist: 0.25, barrios: ['Las Quintas', 'La Esmeralda', 'Rosales', 'San Blas', 'Urb. Los Lanceros'], coords: [[5.548, -73.340], [5.540, -73.330], [5.535, -73.345], [5.542, -73.350]] },
+  { id: 3, name: 'Comuna 3 (Oriente)', type: 'Comuna', votosValidos: 8100, votosSenado: 1980, votosCamara: 1900, candidatoGanador: 'Pacto Histórico', diffSegundo: 310, participacion: 59.8, absPonderada: 40.2, potencialHist: 0.18, barrios: ['Patriotas', 'San Francisco', 'Cooservicios', 'El Jordán', 'Urb. Conzuelo'], coords: [[5.540, -73.330], [5.530, -73.325], [5.525, -73.340], [5.535, -73.345]] },
+  { id: 4, name: 'Comuna 4 (Occidente)', type: 'Comuna', votosValidos: 7800, votosSenado: 1650, votosCamara: 1580, candidatoGanador: 'Pacto Histórico', diffSegundo: 550, participacion: 61.2, absPonderada: 38.8, potencialHist: 0.15, barrios: ['La Granja', 'Antonia Santos', 'Doña Eva', 'El Carmen', 'San Laureano'], coords: [[5.550, -73.360], [5.540, -73.370], [5.530, -73.365], [5.542, -73.350]] },
+  { id: 5, name: 'Comuna 5 (Centro)', type: 'Comuna', votosValidos: 9500, votosSenado: 2200, votosCamara: 2100, candidatoGanador: 'Pacto Histórico', diffSegundo: 280, participacion: 64.5, absPonderada: 35.5, potencialHist: 0.22, barrios: ['Centro Histórico', 'Maldonado', 'Las Nieves', 'El Bosque', 'Plaza de Bolívar'], coords: [[5.542, -73.350], [5.535, -73.345], [5.525, -73.355], [5.530, -73.365]] },
+  { id: 6, name: 'Comuna 6 (Suroriente)', type: 'Comuna', votosValidos: 10200, votosSenado: 12500, votosCamara: 11000, candidatoGanador: 'Pacto Histórico', diffSegundo: 850, participacion: 56.4, absPonderada: 43.6, potencialHist: 0.35, barrios: ['Barrio Runta', 'San Carlos', 'Ciudad Jardín', 'Doña Valentina', 'El Horno'], coords: [[5.525, -73.340], [5.510, -73.335], [5.505, -73.350], [5.520, -73.355]] },
+  { id: 7, name: 'Comuna 7 (Sur)', type: 'Comuna', votosValidos: 12500, votosSenado: 12000, votosCamara: 9000, candidatoGanador: 'Pacto Histórico', diffSegundo: 1100, participacion: 55.8, absPonderada: 44.2, potencialHist: 0.38, barrios: ['San Antonio', 'El Libertador', 'El Milagro', 'Coasmedas', 'La Fuente'], coords: [[5.520, -73.355], [5.505, -73.350], [5.495, -73.365], [5.515, -73.370]] },
+  { id: 8, name: 'Comuna 8 (Suroccidente)', type: 'Comuna', votosValidos: 8800, votosSenado: 6092, votosCamara: 5080, candidatoGanador: 'Pacto Histórico', diffSegundo: 150, participacion: 59.5, absPonderada: 40.5, potencialHist: 0.28, barrios: ['Altamira', 'El Consuelo', 'El Paraíso', 'La Florida', 'La Esperanza'], coords: [[5.530, -73.365], [5.520, -73.380], [5.505, -73.375], [5.515, -73.370]] }
 ];
 
 // Calcular Potencial y Porcentajes
@@ -30,7 +30,9 @@ const enrichedZones = tunjaElectoralZones.map(zone => {
   const censo = Math.round(zone.votosValidos / (zone.participacion / 100));
   const abstencionCount = censo - zone.votosValidos;
   const potencial = Math.round(abstencionCount * zone.potencialHist);
-  const porcentajePH = (zone.votosPH / zone.votosValidos) * 100;
+  const porcentajePH = (zone.votosSenado / zone.votosValidos) * 100;
+  const totalVotosPH = zone.votosSenado + zone.votosCamara; // Suma legislativa para visualización global o podemos usar el promedio
+  const promedioPH = (zone.votosSenado + zone.votosCamara) / 2;
   
   let nivelPotencial = 'Bajo';
   if (potencial > 1500) nivelPotencial = 'Muy Alto';
@@ -42,7 +44,8 @@ const enrichedZones = tunjaElectoralZones.map(zone => {
     censo,
     abstencionCount,
     potencial,
-    porcentajePH,
+    porcentajePH: (promedioPH / zone.votosValidos) * 100, 
+    promedioPH,
     nivelPotencial
   };
 });
@@ -53,20 +56,24 @@ const getHeatmapColor = (value, min, max, mode) => {
   ratio = Math.max(0, Math.min(1, ratio)); // Clamp 0-1
   
   if (mode === 'votos_ph' || mode === 'porcentaje_ph') {
-    // Escala Rojo (Pacto Histórico)
-    // Amarillo -> Naranja -> Rojo Oscuro
-    const r = 255;
-    const g = Math.round(255 * (1 - ratio));
-    const b = Math.round(150 * (1 - ratio));
+    // Escala Turquesa a Azul Intenso
+    // Cyan claro -> Turquesa Medio -> Azul Petróleo Oscuro
+    const startColor = { r: 167, g: 243, b: 208 }; // Verde Claro #A7F3D0
+    const endColor = { r: 0, g: 92, b: 110 }; // Azul Petróleo #005C6E
+
+    const r = Math.round(startColor.r + (endColor.r - startColor.r) * ratio);
+    const g = Math.round(startColor.g + (endColor.g - startColor.g) * ratio);
+    const b = Math.round(startColor.b + (endColor.b - startColor.b) * ratio);
+    
     return `rgb(${r}, ${g}, ${b})`;
   } else if (mode === 'potencial') {
-    // Escala Verde/Azul para potencial
-    return ratio > 0.7 ? '#10B981' : ratio > 0.4 ? '#34D399' : ratio > 0.2 ? '#6EE7B7' : '#D1FAE5';
+    // Escala Morado claro a oscuro
+    return ratio > 0.7 ? '#6D28D9' : ratio > 0.4 ? '#8B5CF6' : ratio > 0.2 ? '#A78BFA' : '#EDE9FE';
   } else if (mode === 'participacion') {
-    // Escala Azul
-    return `rgba(59, 130, 246, ${0.2 + (ratio * 0.8)})`;
+    // Escala Turquesa
+    return `rgba(20, 184, 166, ${0.3 + (ratio * 0.7)})`;
   }
-  return '#9CA3AF'; // Default Gris
+  return '#1F2937'; // Default Gris Oscuro
 };
 
 export default function ElectoralHeatmap() {
@@ -75,8 +82,8 @@ export default function ElectoralHeatmap() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Limites min/max para las escalas
-  const maxVotosPH = Math.max(...enrichedZones.map(z => z.votosPH));
-  const minVotosPH = Math.min(...enrichedZones.map(z => z.votosPH));
+  const maxVotosPH = Math.max(...enrichedZones.map(z => z.promedioPH));
+  const minVotosPH = Math.min(...enrichedZones.map(z => z.promedioPH));
   const maxPorcentaje = Math.max(...enrichedZones.map(z => z.porcentajePH));
   const minPorcentaje = Math.min(...enrichedZones.map(z => z.porcentajePH));
   const maxPotencial = Math.max(...enrichedZones.map(z => z.potencial));
@@ -85,17 +92,17 @@ export default function ElectoralHeatmap() {
   const minParticipacion = Math.min(...enrichedZones.map(z => z.participacion));
 
   // Top 10 Data para Gráficos
-  const sortedByPH = [...enrichedZones].sort((a, b) => b.votosPH - a.votosPH).slice(0, 10);
+  const sortedByPH = [...enrichedZones].sort((a, b) => b.promedioPH - a.promedioPH).slice(0, 10);
   const chartData = sortedByPH.map(z => ({
     name: z.name.split(' ')[1].replace(/[()]/g, ''),
-    VotosPH: z.votosPH,
+    VotosPH: z.promedioPH,
     Potencial: z.potencial
   }));
 
   // Totales
   const totalCenso = enrichedZones.reduce((acc, z) => acc + z.censo, 0);
   const totalVotos = enrichedZones.reduce((acc, z) => acc + z.votosValidos, 0);
-  const totalVotosPH = enrichedZones.reduce((acc, z) => acc + z.votosPH, 0);
+  const totalVotosPH = enrichedZones.reduce((acc, z) => acc + z.promedioPH, 0);
   const porcentajeTotalPH = (totalVotosPH / totalVotos) * 100;
 
   useEffect(() => {
@@ -110,14 +117,14 @@ export default function ElectoralHeatmap() {
       <div className="w-full lg:w-2/3 flex flex-col gap-4">
         
         {/* Encabezado y Filtros Principales */}
-        <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm">
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-200 shadow-sm relative z-10">
           <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4">
             <div>
               <h2 className="text-2xl font-bold font-heading text-gray-900 flex items-center gap-2">
-                <MapPin className="text-red-500" />
+                <MapPin className="text-[#005C6E]" />
                 Heatmap Electoral Tunja
               </h2>
-              <p className="text-sm text-gray-500">Resultados Presidenciales - Pacto Histórico</p>
+              <p className="text-sm text-gray-500">Elecciones Presidenciales (2da Vuelta 2022) - Pacto Histórico</p>
             </div>
             
             <div className="relative">
@@ -145,8 +152,8 @@ export default function ElectoralHeatmap() {
                 onClick={() => setMetricMode(metric.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                   metricMode === metric.id 
-                    ? 'bg-red-50 text-red-600 border border-red-200' 
-                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+                    ? 'bg-[#005C6E]/10 text-[#005C6E] border border-[#005C6E]/30' 
+                    : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                 }`}
               >
                 <metric.icon size={16} />
@@ -164,6 +171,7 @@ export default function ElectoralHeatmap() {
             zoom={13} 
             style={{ height: '100%', width: '100%', zIndex: 10 }}
             scrollWheelZoom={false}
+            zoomControl={false}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/">OSM</a>'
@@ -174,7 +182,7 @@ export default function ElectoralHeatmap() {
               
               // Determinar color basado en el modo actual
               let fillColor = '#CCC';
-              if (metricMode === 'votos_ph') fillColor = getHeatmapColor(zone.votosPH, minVotosPH, maxVotosPH, 'votos_ph');
+              if (metricMode === 'votos_ph') fillColor = getHeatmapColor(zone.promedioPH, minVotosPH, maxVotosPH, 'votos_ph');
               if (metricMode === 'porcentaje_ph') fillColor = getHeatmapColor(zone.porcentajePH, minPorcentaje, maxPorcentaje, 'porcentaje_ph');
               if (metricMode === 'potencial') fillColor = getHeatmapColor(zone.potencial, minPotencial, maxPotencial, 'potencial');
               if (metricMode === 'participacion') fillColor = getHeatmapColor(zone.participacion, minParticipacion, maxParticipacion, 'participacion');
@@ -186,20 +194,27 @@ export default function ElectoralHeatmap() {
                   pathOptions={{ 
                     fillColor, 
                     fillOpacity: 0.7, 
-                    color: selectedZone?.id === zone.id ? '#111827' : '#ffffff', 
-                    weight: selectedZone?.id === zone.id ? 2 : 1,
+                    color: selectedZone?.id === zone.id ? '#1A1A20' : '#ffffff', 
+                    weight: selectedZone?.id === zone.id ? 3 : 1,
                     dashArray: selectedZone?.id === zone.id ? '' : '3'
                   }}
                   eventHandlers={{
-                    click: () => setSelectedZone(zone)
+                    click: () => {
+                      setSelectedZone(zone);
+                    }
                   }}
                 >
+                  <Tooltip permanent direction="center" className="text-[10px] font-bold leading-none bg-white text-gray-800 p-1 px-2 rounded-md shadow-md border-0 ring-1 ring-gray-200 z-[500] whitespace-nowrap opacity-90">
+                    {zone.name.split(' ')[1].replace(/[()]/g, '')}
+                  </Tooltip>
                   <Popup>
-                    <div className="p-1 min-w-[150px]">
-                      <span className="font-bold block border-b pb-1 mb-2">{zone.name}</span>
-                      <div className="text-xs space-y-1">
-                        <div className="flex justify-between"><span>Votos PH:</span> <span className="font-bold text-red-600">{zone.votosPH.toLocaleString()}</span></div>
-                        <div className="flex justify-between"><span>Participación:</span> <span>{zone.participacion}%</span></div>
+                    <div className="p-1 min-w-[200px]">
+                      <span className="font-bold block border-b pb-1 mb-2 text-[#005C6E]">{zone.name}</span>
+                      <div className="text-xs space-y-2">
+                        <div className="flex justify-between"><span>Votantes de la zona:</span> <span className="font-bold text-gray-700">{zone.votosValidos.toLocaleString()}</span></div>
+                        <div className="flex justify-between"><span>Votos PH:</span> <span className="font-bold text-[#005C6E]">{zone.promedioPH.toLocaleString()}</span></div>
+                        <div className="flex justify-between"><span>Participación:</span> <span className="font-bold text-emerald-600">{zone.participacion}%</span></div>
+                        <div className="flex justify-between pt-1 border-t"><span>Potencial Estimado:</span> <span className="font-bold text-purple-600">~{zone.potencial.toLocaleString()}</span></div>
                       </div>
                     </div>
                   </Popup>
@@ -209,19 +224,19 @@ export default function ElectoralHeatmap() {
           </MapContainer>
 
           {/* Leyenda Flotante en el mapa */}
-          <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg border border-gray-200 shadow-sm z-[20] text-xs">
-            <span className="font-bold block mb-2 text-gray-700">
+          <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-xl border border-gray-200 shadow-xl z-[400] text-xs w-56">
+            <span className="font-bold block mb-2 text-gray-800 uppercase tracking-wider text-[10px]">
               {metricMode === 'votos_ph' && 'Intensidad de Votos PH'}
               {metricMode === 'porcentaje_ph' && 'Concentración (%) PH'}
               {metricMode === 'potencial' && 'Potencial Recuperación'}
               {metricMode === 'participacion' && 'Nivel de Participación'}
             </span>
-            <div className="flex w-32 h-3 rounded-full overflow-hidden mb-1">
-              <div className="h-full flex-1" style={{ background: metricMode === 'potencial' ? '#D1FAE5' : metricMode === 'participacion' ? 'rgba(59,130,246,0.2)' : 'rgb(255,255,150)' }}></div>
-              <div className="h-full flex-1" style={{ background: metricMode === 'potencial' ? '#6EE7B7' : metricMode === 'participacion' ? 'rgba(59,130,246,0.5)' : 'rgb(255,150,50)' }}></div>
-              <div className="h-full flex-1" style={{ background: metricMode === 'potencial' ? '#10B981' : metricMode === 'participacion' ? 'rgba(59,130,246,0.9)' : 'rgb(255,0,0)' }}></div>
+            <div className="flex w-full h-2 rounded-full overflow-hidden mb-2 shadow-inner">
+              <div className="h-full flex-1" style={{ background: metricMode === 'potencial' ? '#EDE9FE' : metricMode === 'participacion' ? 'rgba(20,184,166,0.3)' : '#A7F3D0' }}></div>
+              <div className="h-full flex-1" style={{ background: metricMode === 'potencial' ? '#A78BFA' : metricMode === 'participacion' ? 'rgba(20,184,166,0.6)' : '#34D399' }}></div>
+              <div className="h-full flex-1" style={{ background: metricMode === 'potencial' ? '#6D28D9' : metricMode === 'participacion' ? 'rgba(20,184,166,1)' : '#005C6E' }}></div>
             </div>
-            <div className="flex justify-between text-[10px] text-gray-500 font-medium">
+            <div className="flex justify-between text-[10px] text-gray-400 font-medium tracking-widest uppercase">
               <span>Menor</span>
               <span>Mayor</span>
             </div>
@@ -234,100 +249,117 @@ export default function ElectoralHeatmap() {
       <div className="w-full lg:w-1/3 flex flex-col gap-4">
         
         {/* Tarjeta de Resumen Global Tunja */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white shadow-md relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-bl-full"></div>
-          <h3 className="text-sm uppercase tracking-wider text-gray-400 font-bold mb-4">Consolidado Tunja</h3>
+        <div className="bg-white rounded-3xl p-8 shadow-sm relative overflow-hidden border border-gray-200">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#005C6E] opacity-[0.03] rounded-bl-full"></div>
           
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <p className="text-xs text-gray-400 mb-1">Total Votos PH</p>
-              <p className="text-2xl font-bold text-red-400">{totalVotosPH.toLocaleString()}</p>
-            </div>
-            <div>
-              <p className="text-xs text-gray-400 mb-1">% Apoyo Global</p>
-              <p className="text-2xl font-bold text-white">{porcentajeTotalPH.toFixed(1)}%</p>
+          <div className="flex items-center justify-between mb-5">
+            <h3 className="text-xs uppercase tracking-widest text-[#005C6E] font-bold">Consolidado Tunja</h3>
+            <span className="bg-[#005C6E]/10 text-[#005C6E] text-[10px] font-bold px-3 py-1 rounded-full border border-[#005C6E]/20">
+              ELECCIONES 2022
+            </span>
+          </div>
+          
+          <div className="flex flex-col gap-2 mb-8">
+            <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Total Votos Pacto Histórico</p>
+            <div className="flex items-baseline gap-4 mt-1">
+              <p className="text-5xl font-bold text-gray-900 font-heading tracking-tight">{totalVotosPH.toLocaleString()}</p>
+              <div className="flex items-center gap-1.5 text-emerald-700 text-sm font-bold bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100">
+                <TrendingUp size={16} />
+                {porcentajeTotalPH.toFixed(1)}%
+              </div>
             </div>
           </div>
 
-          <div className="border-t border-gray-700 pt-3">
-            <p className="text-xs text-gray-400 flex justify-between">
-              <span>Censo Total:</span> <strong>{totalCenso.toLocaleString()}</strong>
-            </p>
-            <p className="text-xs text-gray-400 flex justify-between mt-1">
-              <span>Participación Promedio:</span> <strong>{((totalVotos / totalCenso)*100).toFixed(1)}%</strong>
-            </p>
+          <div className="grid grid-cols-2 gap-6 border-t border-gray-100 pt-6">
+            <div>
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5 font-semibold">Censo Total</p>
+              <p className="text-xl font-bold text-gray-900">{totalCenso.toLocaleString()}</p>
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5 font-semibold">Participación Promedio</p>
+              <p className="text-xl font-bold text-gray-900">{((totalVotos / totalCenso)*100).toFixed(1)}%</p>
+            </div>
           </div>
         </div>
 
         {/* Panel de Zona Seleccionada (Interacción) */}
         {selectedZone ? (
-          <div className="bg-white rounded-2xl p-5 border border-red-100 shadow-sm relative">
-            <div className="absolute top-0 left-0 w-1 h-full bg-red-500 rounded-l-2xl"></div>
+          <div className="bg-white rounded-3xl p-8 shadow-2xl relative overflow-hidden ring-1 ring-gray-200 mt-6 lg:mt-0 transition-all duration-300">
+            {/* Gradiente sutil de fondo */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#005C6E] opacity-[0.03] rounded-full blur-3xl" style={{ transform: 'translate(30%, -30%)' }}></div>
             
-            <div className="flex justify-between items-start mb-4">
+            {/* Header del Panel */}
+            <div className="flex justify-between items-start mb-8 relative z-10 border-b border-gray-100 pb-5">
               <div>
-                <span className="text-xs font-bold text-red-500 bg-red-50 px-2 py-1 rounded-full uppercase">Zona Seleccionada</span>
-                <h3 className="text-xl font-bold text-gray-900 mt-2 leading-tight">{selectedZone.name}</h3>
-              </div>
-              <div className="text-right">
-                <span className="text-[10px] text-gray-500 uppercase block">Ranking Local</span>
-                <span className="text-lg font-bold text-gray-900">
-                  #{sortedByPH.findIndex(z => z.id === selectedZone.id) + 1}
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                <p className="text-[10px] text-gray-500 uppercase mb-1">Votación PH</p>
-                <p className="text-lg font-bold text-gray-900">{selectedZone.votosPH.toLocaleString()}</p>
-                <div className="w-full bg-gray-200 h-1.5 rounded-full mt-2">
-                  <div className="bg-red-500 h-1.5 rounded-full" style={{ width: `${selectedZone.porcentajePH}%` }}></div>
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-[10px] font-bold text-[#005C6E] bg-[#005C6E]/10 px-3 py-1 rounded-full uppercase tracking-wider border border-[#005C6E]/20">
+                    Ficha Territorial
+                  </span>
+                  <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full uppercase tracking-wider">
+                    Ranking #{sortedByPH.findIndex(z => z.id === selectedZone.id) + 1}
+                  </span>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">{selectedZone.porcentajePH.toFixed(1)}% del total</p>
-              </div>
-
-              <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                <p className="text-[10px] text-gray-500 uppercase mb-1">Potencial Reserva</p>
-                <p className="text-lg font-bold text-emerald-600">~{selectedZone.potencial.toLocaleString()}</p>
-                <span className={`inline-block mt-1 px-2 py-0.5 rounded text-[10px] font-bold ${
-                  selectedZone.nivelPotencial === 'Muy Alto' ? 'bg-emerald-100 text-emerald-700' :
-                  selectedZone.nivelPotencial === 'Alto' ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-600'
-                }`}>
-                  NIVEL: {selectedZone.nivelPotencial}
-                </span>
+                <h3 className="text-3xl font-bold text-gray-900 leading-tight font-heading">{selectedZone.name}</h3>
+                <p className="text-sm text-gray-500 mt-1 flex items-center gap-1.5"><MapPin size={14} className="text-[#005C6E]" /> Centro Oriente</p>
               </div>
             </div>
 
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between py-1 border-b border-gray-50">
-                <span className="text-gray-500">Candidato Ganador local:</span>
-                <span className="font-medium text-gray-900">{selectedZone.candidatoGanador}</span>
+            {/* Grid de Métricas Principales */}
+            <div className="grid grid-cols-2 gap-5 mb-8 relative z-10">
+              <div className="bg-gray-50 rounded-2xl p-5 border border-gray-200 relative overflow-hidden group hover:border-[#005C6E]/30 transition-colors">
+                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5 font-semibold">Total Votantes</p>
+                <p className="text-2xl font-bold text-gray-900 font-heading">{selectedZone.votosValidos.toLocaleString()}</p>
               </div>
-              <div className="flex justify-between py-1 border-b border-gray-50">
-                <span className="text-gray-500">Diferencia con P.H.:</span>
-                <span className="font-medium text-red-500">
-                  {selectedZone.candidatoGanador === 'Pacto Histórico' 
-                    ? `+${selectedZone.diffSegundo}` 
-                    : `-${selectedZone.diffSegundo}`} votos
-                </span>
+
+              <div className="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100 relative overflow-hidden group hover:border-emerald-300 transition-colors">
+                <p className="text-[10px] text-emerald-700 uppercase tracking-widest mb-1.5 font-semibold">Participación</p>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-2xl font-bold text-emerald-600 font-heading">{selectedZone.participacion}%</p>
+                </div>
               </div>
-              <div className="flex justify-between py-1">
-                <span className="text-gray-500">Participación:</span>
-                <span className="font-medium text-gray-900">{selectedZone.participacion}%</span>
+
+              <div className="bg-[#005C6E]/5 rounded-2xl p-6 border border-[#005C6E]/20 col-span-2 relative overflow-hidden">
+                <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-[#005C6E]/5 to-transparent"></div>
+                <div className="flex justify-between items-start mb-3">
+                  <p className="text-[10px] text-[#005C6E] uppercase tracking-widest font-semibold">Apoyo Pacto Histórico</p>
+                  <span className="text-xs font-bold text-white bg-[#005C6E] px-2.5 py-1 rounded-md shadow-sm">
+                    {selectedZone.porcentajePH.toFixed(1)}%
+                  </span>
+                </div>
+                <p className="text-4xl font-bold text-[#005C6E] font-heading">{selectedZone.promedioPH.toLocaleString()}</p>
+                <div className="w-full bg-gray-200 h-2 rounded-full mt-4 overflow-hidden">
+                  <div className="bg-[#005C6E] h-2 rounded-full" style={{ width: `${selectedZone.porcentajePH}%` }}></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Listado de Barrios */}
+            <div className="relative z-10">
+              <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center justify-between">
+                Barrios Integrantes ({selectedZone.barrios.length})
+              </h4>
+              <div className="grid grid-cols-2 gap-3 max-h-[160px] overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin' }}>
+                {selectedZone.barrios.map((barrio, idx) => (
+                  <div key={idx} className="bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-xs text-gray-700 font-medium hover:bg-white hover:border-[#005C6E]/30 transition-colors shadow-sm" title={barrio}>
+                    {barrio}
+                  </div>
+                ))}
               </div>
             </div>
 
           </div>
         ) : (
-          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 text-center text-gray-500 text-sm flex flex-col items-center justify-center min-h-[200px]">
-            <MapPin size={32} className="text-gray-300 mb-2" />
-            Selecciona una zona en el mapa para ver sus detalles estratificados.
+          <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center text-gray-500 flex flex-col items-center justify-center min-h-[350px] shadow-sm mt-6 lg:mt-0">
+            <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4 border border-gray-100">
+              <MapPin size={24} className="text-gray-400" />
+            </div>
+            <h3 className="text-lg font-bold text-gray-900 mb-2 font-heading">Inteligencia Territorial</h3>
+            <p className="text-sm max-w-xs leading-relaxed">Selecciona una comuna en el mapa interactivo para desplegar su ficha de análisis electoral detallada y barrios integrados.</p>
           </div>
         )}
 
         {/* Gráfico de Barras - Top Zonas */}
-        <div className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm flex-1">
+        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm flex-1 mt-6 lg:mt-0">
           <h4 className="text-sm font-bold text-gray-900 mb-4 flex items-center justify-between">
             Desempeño y Potencial por Zona
             <ChevronRight size={16} className="text-gray-400" />
@@ -335,17 +367,17 @@ export default function ElectoralHeatmap() {
           
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} layout="vertical" margin={{ top: 0, right: 0, left: 10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E5E7EB" />
+              <BarChart data={chartData} layout="vertical" margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
                 <XAxis type="number" hide />
                 <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#6B7280' }} width={70} />
                 <RechartsTooltip 
-                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
-                  itemStyle={{ fontSize: '12px' }}
+                  contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', background: '#ffffff', color: '#111827', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
+                  itemStyle={{ fontSize: '12px', color: '#111827' }}
                 />
                 <Legend iconType="circle" wrapperStyle={{ fontSize: '10px' }} />
-                <Bar dataKey="VotosPH" name="Votos Confirmados" stackId="a" fill="#EF4444" radius={[0, 0, 0, 0]} barSize={12} />
-                <Bar dataKey="Potencial" name="Reserva/Potencial" stackId="a" fill="#34D399" radius={[0, 4, 4, 0]} barSize={12} />
+                <Bar dataKey="VotosPH" name="Votos Confirmados" stackId="a" fill="#005C6E" radius={[0, 0, 0, 0]} barSize={12} />
+                <Bar dataKey="Potencial" name="Reserva/Potencial" stackId="a" fill="#10B981" radius={[0, 4, 4, 0]} barSize={12} />
               </BarChart>
             </ResponsiveContainer>
           </div>

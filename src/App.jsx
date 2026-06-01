@@ -165,34 +165,14 @@ export default function App() {
               </div>
             </div>
 
-            {/* Micro Widget de Resumen Financiero Rápido */}
-            <div style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              padding: '1.25rem 1.5rem',
-              borderRadius: '12px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.25rem',
-              minWidth: '220px'
-            }}>
-              <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', fontWeight: '600', letterSpacing: '0.5px' }}>
-                Presupuesto Analizado
-              </span>
-              <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--accent-green)', fontFamily: 'var(--font-heading)' }}>
-                $534.537 M
-              </span>
-              <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>
-                Veeduría en tiempo real
-              </span>
-            </div>
+            {/* Removed Micro Widget de Resumen Financiero Rápido */}
           </div>
         </div>
       </section>
 
       {/* 3. Contenedor del Contenido Activo */}
       <main style={{ flex: 1, paddingBottom: '3rem' }}>
-        <div className="container" style={{ margin: '0 auto', maxWidth: '1400px', paddingTop: '2.5rem' }}>
+        <div className="container" style={{ margin: '0 auto', maxWidth: '1400px', padding: '2.5rem 2rem' }}>
           
           {/* Renderizado Condicional del Componente Seleccionado */}
           <div className="animate-fade-in" key={activeTab}>

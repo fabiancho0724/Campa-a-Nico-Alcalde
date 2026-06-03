@@ -249,98 +249,100 @@ export default function ElectoralHeatmap() {
       <div className="w-full lg:w-1/3 flex flex-col gap-4">
         
         {/* Tarjeta de Resumen Global Tunja */}
-        <div className="bg-white rounded-3xl p-8 shadow-sm relative overflow-hidden border border-gray-200">
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 shadow-sm relative overflow-hidden border border-gray-200">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#005C6E] opacity-[0.03] rounded-bl-full"></div>
           
-          <div className="flex items-center justify-between mb-5">
-            <h3 className="text-xs uppercase tracking-widest text-[#005C6E] font-bold">Consolidado Tunja</h3>
-            <span className="bg-[#005C6E]/10 text-[#005C6E] text-[10px] font-bold px-3 py-1 rounded-full border border-[#005C6E]/20">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+            <h3 className="text-xs sm:text-sm uppercase tracking-wider text-[#005C6E] font-bold">Consolidado</h3>
+            <span className="bg-[#005C6E]/10 text-[#005C6E] text-[10px] font-bold px-3 py-1 rounded-full border border-[#005C6E]/20 whitespace-nowrap">
               ELECCIONES 2022
             </span>
           </div>
           
-          <div className="flex flex-col gap-2 mb-8">
-            <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Total Votos Pacto Histórico</p>
-            <div className="flex items-baseline gap-4 mt-1">
-              <p className="text-5xl font-bold text-gray-900 font-heading tracking-tight">{totalVotosPH.toLocaleString()}</p>
-              <div className="flex items-center gap-1.5 text-emerald-700 text-sm font-bold bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100">
+          <div className="flex flex-col gap-2 mb-6 sm:mb-8">
+            <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider break-words flex flex-wrap">TOTAL VOTOS PACTO HISTÓRICO</p>
+            <div className="flex flex-wrap items-baseline gap-3 mt-1">
+              <p className="text-5xl font-bold text-gray-900 font-heading tracking-tight" style={{ fontSize: 'min(3.5rem, 12vw)', lineHeight: 1 }}>{totalVotosPH.toLocaleString()}</p>
+              <div className="flex items-center gap-1.5 text-emerald-700 text-sm font-bold bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 whitespace-nowrap">
                 <TrendingUp size={16} />
                 {porcentajeTotalPH.toFixed(1)}%
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 border-t border-gray-100 pt-6">
-            <div>
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5 font-semibold">Censo Total</p>
-              <p className="text-xl font-bold text-gray-900">{totalCenso.toLocaleString()}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 border-t border-gray-100 pt-5 sm:pt-6">
+            <div className="flex flex-col">
+              <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-1.5 font-semibold">Censo Total</p>
+              <p className="text-lg sm:text-xl font-bold text-gray-900 truncate">{totalCenso.toLocaleString()}</p>
             </div>
-            <div>
-              <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5 font-semibold">Participación Promedio</p>
-              <p className="text-xl font-bold text-gray-900">{((totalVotos / totalCenso)*100).toFixed(1)}%</p>
+            <div className="flex flex-col">
+              <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-1.5 font-semibold">Participación Promedio</p>
+              <p className="text-lg sm:text-xl font-bold text-gray-900 truncate">{((totalVotos / totalCenso)*100).toFixed(1)}%</p>
             </div>
           </div>
         </div>
 
         {/* Panel de Zona Seleccionada (Interacción) */}
         {selectedZone ? (
-          <div className="bg-white rounded-3xl p-8 shadow-2xl relative overflow-hidden ring-1 ring-gray-200 mt-6 lg:mt-0 transition-all duration-300">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl relative overflow-hidden ring-1 ring-gray-200 mt-6 lg:mt-0 transition-all duration-300">
             {/* Gradiente sutil de fondo */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#005C6E] opacity-[0.03] rounded-full blur-3xl" style={{ transform: 'translate(30%, -30%)' }}></div>
             
             {/* Header del Panel */}
-            <div className="flex justify-between items-start mb-8 relative z-10 border-b border-gray-100 pb-5">
+            <div className="flex flex-col gap-4 mb-6 sm:mb-8 relative z-10 border-b border-gray-100 pb-5">
               <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-[10px] font-bold text-[#005C6E] bg-[#005C6E]/10 px-3 py-1 rounded-full uppercase tracking-wider border border-[#005C6E]/20">
-                    Ficha Territorial
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <span className="text-[10px] font-bold text-[#005C6E] bg-[#005C6E]/10 px-3 py-1 rounded-full uppercase tracking-wider border border-[#005C6E]/20 whitespace-nowrap">
+                    FICHA TERRITORIAL
                   </span>
-                  <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full uppercase tracking-wider">
-                    Ranking #{sortedByPH.findIndex(z => z.id === selectedZone.id) + 1}
+                  <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full uppercase tracking-wider whitespace-nowrap">
+                    RANKING #{sortedByPH.findIndex(z => z.id === selectedZone.id) + 1}
                   </span>
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 leading-tight font-heading">{selectedZone.name}</h3>
-                <p className="text-sm text-gray-500 mt-1 flex items-center gap-1.5"><MapPin size={14} className="text-[#005C6E]" /> Centro Oriente</p>
+                <h3 className="font-bold text-gray-900 leading-tight font-heading break-words" style={{ fontSize: 'min(2.5rem, 8vw)', overflowWrap: 'break-word', wordBreak: 'break-word' }}>
+                  {selectedZone.name}
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-500 mt-2 flex items-center gap-1.5"><MapPin size={14} className="text-[#005C6E]" /> Centro Oriente</p>
               </div>
             </div>
 
             {/* Grid de Métricas Principales */}
-            <div className="grid grid-cols-2 gap-5 mb-8 relative z-10">
-              <div className="bg-gray-50 rounded-2xl p-5 border border-gray-200 relative overflow-hidden group hover:border-[#005C6E]/30 transition-colors">
-                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5 font-semibold">Total Votantes</p>
-                <p className="text-2xl font-bold text-gray-900 font-heading">{selectedZone.votosValidos.toLocaleString()}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 sm:mb-8 relative z-10 w-full overflow-hidden">
+              <div className="bg-gray-50 rounded-2xl p-4 sm:p-5 border border-gray-200 relative overflow-hidden group hover:border-[#005C6E]/30 transition-colors h-fit flex flex-col justify-center min-h-[100px]">
+                <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-widest mb-1.5 font-semibold break-words">Total Votantes</p>
+                <p className="font-bold text-gray-900 font-heading break-words" style={{ fontSize: 'min(2rem, 7vw)' }}>{selectedZone.votosValidos.toLocaleString()}</p>
               </div>
 
-              <div className="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100 relative overflow-hidden group hover:border-emerald-300 transition-colors">
-                <p className="text-[10px] text-emerald-700 uppercase tracking-widest mb-1.5 font-semibold">Participación</p>
-                <div className="flex items-baseline gap-2">
-                  <p className="text-2xl font-bold text-emerald-600 font-heading">{selectedZone.participacion}%</p>
+              <div className="bg-emerald-50/50 rounded-2xl p-4 sm:p-5 border border-emerald-100 relative overflow-hidden group hover:border-emerald-300 transition-colors h-fit flex flex-col justify-center min-h-[100px]">
+                <p className="text-[10px] sm:text-xs text-emerald-700 uppercase tracking-widest mb-1.5 font-semibold break-words">Participación</p>
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <p className="font-bold text-emerald-600 font-heading break-words" style={{ fontSize: 'min(2.2rem, 8vw)' }}>{selectedZone.participacion}%</p>
                 </div>
               </div>
 
-              <div className="bg-[#005C6E]/5 rounded-2xl p-6 border border-[#005C6E]/20 col-span-2 relative overflow-hidden">
+              <div className="bg-[#005C6E]/5 rounded-2xl p-4 sm:p-5 lg:p-6 border border-[#005C6E]/20 col-span-1 sm:col-span-2 relative overflow-hidden h-fit flex flex-col min-h-[140px]">
                 <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-[#005C6E]/5 to-transparent"></div>
-                <div className="flex justify-between items-start mb-3">
-                  <p className="text-[10px] text-[#005C6E] uppercase tracking-widest font-semibold">Apoyo Pacto Histórico</p>
-                  <span className="text-xs font-bold text-white bg-[#005C6E] px-2.5 py-1 rounded-md shadow-sm">
+                <div className="flex flex-wrap justify-between items-center gap-3 mb-3 relative z-10 w-full">
+                  <p className="text-[10px] sm:text-xs text-[#005C6E] uppercase tracking-wider font-semibold">Apoyo Pacto Histórico</p> 
+                  <span className="text-[10px] sm:text-xs font-bold text-white bg-[#005C6E] px-2.5 py-1 rounded-md shadow-sm whitespace-nowrap">
                     {selectedZone.porcentajePH.toFixed(1)}%
                   </span>
                 </div>
-                <p className="text-4xl font-bold text-[#005C6E] font-heading">{selectedZone.promedioPH.toLocaleString()}</p>
-                <div className="w-full bg-gray-200 h-2 rounded-full mt-4 overflow-hidden">
-                  <div className="bg-[#005C6E] h-2 rounded-full" style={{ width: `${selectedZone.porcentajePH}%` }}></div>
+                <p className="font-bold text-[#005C6E] font-heading relative z-10 break-words mt-auto" style={{ fontSize: 'min(3rem, 10vw)' }}>{selectedZone.promedioPH.toLocaleString()}</p>
+                <div className="w-full bg-gray-200 h-2 rounded-full mt-4 overflow-hidden relative z-10 shrink-0">
+                  <div className="bg-[#005C6E] h-2 rounded-full max-w-full" style={{ width: `${Math.min(selectedZone.porcentajePH, 100)}%` }}></div>
                 </div>
               </div>
             </div>
 
             {/* Listado de Barrios */}
-            <div className="relative z-10">
+            <div className="relative z-10 w-full">
               <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center justify-between">
                 Barrios Integrantes ({selectedZone.barrios.length})
               </h4>
-              <div className="grid grid-cols-2 gap-3 max-h-[160px] overflow-y-auto pr-2" style={{ scrollbarWidth: 'thin' }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 max-h-[250px] overflow-y-auto pr-1" style={{ scrollbarWidth: 'thin' }}>
                 {selectedZone.barrios.map((barrio, idx) => (
-                  <div key={idx} className="bg-gray-50 border border-gray-200 px-4 py-2.5 rounded-xl text-xs text-gray-700 font-medium hover:bg-white hover:border-[#005C6E]/30 transition-colors shadow-sm" title={barrio}>
+                  <div key={idx} className="bg-gray-50 border border-gray-200 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm text-gray-700 font-medium hover:bg-white hover:border-[#005C6E]/30 transition-colors shadow-sm whitespace-normal leading-tight h-fit" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                     {barrio}
                   </div>
                 ))}
@@ -370,7 +372,7 @@ export default function ElectoralHeatmap() {
               <BarChart data={chartData} layout="vertical" margin={{ top: 0, right: 10, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f3f4f6" />
                 <XAxis type="number" hide />
-                <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#6B7280' }} width={70} />
+                <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#6B7280' }} width={120} />
                 <RechartsTooltip 
                   contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb', background: '#ffffff', color: '#111827', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}
                   itemStyle={{ fontSize: '12px', color: '#111827' }}

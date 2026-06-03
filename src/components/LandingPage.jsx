@@ -1,21 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Building, Network, Users, ChevronRight, Activity, Cpu, Play, Target,
-  MessageSquare, FileText, CheckCircle, Send, X, ArrowUpRight, Check, MapPin, Facebook, Twitter, Instagram, Globe, BarChart
+  MessageSquare, FileText, CheckCircle, Send, X, ArrowUpRight, Check, MapPin, Facebook, Twitter, Instagram, Globe, BarChart, LogOut, Settings, User as UserIcon, LayoutDashboard, Zap
 } from 'lucide-react';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth, db } from '../lib/firebase';
 
 import BrandLogos from './BrandLogos';
+import AuthModal from './AuthModal';
+import NetworkBackground from './NetworkBackground';
+import InstagramFeed from './InstagramFeed';
 
 export default function LandingPage({ onEnterApp }) {
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
 
   const [activeModal, setActiveModal] = useState(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
+  const [user, setUser] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [rsvpList, setRsvpList] = useState({});
   const [proposals, setProposals] = useState([]);
   const [newProposal, setNewProposal] = useState({ comuna: 'Distrito Central', sector: 'Tecnología e Innovación', texto: '' });
   const [proposalSubmitted, setProposalSubmitted] = useState(false);
   const [simulatedParticipants, setSimulatedParticipants] = useState(3452);
   const [isProfileFlipped, setIsProfileFlipped] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        setShowAuthModal(false);
+        try {
+          const { doc, getDoc } = await import('firebase/firestore');
+          const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+          if (userDoc.exists()) {
+            setUserProfile(userDoc.data());
+          }
+        } catch (e) {
+          console.error("Error fetching user profile:", e);
+        }
+      } else {
+        setUserProfile(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setShowUserMenu(false);
+    } catch (e) {
+      console.error('Logout error', e);
+    }
+  };
+
+  const openAuth = (mode = 'login') => {
+    setAuthMode(mode);
+    setShowAuthModal(true);
+  };
+
 
   const localAgenda = [
     { id: 'com1', title: 'Foro de Movilidad y Diseño Vial', place: 'Hub de Innovación Norte', date: 'Jueves, Mayo 28', time: '5:00 PM', attendees: 215 },
@@ -52,10 +98,12 @@ export default function LandingPage({ onEnterApp }) {
       overflowX: 'hidden'
     }} className="animate-fade-in">
       
-      {/* HEADER ELEGANTE Y OSCURO */}
+      {/* HEADER ELEGANTE Y CLARO (Como la app) */}
       <header style={{
-        background: '#0F0F0F',
-        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid var(--border-color)',
         position: 'fixed',
         top: 0,
         zIndex: 100,
@@ -67,48 +115,101 @@ export default function LandingPage({ onEnterApp }) {
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: '1rem 1.5rem',
+          maxWidth: '1400px',
+          margin: '0 auto'
         }}>
-          <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>
             <BrandLogos variant="header" />
           </div>
 
           <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-            <button onClick={() => setActiveModal('acuerdo')} className="nav-clean-btn hidden-mobile">Ecosistema</button>
-            <button onClick={() => setActiveModal('consulta')} className="nav-clean-btn hidden-mobile">Laboratorio</button>
-            <button onClick={() => setActiveModal('agenda')} className="nav-clean-btn hidden-mobile">Nodes</button>
+            <button onClick={() => setActiveModal('acuerdo')} className="nav-clean-btn-light hidden-mobile">Ecosistema</button>
+            <button onClick={() => setActiveModal('consulta')} className="nav-clean-btn-light hidden-mobile">Laboratorio</button>
+            <button onClick={() => setActiveModal('agenda')} className="nav-clean-btn-light hidden-mobile">Nodes</button>
             
-            <button 
-              onClick={onEnterApp}
-              style={{
-                background: 'var(--primary)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '0.65rem 1.25rem',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                fontFamily: 'var(--font-heading)',
-                transition: 'all 0.2s',
-                boxShadow: '0 0 15px rgba(15, 76, 129, 0.4)'
-              }}
-              onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(15, 76, 129, 0.6)'; }}
-              onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(15, 76, 129, 0.4)'; }}
-            >
-              Iniciar Panel Operativo
-            </button>
+            {user ? (
+              <div style={{ position: 'relative' }}>
+                <div 
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', background: 'rgba(0,0,0,0.03)', padding: '0.4rem 0.75rem', borderRadius: '100px', border: '1px solid rgba(0,0,0,0.05)', transition: 'all 0.2s' }}
+                >
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>
+                    {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: '600', color: '#171717', lineHeight: '1.2' }}>
+                      {user.displayName || user.email?.split('@')[0]}
+                    </span>
+                    <span style={{ fontSize: '0.65rem', color: '#52525B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      {userProfile?.role || 'Usuario Registrado'}
+                    </span>
+                  </div>
+                </div>
+
+                {showUserMenu && (
+                  <div style={{ position: 'absolute', top: 'calc(100% + 0.5rem)', right: 0, width: '220px', background: '#fff', borderRadius: '16px', boxShadow: '0 10px 40px rgba(0,0,0,0.1)', border: '1px solid #E4E4E7', padding: '0.5rem', zIndex: 100, animation: 'fadeIn 0.2s ease' }}>
+                    <button style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', background: 'transparent', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.2s', color: '#171717', fontSize: '0.9rem', textAlign: 'left' }} onMouseOver={e=>e.currentTarget.style.background='#F4F4F5'} onMouseOut={e=>e.currentTarget.style.background='transparent'}>
+                      <UserIcon size={16} /> Mi Perfil
+                    </button>
+                    <button style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', background: 'transparent', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.2s', color: '#171717', fontSize: '0.9rem', textAlign: 'left' }} onMouseOver={e=>e.currentTarget.style.background='#F4F4F5'} onMouseOut={e=>e.currentTarget.style.background='transparent'}>
+                      <Settings size={16} /> Configuración
+                    </button>
+                    <div style={{ height: '1px', background: '#E4E4E7', margin: '0.25rem 0' }}></div>
+                    <button onClick={handleLogout} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', background: 'transparent', border: 'none', borderRadius: '8px', cursor: 'pointer', transition: 'background 0.2s', color: '#DC2626', fontSize: '0.9rem', textAlign: 'left' }} onMouseOver={e=>e.currentTarget.style.background='#FEF2F2'} onMouseOut={e=>e.currentTarget.style.background='transparent'}>
+                      <LogOut size={16} /> Cerrar Sesión
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button 
+                  onClick={() => openAuth('login')}
+                  className="nav-clean-btn-light"
+                  style={{ padding: '0.5rem 1rem' }}
+                >
+                  Iniciar Sesión
+                </button>
+                <button 
+                  onClick={() => openAuth('register')}
+                  style={{
+                    background: 'var(--primary)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '0.5rem 1.25rem',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-heading)',
+                    transition: 'all 0.2s',
+                    boxShadow: '0 4px 14px rgba(15, 76, 129, 0.3)'
+                  }}
+                  onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
+                >
+                  Crear Cuenta
+                </button>
+              </div>
+            )}
           </nav>
         </div>
       </header>
 
       {/* HERO SECTION DE ALTO IMPACTO MODO OSCURO (Linear style) */}
       <main style={{ position: 'relative', marginTop: '70px', padding: '8rem 0 6rem 0', overflow: 'hidden', minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
-        {/* Abstract Glows */}
-        <div style={{ position: 'absolute', top: '10%', right: '15%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(109, 93, 252, 0.15) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none' }}></div>
-        <div style={{ position: 'absolute', bottom: '15%', left: '5%', width: '50vw', height: '50vw', background: 'radial-gradient(circle, rgba(0, 184, 217, 0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none' }}></div>
         
-        {/* Reticular Grid Pattern */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '40px 40px', zIndex: 0, pointerEvents: 'none', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%)' }}></div>
+        {/* Fondo Interactivo de Red de Partículas */}
+        <NetworkBackground />
+        
+        {/* Abstract Glows Animados */}
+        <div className="blob-1" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(109, 93, 252, 0.15) 0%, rgba(109, 93, 252, 0) 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(40px)' }}></div>
+        <div className="blob-2" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '70vw', height: '70vw', background: 'radial-gradient(circle, rgba(0, 184, 217, 0.12) 0%, rgba(0, 184, 217, 0) 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(40px)' }}></div>
+        <div className="blob-3" style={{ position: 'absolute', top: '40%', left: '40%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0) 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(40px)' }}></div>
+        
+        {/* Reticular Grid Pattern Animada */}
+        <div className="grid-bg-anim" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '50px 50px', zIndex: 0, pointerEvents: 'none', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%)' }}></div>
+
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 0.8fr)', gap: '4rem', alignItems: 'center' }} className="hero-grid">
@@ -120,72 +221,142 @@ export default function LandingPage({ onEnterApp }) {
                 <span style={{ color: 'var(--accent-green)', fontSize: '0.75rem', fontWeight: '600', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Sistema Operativo Municipal Activo</span>
               </div>
               
-              <h1 style={{ fontSize: 'clamp(3.5rem, 6vw, 5rem)', lineHeight: '1.05', marginBottom: '1.5rem', color: '#FFFFFF', letterSpacing: '-0.03em' }}>
-                Construyendo la<br/>
-                <span style={{ 
-                  background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  display: 'inline-block'
-                }}>Ciudad Inteligente.</span>
-              </h1>
-              <p style={{ fontSize: '1.15rem', color: '#A1A1AA', marginBottom: '2.5rem', maxWidth: '580px', lineHeight: '1.6' }}>
-                Arquitectura de gestión pública impulsada por datos. Monitoreo presupuestal en tiempo real, urbanismo conectado e innovación cívica para el futuro de Tunja.
-              </p>
-              
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <button onClick={onEnterApp} style={{ 
-                  background: '#FFFFFF', 
-                  color: '#000000', 
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '0.85rem 2rem',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'all 0.2s'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-                >
-                  Acceso al Dashboard <ArrowUpRight size={18} />
-                </button>
-                <button onClick={() => setActiveModal('invitacion')} style={{ 
-                  background: 'rgba(255,255,255,0.05)', 
-                  color: '#FFFFFF', 
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '8px',
-                  padding: '0.85rem 2rem',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  transition: 'all 0.2s',
-                  backdropFilter: 'blur(10px)'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-                >
-                  <Play size={16} fill="currentColor" /> Ver Visión 2.0
-                </button>
-              </div>
+              {user ? (
+                <>
+                  <h1 style={{ fontSize: 'clamp(3.5rem, 5vw, 4.5rem)', lineHeight: '1.05', marginBottom: '1rem', color: '#FFFFFF', letterSpacing: '-0.03em' }}>
+                    Bienvenido,<br/>
+                    <span style={{ 
+                      background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      display: 'inline-block'
+                    }}>{user.displayName || user.email?.split('@')[0]}</span>
+                  </h1>
+                  <p style={{ fontSize: '1.15rem', color: '#A1A1AA', marginBottom: '2.5rem', maxWidth: '580px', lineHeight: '1.6' }}>
+                    Tu panel de control está listo. Recomendaciones de IA generadas para hoy basadas en tu rol de <strong style={{ color: '#E4E4E7' }}>{userProfile?.role || 'Usuario Registrado'}</strong>.
+                  </p>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+                    <button onClick={onEnterApp} style={{ 
+                      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '1.25rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', backdropFilter: 'blur(10px)'
+                    }}
+                    onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                    onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                    >
+                      <LayoutDashboard size={24} color="var(--secondary)" style={{ marginBottom: '0.75rem' }} />
+                      <h4 style={{ color: '#fff', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Panel Operativo (App)</h4>
+                      <p style={{ color: '#A1A1AA', margin: 0, fontSize: '0.85rem' }}>Accede al dashboard completo.</p>
+                    </button>
 
-              {/* Análisis del Panorama */}
-              <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '2.5rem' }}>
-                <p style={{ color: '#E4E4E7', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '2rem', fontWeight: '300' }}>
-                  El análisis financiero del panorama actual nos deja una conclusión clara: Tunja no puede seguir gobernada bajo las fórmulas del pasado si pretende obtener resultados distintos. Frente a la rigidez presupuestal y la desatención de los sectores clave, surge la urgencia de una administración con energía renovada, visión de futuro y las manos libres de la política tradicional.
-                </p>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ flex: 1, borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg" alt="Catedral Basílica de Tunja" style={{ width: '100%', height: '160px', objectFit: 'cover', display: 'block' }} />
+                    <button onClick={() => setActiveModal('consulta')} style={{ 
+                      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '1.25rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', backdropFilter: 'blur(10px)'
+                    }}
+                    onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                    onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                    >
+                      <Zap size={24} color="var(--primary)" style={{ marginBottom: '0.75rem' }} />
+                      <h4 style={{ color: '#fff', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Sugerencia IA</h4>
+                      <p style={{ color: '#A1A1AA', margin: 0, fontSize: '0.85rem' }}>Revisar Laboratorio Ciudadano.</p>
+                    </button>
                   </div>
-                  <div style={{ flex: 1, borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg" alt="Lugares Turísticos de Tunja" style={{ width: '100%', height: '160px', objectFit: 'cover', display: 'block' }} />
+                </>
+              ) : (
+                <>
+                  <h1 style={{ fontSize: 'clamp(3.5rem, 6vw, 5rem)', lineHeight: '1.05', marginBottom: '1.5rem', color: '#FFFFFF', letterSpacing: '-0.03em' }}>
+                    Construyendo la<br/>
+                    <span style={{ 
+                      background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      display: 'inline-block'
+                    }}>Ciudad Inteligente.</span>
+                  </h1>
+                  <p style={{ fontSize: '1.15rem', color: '#A1A1AA', marginBottom: '2.5rem', maxWidth: '580px', lineHeight: '1.6' }}>
+                    Arquitectura de gestión pública impulsada por datos. Monitoreo presupuestal en tiempo real, urbanismo conectado e innovación cívica para el futuro de Tunja.
+                  </p>
+                  
+                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <button onClick={() => openAuth('login')} style={{ 
+                      background: '#FFFFFF', 
+                      color: '#000000', 
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '0.85rem 2rem',
+                      fontSize: '1rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    >
+                      Iniciar Sesión <ArrowUpRight size={18} />
+                    </button>
+                    <button onClick={() => setActiveModal('invitacion')} style={{ 
+                      background: 'rgba(255,255,255,0.05)', 
+                      color: '#FFFFFF', 
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '8px',
+                      padding: '0.85rem 2rem',
+                      fontSize: '1rem',
+                      fontWeight: '500',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      transition: 'all 0.2s',
+                      backdropFilter: 'blur(10px)'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+                    onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+                    >
+                      <Play size={16} fill="currentColor" /> Ver Visión 2.0
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {/* Análisis del Panorama Destacado */}
+
+              <div style={{ 
+                marginTop: '3.5rem', 
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.05) 100%)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: '16px',
+                padding: '2.5rem',
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                backdropFilter: 'blur(10px)'
+              }}>
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'linear-gradient(to bottom, var(--primary), var(--accent))' }}></div>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <div style={{ background: 'rgba(255,255,255,0.1)', padding: '0.75rem', borderRadius: '12px' }}>
+                    <Activity size={24} color="var(--primary)" />
+                  </div>
+                  <h3 style={{ margin: 0, fontSize: '1.4rem', color: '#fff', letterSpacing: '-0.02em' }}>Diagnóstico Estratégico</h3>
+                </div>
+
+                <p style={{ color: '#E4E4E7', fontSize: '1.15rem', lineHeight: '1.8', marginBottom: '2.5rem', fontWeight: '300', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                  El análisis financiero del panorama actual nos deja una conclusión clara: <strong style={{color: '#fff', fontWeight: '600'}}>Tunja no puede seguir gobernada bajo las fórmulas del pasado si pretende obtener resultados distintos.</strong> Frente a la rigidez presupuestal y la desatención de los sectores clave, surge la urgencia de una administración con energía renovada, visión de futuro y las manos libres de la política tradicional.
+                </p>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                  <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', position: 'relative', aspectRatio: '16/9' }}>
+                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg" alt="Catedral Basílica de Tunja" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }} onMouseOver={e=>e.currentTarget.style.transform='scale(1.05)'} onMouseOut={e=>e.currentTarget.style.transform='scale(1)'} />
+                    <div style={{position:'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', alignItems: 'flex-end', padding: '1rem'}}>
+                      <span style={{color: '#fff', fontSize: '0.85rem', fontWeight: '500'}}>Patrimonio Histórico</span>
+                    </div>
+                  </div>
+                  <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', position: 'relative', aspectRatio: '16/9' }}>
+                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg" alt="Lugares Turísticos de Tunja" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }} onMouseOver={e=>e.currentTarget.style.transform='scale(1.05)'} onMouseOut={e=>e.currentTarget.style.transform='scale(1)'} />
+                    <div style={{position:'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', alignItems: 'flex-end', padding: '1rem'}}>
+                      <span style={{color: '#fff', fontSize: '0.85rem', fontWeight: '500'}}>Desarrollo Urbano</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -314,6 +485,13 @@ export default function LandingPage({ onEnterApp }) {
         </div>
       </main>
 
+      {/* Componente Integrado de Instagram */}
+      <section style={{ padding: '0 2rem', background: '#000000', borderTop: 'none', position: 'relative' }}>
+         <div className="container" style={{ position: 'relative', zIndex: 10, maxWidth: '1200px', margin: '0 auto' }}>
+            <InstagramFeed />
+         </div>
+      </section>
+
       {/* MODULOS DE SERVICIO (Cards al estilo Linear) */}
       <section style={{ padding: '6rem 0', background: '#0A0A0A', borderTop: '1px solid rgba(255,255,255,0.05)', position: 'relative' }}>
          <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -364,8 +542,8 @@ export default function LandingPage({ onEnterApp }) {
          </div>
       </section>
 
-      {/* FOOTER ULTRA MODERNO */}
-      <footer style={{ background: '#0F0F0F', color: '#fff', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+      {/* FOOTER ULTRA MODERNO CLARO */}
+      <footer style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid var(--border-color)' }}>
          <div className="container" style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             
             {/* BRANDING INTEGRADO */}
@@ -374,17 +552,17 @@ export default function LandingPage({ onEnterApp }) {
             </div>
 
             <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '4rem' }}>
-               <a href="#" style={{ color: '#A1A1AA', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#fff'} onMouseOut={e=>e.currentTarget.style.color='#A1A1AA'}><Facebook size={20} /></a>
-               <a href="#" style={{ color: '#A1A1AA', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#fff'} onMouseOut={e=>e.currentTarget.style.color='#A1A1AA'}><Twitter size={20} /></a>
-               <a href="#" style={{ color: '#A1A1AA', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#fff'} onMouseOut={e=>e.currentTarget.style.color='#A1A1AA'}><Instagram size={20} /></a>
+               <a href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Facebook size={20} /></a>
+               <a href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Twitter size={20} /></a>
+               <a href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Instagram size={20} /></a>
             </div>
 
-            <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', color: '#71717A', fontSize: '0.85rem' }}>
+            <div style={{ width: '100%', borderTop: '1px solid var(--border-color)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
                <span>&copy; 2026 TUNJA 2.0. Plataforma de Gobernanza Inteligente.</span>
                <div style={{ display: 'flex', gap: '1.5rem' }}>
-                  <a href="#" style={{ color: '#71717A', textDecoration: 'none' }}>Privacidad</a>
-                  <a href="#" style={{ color: '#71717A', textDecoration: 'none' }}>Términos</a>
-                  <a href="#" style={{ color: '#71717A', textDecoration: 'none' }}>Transparencia</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Privacidad</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Términos</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Transparencia</a>
                </div>
             </div>
          </div>
@@ -578,6 +756,13 @@ export default function LandingPage({ onEnterApp }) {
         </div>
       )}
 
+      {/* AUTH MODAL ADDITION */}
+      <AuthModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)}
+        initialMode={authMode}
+      />
+
       <style>{`
         .nav-clean-btn {
           background: transparent;
@@ -590,6 +775,18 @@ export default function LandingPage({ onEnterApp }) {
           transition: var(--transition-fast);
         }
         .nav-clean-btn:hover { color: #fff; }
+
+        .nav-clean-btn-light {
+          background: transparent;
+          border: none;
+          color: rgba(0,0,0,0.6);
+          font-family: var(--font-heading);
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: var(--transition-fast);
+        }
+        .nav-clean-btn-light:hover { color: var(--primary); }
 
         .linear-card {
            background: rgba(255,255,255,0.02);
@@ -641,6 +838,25 @@ export default function LandingPage({ onEnterApp }) {
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
+        }
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.1); opacity: 1; }
+        }
+        .blob-1 { animation: spinSlow 30s linear infinite; transform-origin: 40% 40%; }
+        .blob-2 { animation: spinSlow 40s linear infinite reverse; transform-origin: 60% 60%; }
+        .blob-3 { animation: pulseGlow 10s ease-in-out infinite; }
+        
+        .grid-bg-anim {
+          animation: slideDown 20s linear infinite;
+        }
+        @keyframes slideDown {
+          from { background-position: 0 0; }
+          to { background-position: 50px 50px; }
         }
       `}</style>
     </div>

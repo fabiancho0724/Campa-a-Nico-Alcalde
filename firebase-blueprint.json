@@ -31,12 +31,67 @@
         }
       },
       "required": ["userId", "role", "email"]
+    },
+    "Proposal": {
+      "title": "Proposal",
+      "description": "A campaign proposal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["id", "title", "content", "authorId", "createdAt"]
+    },
+    "AgendaItem": {
+      "title": "AgendaItem",
+      "description": "An agenda event",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "date": { "type": "timestamp" },
+        "location": { "type": "string" },
+        "authorId": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["id", "title", "date", "location", "authorId", "createdAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "A user comment on an item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "content": { "type": "string" },
+        "userId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "updatedAt": { "type": "timestamp" }
+      },
+      "required": ["id", "content", "userId", "targetId", "createdAt"]
     }
   },
   "firestore": {
     "users/{userId}": {
       "schema": "User",
       "description": "User profile document"
+    },
+    "proposals/{proposalId}": {
+      "schema": "Proposal",
+      "description": "Proposals collection"
+    },
+    "agenda/{agendaId}": {
+      "schema": "AgendaItem",
+      "description": "Agenda events collection"
+    },
+    "comments/{commentId}": {
+      "schema": "Comment",
+      "description": "User comments collection"
     }
   }
 }

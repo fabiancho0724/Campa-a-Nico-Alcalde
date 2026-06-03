@@ -17,7 +17,53 @@ export default function InstagramFeed() {
         
         if (!token) {
           // Fallback informativo de integración si no hay token configurado
-          throw new Error('Token de acceso de Instagram no configurado. (VITE_INSTAGRAM_ACCESS_TOKEN)');
+          console.warn('Token de acceso de Instagram no configurado. (VITE_INSTAGRAM_ACCESS_TOKEN). Mostrando datos de prueba.');
+          
+          const MOCK_POSTS = [
+            {
+              id: 'mock1',
+              type: 'reel',
+              imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800',
+              caption: '¡Seguimos trabajando por Tunja! Hoy recorrimos el centro histórico revisando avances de las obras. #Desarrollo',
+              url: 'https://www.instagram.com/nicolas__cortes_/',
+              date: new Date()
+            },
+            {
+              id: 'mock2',
+              type: 'image',
+              imageUrl: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&q=80&w=600',
+              caption: 'Reunión estratégica con el equipo de innovación local. Grandes cosas vienen para nuestra ciudad inteligente. 💡',
+              url: 'https://www.instagram.com/nicolas__cortes_/',
+              date: new Date(Date.now() - 86400000)
+            },
+            {
+              id: 'mock3',
+              type: 'reel',
+              imageUrl: 'https://images.unsplash.com/photo-1555848962-6e79363ec58f?auto=format&fit=crop&q=80&w=600',
+              caption: 'Modernización del sistema de presupuesto en vivo. Transparencia total. 📊',
+              url: 'https://www.instagram.com/nicolas__cortes_/',
+              date: new Date(Date.now() - 86400000 * 2)
+            },
+            {
+              id: 'mock4',
+              type: 'image',
+              imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=600',
+              caption: 'Compartiendo ideas con emprendedores de la región. El futuro es digital.',
+              url: 'https://www.instagram.com/nicolas__cortes_/',
+              date: new Date(Date.now() - 86400000 * 3)
+            },
+            {
+              id: 'mock5',
+              type: 'image',
+              imageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=600',
+              caption: 'Iniciando semana con toda la energía desde la Alcaldía. ¡Feliz lunes!',
+              url: 'https://www.instagram.com/nicolas__cortes_/',
+              date: new Date(Date.now() - 86400000 * 5)
+            }
+          ];
+          
+          setPosts(MOCK_POSTS);
+          return;
         }
 
         // Endpoint de Instagram Graph API

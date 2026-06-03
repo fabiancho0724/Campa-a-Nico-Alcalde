@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Mail, Lock, Eye, EyeOff, Loader, Github } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
@@ -9,7 +9,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   GithubAuthProvider,
-  OAuthProvider
+  OAuthProvider,
+  getAdditionalUserInfo
 } from 'firebase/auth';
 
 const defaultInputStyle = {
@@ -56,33 +57,43 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
 
   if (!isOpen) return null;
 
+  const checkAndCreateUserDoc = async (userCred) => {
+      const userDocRef = doc(db, 'users', userCred.user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (!userDocSnap.exists()) {
+         const emailLower = (userCred.user.email || '').toLowerCase().trim();
+         await setDoc(userDocRef, {
+            userId: userCred.user.uid,
+            email: emailLower,
+            displayName: userCred.user.displayName || '',
+            photoURL: userCred.user.photoURL || '',
+            role: emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado',
+            estado: 'activo',
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp()
+        });
+      }
+  };
+
   const handleEmailAuth = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setMessage(null);
 
+    const emailLower = email.toLowerCase().trim();
+
     try {
       if (mode === 'login') {
-        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        const userCred = await signInWithEmailAndPassword(auth, emailLower, password);
+        await checkAndCreateUserDoc(userCred);
         onClose();
       } else if (mode === 'register') {
-        const userCred = await createUserWithEmailAndPassword(auth, email, password);
-        // Ensure to save user role in db
-        try {
-          await setDoc(doc(db, 'users', userCred.user.uid), {
-            userId: userCred.user.uid,
-            email: email,
-            role: 'Usuario Registrado',
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp()
-          });
-        } catch (dbErr) {
-          console.error("Error creating user profile in db:", dbErr);
-        }
+        const userCred = await createUserWithEmailAndPassword(auth, emailLower, password);
+        await checkAndCreateUserDoc(userCred);
         onClose();
       } else if (mode === 'reset') {
-        await sendPasswordResetEmail(auth, email);
+        await sendPasswordResetEmail(auth, emailLower);
         setMessage('Enlace de recuperación enviado. Revisa tu bandeja de entrada.');
       }
     } catch (err) {
@@ -112,7 +123,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
         provider = new OAuthProvider('microsoft.com');
       }
       
-      await signInWithPopup(auth, provider);
+      const userCred = await signInWithPopup(auth, provider);
+      await checkAndCreateUserDoc(userCred);
       onClose();
     } catch (err) {
       console.error(err);

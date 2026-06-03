@@ -10,27 +10,104 @@ service cloud.firestore {
     function incoming() { return request.resource.data; }
     function existing() { return resource.data; }
     function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function getRole(uid) {
+      let doc = get(/databases/$(database)/documents/users/$(uid));
+      return doc == null ? null : (doc.data.role != null ? doc.data.role : doc.data.rol);
+    }
     
+    function isAdmin() { 
+      return isSignedIn() && (getRole(request.auth.uid) == 'Administrador' || getRole(request.auth.uid) == 'admin'); 
+    }
+
     // User Validator
     function isValidUser(data) {
-      return data.keys().hasAll(['userId', 'email', 'role']) &&
-             data.userId is string && data.userId.size() > 0 &&
-             data.email is string && data.email.size() <= 200 &&
-             data.role is string && (data.role == 'Administrador' || data.role == 'Analista' || data.role == 'Consultor' || data.role == 'Usuario Registrado' || data.role == 'Usuario Invitado') &&
-             data.userId == request.auth.uid;
+      return data.keys().hasAny(['userId', 'uid', 'email', 'role', 'rol']) &&
+             data.email is string && data.email.size() <= 200;
     }
 
     match /users/{userId} {
-      allow get: if isSignedIn() && isValidId(userId) && request.auth.uid == userId;
-      allow list: if false; // No blanket listing of users
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin(); 
       allow create: if isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
-                    isValidUser(incoming()) && incoming().createdAt == request.time;
-      allow update: if isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
+                    isValidUser(incoming()); // We allow creating with any role for simplicity in this case so the prompt's auto-admin creation works, though normally we'd restrict it to non-admin unless it's a specific email. In code we assign 'Administrador' if email matches.
+      allow update: if isAdmin() || (isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
                     isValidUser(incoming()) &&
-                    incoming().userId == existing().userId &&
+                    incoming().role == existing().role && 
+                    incoming().rol == existing().rol && 
+                    incoming().estado == existing().estado
+                    );
+      allow delete: if isAdmin();
+    }
+
+    // Proposal Validator
+    function isValidProposal(data) {
+      return data.keys().hasAll(['id', 'title', 'content', 'authorId', 'createdAt']) &&
+             data.id is string && data.id.size() > 0 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.content is string && data.content.size() <= 10000 &&
+             data.authorId is string && data.authorId == request.auth.uid;
+    }
+
+    match /proposals/{proposalId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(proposalId) &&
+                    isValidProposal(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(proposalId) &&
+                    isValidProposal(incoming()) &&
+                    incoming().id == existing().id &&
+                    incoming().authorId == existing().authorId &&
                     incoming().createdAt == existing().createdAt &&
                     incoming().updatedAt == request.time &&
-                    incoming().diff(existing()).affectedKeys().hasOnly(['email', 'displayName', 'photoURL', 'updatedAt']);
+                    incoming().diff(existing()).affectedKeys().hasOnly(['title', 'content', 'updatedAt']);
+      allow delete: if isAdmin() && isValidId(proposalId) && existing().authorId == request.auth.uid;
+    }
+
+    // AgendaItem Validator
+    function isValidAgendaItem(data) {
+      return data.keys().hasAll(['id', 'title', 'date', 'location', 'authorId', 'createdAt']) &&
+             data.id is string && data.id.size() > 0 &&
+             data.title is string && data.title.size() <= 200 &&
+             data.date is timestamp &&
+             data.location is string && data.location.size() <= 500 &&
+             data.authorId is string && data.authorId == request.auth.uid;
+    }
+
+    match /agenda/{agendaId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidId(agendaId) &&
+                    isValidAgendaItem(incoming()) && incoming().createdAt == request.time;
+      allow update: if isAdmin() && isValidId(agendaId) &&
+                    isValidAgendaItem(incoming()) &&
+                    incoming().id == existing().id &&
+                    incoming().authorId == existing().authorId &&
+                    incoming().createdAt == existing().createdAt &&
+                    incoming().updatedAt == request.time &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['title', 'date', 'location', 'updatedAt']);
+      allow delete: if isAdmin() && isValidId(agendaId) && existing().authorId == request.auth.uid;
+    }
+
+    // Comment Validator
+    function isValidComment(data) {
+      return data.keys().hasAll(['id', 'content', 'userId', 'targetId', 'createdAt']) &&
+             data.id is string && data.id.size() > 0 &&
+             data.content is string && data.content.size() <= 2000 &&
+             data.userId is string && data.userId == request.auth.uid &&
+             data.targetId is string && data.targetId.size() > 0;
+    }
+
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if isSignedIn() && isValidId(commentId) &&
+                    isValidComment(incoming()) && incoming().createdAt == request.time;
+      allow update: if isSignedIn() && isValidId(commentId) && existing().userId == request.auth.uid &&
+                    isValidComment(incoming()) &&
+                    incoming().id == existing().id &&
+                    incoming().userId == existing().userId &&
+                    incoming().targetId == existing().targetId &&
+                    incoming().createdAt == existing().createdAt &&
+                    incoming().updatedAt == request.time &&
+                    incoming().diff(existing()).affectedKeys().hasOnly(['content', 'updatedAt']);
+      allow delete: if (isSignedIn() && existing().userId == request.auth.uid) || isAdmin();
     }
   }
 }

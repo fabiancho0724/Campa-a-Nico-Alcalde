@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LandingPage from './components/LandingPage';
 import ElectoralMetrics from './components/ElectoralMetrics';
 import BudgetVisualizer from './components/BudgetVisualizer';
@@ -7,11 +7,15 @@ import NewsFeed from './components/NewsFeed';
 import Agenda from './components/Agenda';
 import InteractiveMap from './components/InteractiveMap';
 import BrandLogos from './components/BrandLogos';
+import AdminPanel from './components/AdminPanel';
 import { 
   Vote, Sliders, GraduationCap, Newspaper, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
   Facebook, Twitter, Instagram, Map
 } from 'lucide-react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './lib/firebase';
 
 export default function App() {
 
@@ -19,12 +23,37 @@ export default function App() {
 
   // viewMode puede ser 'landing' (portada) o 'dashboard' (interfaz principal)
   const [viewMode, setViewMode] = useState('landing');
-  const [activeTab, setActiveTab] = useState('electoral');
+  const [activeTab, setActiveTab] = useState('proposals'); // Default to a public tab
+  const [userProfile, setUserProfile] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+          if (userDoc.exists()) {
+            setUserProfile(userDoc.data());
+          } else {
+            setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
+          }
+        } catch (e) {
+          console.error("Error fetching user profile:", e);
+        }
+      } else {
+        setUserProfile(null);
+      }
+    });
+    return () => unsubscribe();
+  }, [viewMode]);
 
   // Si estamos en modo Portada, renderizamos la portada premium
   if (viewMode === 'landing') {
     return <LandingPage onEnterApp={() => setViewMode('dashboard')} />;
   }
+
+  const role = userProfile?.role || userProfile?.rol || 'Usuario Invitado';
+  const isAdmin = role === 'Administrador' || role === 'admin';
+  const canViewReports = isAdmin || role === 'Editor' || role === 'Analista';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg-primary)' }} className="animate-fade-in">
@@ -54,25 +83,11 @@ export default function App() {
           {/* Menú de Navegación de Pestañas (Desktop) */}
           <nav className="nav-tab-container" style={{ flexWrap: 'wrap' }}>
             <button 
-              className={`nav-tab ${activeTab === 'electoral' ? 'active' : ''}`}
-              onClick={() => setActiveTab('electoral')}
-            >
-              <BarChart3 size={16} />
-              Balance
-            </button>
-            <button 
               className={`nav-tab ${activeTab === 'proposals' ? 'active' : ''}`}
               onClick={() => setActiveTab('proposals')}
             >
               <GraduationCap size={16} />
               Rutas
-            </button>
-            <button 
-              className={`nav-tab ${activeTab === 'budget' ? 'active' : ''}`}
-              onClick={() => setActiveTab('budget')}
-            >
-              <Sliders size={16} />
-              Simulador
             </button>
             <button 
               className={`nav-tab ${activeTab === 'news' ? 'active' : ''}`}
@@ -95,6 +110,36 @@ export default function App() {
               <Map size={16} />
               Mapa
             </button>
+
+            {canViewReports && (
+              <>
+                <button 
+                  className={`nav-tab ${activeTab === 'electoral' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('electoral')}
+                >
+                  <BarChart3 size={16} />
+                  Balance
+                </button>
+                <button 
+                  className={`nav-tab ${activeTab === 'budget' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('budget')}
+                >
+                  <Sliders size={16} />
+                  Simulador
+                </button>
+              </>
+            )}
+
+            {isAdmin && (
+              <button 
+                className={`nav-tab ${activeTab === 'admin' ? 'active' : ''}`}
+                onClick={() => setActiveTab('admin')}
+                style={{ background: activeTab === 'admin' ? 'var(--primary)' : 'rgba(15, 76, 129, 0.05)', color: activeTab === 'admin' ? '#fff' : 'var(--primary)', borderColor: activeTab === 'admin' ? 'transparent' : 'rgba(15, 76, 129, 0.2)' }}
+              >
+                <Shield size={16} />
+                Panel Admin
+              </button>
+            )}
           </nav>
 
           {/* Botones de Control / Portada */}
@@ -105,7 +150,7 @@ export default function App() {
               style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
             >
               <ArrowLeft size={14} />
-              Cerrar Sesión
+              Salir al inicio
             </button>
           </div>
 
@@ -176,12 +221,13 @@ export default function App() {
           
           {/* Renderizado Condicional del Componente Seleccionado */}
           <div className="animate-fade-in" key={activeTab}>
-            {activeTab === 'electoral' && <ElectoralMetrics />}
+            {activeTab === 'electoral' && canViewReports && <ElectoralMetrics />}
+            {activeTab === 'budget' && canViewReports && <BudgetVisualizer />}
             {activeTab === 'proposals' && <Proposals />}
-            {activeTab === 'budget' && <BudgetVisualizer />}
             {activeTab === 'news' && <NewsFeed />}
             {activeTab === 'agenda' && <Agenda />}
             {activeTab === 'map' && <InteractiveMap />}
+            {activeTab === 'admin' && isAdmin && <AdminPanel />}
           </div>
           
         </div>

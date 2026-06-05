@@ -24,6 +24,39 @@ import hunzaInnovaHub from '../assets/images/hunza_coworking_1780675677359.png';
 export default function Proposals() {
   const [activeBandera, setActiveBandera] = useState(null);
   const [proposalText, setProposalText] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmitProposal = async () => {
+    if(!proposalText.trim()) { 
+      alert('Por favor escribe tu idea.'); 
+      return; 
+    }
+    
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/aportes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          autor: 'Ciudadano Túña 2.0',
+          titulo: 'Nueva propuesta ciudadana',
+          contenido: proposalText
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al enviar la propuesta');
+      }
+
+      alert('¡Idea enviada exitosamente y registrada como aporte!');
+      setProposalText('');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Hubo un error al enviar tu idea. Por favor, intenta de nuevo más tarde.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const banderas = [
     {
@@ -439,21 +472,19 @@ export default function Proposals() {
               }}
             />
             <button 
-              onClick={() => {
-                if(!proposalText.trim()) { alert('Por favor escribe tu idea.'); return; }
-                alert('¡Idea enviada exitosamente!');
-                setProposalText('');
-              }}
+              onClick={handleSubmitProposal}
+              disabled={isSubmitting}
               style={{ 
                 background: 'var(--primary)', 
                 color: '#fff', border: 'none', padding: '1.2rem 3rem', borderRadius: '50px', 
-                fontWeight: 800, fontSize: '1.1rem', cursor: 'pointer', width: '100%',
-                boxShadow: '0 10px 30px rgba(15,76,129,0.3)', transition: 'all 0.3s'
+                fontWeight: 800, fontSize: '1.1rem', cursor: isSubmitting ? 'not-allowed' : 'pointer', width: '100%',
+                boxShadow: '0 10px 30px rgba(15,76,129,0.3)', transition: 'all 0.3s',
+                opacity: isSubmitting ? 0.7 : 1
               }}
-              onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+              onMouseOver={e => { if(!isSubmitting) e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseOut={e => { if(!isSubmitting) e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Enviar propuesta ciudadana
+              {isSubmitting ? 'Enviando...' : 'Enviar propuesta ciudadana'}
             </button>
           </div>
         </div>

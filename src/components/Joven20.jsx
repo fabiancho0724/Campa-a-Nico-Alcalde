@@ -31,6 +31,40 @@ export default function Joven20() {
   const [activeEcosystem, setActiveEcosystem] = useState('coworking');
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [proposalText, setProposalText] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmitProposal = async () => {
+    if(!proposalText.trim()) { 
+      alert('Por favor escribe una propuesta antes de enviar.'); 
+      return; 
+    }
+    
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/aportes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          autor: 'Joven Tunja 2.0',
+          titulo: 'Nueva idea ecosistema joven',
+          contenido: proposalText
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al enviar la propuesta');
+      }
+
+      alert('¡Propuesta enviada con éxito al Laboratorio del Ecosistema!');
+      setShowProposalForm(false);
+      setProposalText('');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Hubo un error al enviar tu idea. Por favor, intenta de nuevo más tarde.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const [testStarted, setTestStarted] = useState(false);
   const [testQuestion, setTestQuestion] = useState(0);
@@ -222,14 +256,10 @@ export default function Joven20() {
                   Cancelar
                 </button>
                 <button 
-                  onClick={() => {
-                    if(!proposalText.trim()) { alert('Por favor escribe una propuesta antes de enviar.'); return; }
-                    alert('¡Propuesta enviada con éxito al Laboratorio del Ecosistema!');
-                    setShowProposalForm(false);
-                    setProposalText('');
-                  }}
-                  style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 2rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(15,76,129,0.2)' }}>
-                  Enviar Propuesta
+                  onClick={handleSubmitProposal}
+                  disabled={isSubmitting}
+                  style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 2rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: isSubmitting ? 'not-allowed' : 'pointer', boxShadow: '0 4px 15px rgba(15,76,129,0.2)', opacity: isSubmitting ? 0.7 : 1 }}>
+                  {isSubmitting ? 'Enviando...' : 'Enviar Propuesta'}
                 </button>
               </div>
             </div>

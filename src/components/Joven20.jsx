@@ -17,20 +17,20 @@ import {
   AlertCircle
 } from 'lucide-react';
 import jovenHero from '../assets/images/joven_hero_tunja_1780673476635.png';
-import hunzaInnova from '../assets/images/hunza_innova_hub_1780673493787.png';
 import saberPlus from '../assets/images/saber_plus_education_1780673508458.png';
+
+import hunzaInnovaLogo from '../assets/images/hunza_innova_logo_1780675662347.png';
+import hunzaCoworking from '../assets/images/hunza_coworking_1780675677359.png';
+import hunzaEmprende from '../assets/images/hunza_emprende_1780675692908.png';
+import hunzaAcademia from '../assets/images/hunza_academia_1780675707942.png';
+import hunzaMentores from '../assets/images/hunza_mentores_1780675723462.png';
 
 export default function Joven20() {
   const [activeTabDiagnostico, setActiveTabDiagnostico] = useState('ciudad');
   
-  const [budgetLimits, setBudgetLimits] = useState({
-    cultura: 200,
-    deporte: 150,
-    tecnologia: 300,
-    medioambiente: 200,
-    educacion: 500,
-    emprendimiento: 400
-  });
+  const [activeEcosystem, setActiveEcosystem] = useState('coworking');
+  const [showProposalForm, setShowProposalForm] = useState(false);
+  const [proposalText, setProposalText] = useState("");
 
   const [testStarted, setTestStarted] = useState(false);
   const [testQuestion, setTestQuestion] = useState(0);
@@ -185,11 +185,11 @@ export default function Joven20() {
               Explorar oportunidades <ChevronRight size={20} />
             </button>
             <button 
-              onClick={() => alert('¡Únete a la red de Jóvenes 2.0! Te contactaremos pronto.')}
+              onClick={() => setShowProposalForm(!showProposalForm)}
               style={{
-              background: '#fff',
-              color: 'var(--primary)',
-              border: '1px solid rgba(0,0,0,0.1)',
+              background: showProposalForm ? 'var(--primary)' : '#fff',
+              color: showProposalForm ? '#fff' : 'var(--primary)',
+              border: showProposalForm ? 'none' : '1px solid rgba(0,0,0,0.1)',
               padding: '1rem 2rem',
               borderRadius: '50px',
               fontWeight: 600,
@@ -198,12 +198,42 @@ export default function Joven20() {
               boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
               transition: 'all 0.3s ease'
             }}
-            onMouseOver={e => e.currentTarget.style.background = '#f1f5f9'}
-            onMouseOut={e => e.currentTarget.style.background = '#fff'}
+            onMouseOver={e => !showProposalForm && (e.currentTarget.style.background = '#f1f5f9')}
+            onMouseOut={e => !showProposalForm && (e.currentTarget.style.background = '#fff')}
             >
               Construyamos la Tunja 2.0
             </button>
           </div>
+
+          {showProposalForm && (
+            <div className="animate-fade-in" style={{ marginTop: '2rem', background: '#fff', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', maxWidth: '700px', margin: '2rem auto 0 auto', textAlign: 'left' }}>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>Ecosistema Joven 2.0</h3>
+              <p style={{ color: '#64748b', marginBottom: '1.5rem', fontSize: '1.05rem' }}>Escribe tu propuesta para mejorar el ecosistema y envíala al laboratorio de innovación.</p>
+              <textarea 
+                value={proposalText}
+                onChange={(e) => setProposalText(e.target.value)}
+                placeholder="Describe tu idea detalladamente..."
+                style={{ width: '100%', height: '150px', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.1)', marginBottom: '1.5rem', resize: 'none', fontSize: '1rem', fontFamily: 'inherit', color: '#0f172a' }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
+                <button 
+                  onClick={() => setShowProposalForm(false)}
+                  style={{ background: 'transparent', color: '#64748b', padding: '0.8rem 1.5rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                  Cancelar
+                </button>
+                <button 
+                  onClick={() => {
+                    if(!proposalText.trim()) { alert('Por favor escribe una propuesta antes de enviar.'); return; }
+                    alert('¡Propuesta enviada con éxito al Laboratorio del Ecosistema!');
+                    setShowProposalForm(false);
+                    setProposalText('');
+                  }}
+                  style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 2rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(15,76,129,0.2)' }}>
+                  Enviar Propuesta
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -314,119 +344,191 @@ export default function Joven20() {
         </div>
       </section>
 
-      {/* HUNZA INNOVA (PREMIUM) */}
+      {/* PREVIOUS HUNZA INNOVA SECTION HAS BEEN REPLACED BY EXPLORAR EL ECOSISTEMA */}
+
+      {/* ECOSYSTEM / EXPLORAR EL ECOSISTEMA (HUNZA INNOVA) */}
       <section style={{ 
         position: 'relative',
         padding: '8rem 2rem',
-        minHeight: '70vh',
+        minHeight: '100vh',
         display: 'flex',
-        alignItems: 'center'
+        flexDirection: 'column',
+        alignItems: 'center',
+        background: '#f8fafc',
+        overflow: 'hidden'
       }}>
+        {/* Animated background stars/particles placeholder */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          backgroundImage: `url(${hunzaInnova})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.15,
-          zIndex: 0
-        }} />
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.2) 100%)',
+          background: 'radial-gradient(circle at center, rgba(15,76,129,0.05) 0%, transparent 60%)',
           zIndex: 1
         }} />
         
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
-          <div style={{ maxWidth: '600px' }}>
-            <div style={{ color: 'var(--primary)', fontWeight: 700, marginBottom: '1rem', letterSpacing: '2px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Laptop size={18} /> Eje 4. Ecosistema Premium
-            </div>
-            <h2 style={{ fontSize: '4rem', fontWeight: 900, marginBottom: '1.5rem', lineHeight: 1.1, color: '#0f172a' }}>
-              HUNZA <br/><span style={{ color: 'var(--secondary)' }}>INNOVA</span>
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <img src={hunzaInnovaLogo} alt="Hunza Innova Logo" style={{ height: '80px', marginBottom: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }} />
+            <h2 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1rem', color: '#0f172a', letterSpacing: '-0.03em' }}>
+              Explorar el Ecosistema
             </h2>
-            <p style={{ fontSize: '1.15rem', color: '#475569', marginBottom: '1rem', lineHeight: 1.6 }}>
-              Primer ecosistema municipal de innovación. Un espacio donde convergen la academia, el sector empresarial y la juventud para posicionar a Tunja como referente regional.
+            <p style={{ color: '#475569', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto' }}>
+              Navega por el ecosistema de innovación tecnológica más avanzado de la región, diseñado para conectar, formar y financiar a la próxima generación de líderes digitales.
             </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', color: '#334155', fontWeight: 600 }}>
-              <li style={{ marginBottom: '0.5rem' }}>✓ Centro de Innovación y Coworking Juvenil</li>
-              <li style={{ marginBottom: '0.5rem' }}>✓ Fondo Hunza Emprende (Capital Semilla)</li>
-              <li style={{ marginBottom: '0.5rem' }}>✓ Academia de Innovación Digital</li>
-              <li style={{ marginBottom: '0.5rem' }}>✓ Red de Mentores y Laboratorio de Soluciones</li>
-            </ul>
-            <p style={{ fontSize: '1.4rem', fontStyle: 'italic', borderLeft: '4px solid var(--primary)', paddingLeft: '1.5rem', color: '#0f172a', marginBottom: '3rem', fontWeight: 700 }}>
-              "Hunza Innova: el talento joven construye la Tunja del futuro."
-            </p>
-            <button 
-              onClick={() => alert('Simulación: Solicitando acceso al Centro de Innovación Hunza Innova.')}
-              style={{
-              background: 'var(--secondary)',
-              color: '#fff',
-              border: 'none',
-              padding: '1rem 2rem',
-              borderRadius: '50px',
-              fontWeight: 600,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
-            }}
-            onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-            onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              Explorar el Ecosistema <ChevronRight size={20} />
-            </button>
           </div>
-        </div>
-      </section>
 
-      {/* PRESUPUESTO PARTICIPATIVO */}
-      <section style={{ padding: '6rem 2rem', background: '#f8fafc', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.6rem 1.2rem', borderRadius: '50px', marginBottom: '1.5rem', fontSize: '0.9rem', fontWeight: 700 }}>
-            <Activity size={16} /> Gobierno Abierto - Simulador
-          </div>
-          <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', color: '#0f172a' }}>Presupuesto Participativo Juvenil</h2>
-          <p style={{ color: '#475569', marginBottom: '3rem', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto 3rem auto' }}>
-            Los jóvenes podrán formular, deliberar, priorizar y hacer seguimiento a proyectos. Distribuye recursos virtuales e impacta en tiempo real.
-          </p>
-
-          <div style={{ background: '#ffffff', padding: '3rem', borderRadius: '24px', border: '1px solid rgba(0,0,0,0.05)', textAlign: 'left', boxShadow: '0 10px 40px rgba(0,0,0,0.03)' }}>
-            <div style={{ display: 'grid', gap: '2rem' }}>
-              {Object.keys(budgetLimits).map(categoria => (
-                <div key={categoria}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                    <span style={{ textTransform: 'capitalize', fontWeight: 700, color: '#334155' }}>{categoria}</span>
-                    <span style={{ color: 'var(--primary)', fontWeight: 800 }}>{budgetLimits[categoria]} COP Simulados</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 300px) 1fr', gap: '2rem', height: '100%' }}>
+            
+            {/* Ecosistema Navigation Sidebar */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+              {[
+                { id: 'coworking', title: 'Centro de Innovación', icon: <Laptop size={18}/>, subtitle: 'Coworking y Laboratorios' },
+                { id: 'fondo', title: 'Fondo Hunza Emprende', icon: <TrendingUp size={18}/>, subtitle: 'Capital Semilla' },
+                { id: 'academia', title: 'Academia Digital', icon: <Cpu size={18}/>, subtitle: 'Inteligencia Artificial' },
+                { id: 'mentores', title: 'Red de Mentores', icon: <Users size={18}/>, subtitle: 'Laboratorio de Soluciones' }
+              ].map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveEcosystem(item.id)}
+                  style={{
+                    padding: '1.5rem',
+                    borderRadius: '16px',
+                    border: `1px solid ${activeEcosystem === item.id ? 'rgba(15,76,129,0.2)' : 'rgba(0,0,0,0.05)'}`,
+                    background: activeEcosystem === item.id ? 'rgba(15,76,129,0.05)' : '#ffffff',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: activeEcosystem === item.id ? 'none' : '0 4px 15px rgba(0,0,0,0.02)'
+                  }}
+                >
+                  <div style={{ color: activeEcosystem === item.id ? 'var(--primary)' : '#64748b', display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '0.5rem' }}>
+                    {item.icon} <span style={{ fontWeight: 700, fontSize: '1.1rem', color: activeEcosystem === item.id ? '#0f172a' : '#475569' }}>{item.title}</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="10" 
-                    max="1000" 
-                    value={budgetLimits[categoria]} 
-                    onChange={e => setBudgetLimits({...budgetLimits, [categoria]: parseInt(e.target.value)})}
-                    style={{ width: '100%', accentColor: 'var(--primary)', cursor: 'grab' }}
-                  />
-                  <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.5rem' }}>
-                    Impacto estimado: <strong>+{Math.floor(budgetLimits[categoria] * 1.5)} proyectos beneficiarios</strong>
+                  <div style={{ color: '#64748b', fontSize: '0.85rem', paddingLeft: '2.5rem' }}>
+                    {item.subtitle}
                   </div>
-                </div>
+                </button>
               ))}
             </div>
-            
-            <div style={{ marginTop: '3rem', padding: '2rem', background: 'rgba(15, 76, 129, 0.05)', borderRadius: '16px', border: '1px solid rgba(15, 76, 129, 0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-              <div>
-                <div style={{ color: '#475569', fontSize: '0.9rem', fontWeight: 600 }}>Impacto Total Requerido</div>
-                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--primary)' }}>
-                  {Object.values(budgetLimits).reduce((a, b) => a + b, 0) * 1.5} <span style={{ fontSize: '1rem', color: '#334155', fontWeight: 600 }}>Jóvenes Involucrados</span>
+
+            {/* Ecosistema Content Area */}
+            <div style={{ 
+              background: '#ffffff', 
+              borderRadius: '24px', 
+              border: '1px solid rgba(0,0,0,0.05)', 
+              overflow: 'hidden',
+              boxShadow: '0 10px 40px rgba(0,0,0,0.03)',
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: '600px',
+              position: 'relative'
+            }}>
+              
+              {activeEcosystem === 'coworking' && (
+                <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ height: '300px', backgroundImage: `url(${hunzaCoworking})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }}>
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '150px', background: 'linear-gradient(to top, #ffffff 0%, transparent 100%)' }} />
+                  </div>
+                  <div style={{ padding: '3rem', flex: 1 }}>
+                    <h3 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>Centro de Innovación y Coworking</h3>
+                    <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                      Un hub de clase mundial. Accede a espacios colaborativos premium, estaciones de trabajo de alto rendimiento y laboratorios de testeo con equipos de última generación. Un punto de encuentro vibrante diseñado para incubar las startups que transformarán el país.
+                    </p>
+                    <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+                      <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                         <div style={{ color: 'var(--primary)', fontSize: '1.8rem', fontWeight: 800 }}>50+</div>
+                         <div style={{ color: '#64748b', fontSize: '0.9rem', fontWeight: 600 }}>Espacios Disponibles</div>
+                      </div>
+                      <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                         <div style={{ color: 'var(--primary)', fontSize: '1.8rem', fontWeight: 800 }}>Vibrante</div>
+                         <div style={{ color: '#64748b', fontSize: '0.9rem', fontWeight: 600 }}>Networking Interactivo</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <button 
-              onClick={() => alert(`Propuesta guardada en la base de participación. Total impacto estimado: ${Object.values(budgetLimits).reduce((a, b) => a + b, 0) * 1.5}`)}
-              style={{
-                background: 'var(--primary)', color: '#fff', border: 'none', padding: '1rem 2rem', borderRadius: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
-              }}>Subir Propuesta al Laboratorio</button>
+              )}
+
+              {activeEcosystem === 'fondo' && (
+                <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ height: '300px', backgroundImage: `url(${hunzaEmprende})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }}>
+                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '150px', background: 'linear-gradient(to top, #ffffff 0%, transparent 100%)' }} />
+                  </div>
+                  <div style={{ padding: '3rem', flex: 1 }}>
+                    <h3 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>Fondo Hunza Emprende</h3>
+                    <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                      Conectamos tu brillante idea con la financiación necesaria. Un fondo de capital semilla tipo Venture Capital municipal para escalar iniciativas juveniles, apoyando desde la tracción inicial hasta la consolidación y expansión comercial.
+                    </p>
+                    
+                    {/* Ruta del emprendedor */}
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', background: '#f8fafc', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                       {[
+                         { step: '1', title: 'Idea' },
+                         { step: '2', title: 'Validación' },
+                         { step: '3', title: 'Capital Semilla' },
+                         { step: '4', title: 'Crecimiento' },
+                       ].map((s, i) => (
+                         <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', flex: 1 }}>
+                           <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: i === 2 ? 'var(--primary)' : '#ffffff', color: i === 2 ? '#fff' : '#475569', border: i !== 2 ? '1px solid rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, marginBottom: '0.5rem', zIndex: 2, boxShadow: i === 2 ? '0 4px 10px rgba(15,76,129,0.3)' : 'none'}}>
+                             {s.step}
+                           </div>
+                           <div style={{ color: i === 2 ? 'var(--primary)' : '#64748b', fontSize: '0.9rem', fontWeight: 700 }}>{s.title}</div>
+                           {i < 3 && <div style={{ position: 'absolute', top: '20px', left: '60%', right: '-40%', height: '2px', background: i === 1 ? 'linear-gradient(90deg, rgba(0,0,0,0.1) 0%, var(--primary) 100%)' : 'rgba(0,0,0,0.1)', zIndex: 1 }} />}
+                         </div>
+                       ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeEcosystem === 'academia' && (
+                <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ height: '300px', backgroundImage: `url(${hunzaAcademia})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }}>
+                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '150px', background: 'linear-gradient(to top, #ffffff 0%, transparent 100%)' }} />
+                  </div>
+                  <div style={{ padding: '3rem', flex: 1 }}>
+                    <h3 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>Academia Digital Futurista</h3>
+                    <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                      Una interfaz educativa diseñada para la economía circular, economía digital y el desarrollo avanzado de software. Domina el código, explora algoritmos y gamifica tu aprendizaje con sistemas de progreso en tiempo real e insignias de prestigio.
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                      <div style={{ background: '#f8fafc', border: '1px solid rgba(0,0,0,0.05)', padding: '1.5rem', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem', borderRadius: '10px' }}><Cpu size={24}/></div>
+                        <div>
+                           <div style={{ color: '#0f172a', fontWeight: 800, fontSize: '1.1rem' }}>Inteligencia Artificial</div>
+                           <div style={{ color: '#64748b', fontSize: '0.9rem' }}>Módulo Fundamental Avanzado</div>
+                        </div>
+                      </div>
+                      <div style={{ background: '#ffffff', border: '1px solid rgba(0,0,0,0.05)', padding: '1.5rem', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{ background: '#f1f5f9', color: '#475569', padding: '0.8rem', borderRadius: '10px' }}><Laptop size={24}/></div>
+                        <div>
+                           <div style={{ color: '#0f172a', fontWeight: 800, fontSize: '1.1rem' }}>Data Science</div>
+                           <div style={{ color: 'var(--primary)', fontSize: '0.9rem', fontWeight: 600 }}>Próxima Certificación</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeEcosystem === 'mentores' && (
+                <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div style={{ height: '300px', backgroundImage: `url(${hunzaMentores})`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }}>
+                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '150px', background: 'linear-gradient(to top, #ffffff 0%, transparent 100%)' }} />
+                  </div>
+                  <div style={{ padding: '3rem', flex: 1 }}>
+                    <h3 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>Red de Mentores & Laboratorio de Soluciones</h3>
+                    <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '2rem' }}>
+                      Explora retos de ciudad y diseña soluciones junto a empresarios exitosos, investigadores universitarios y expertos de diferentes industrias. Este es el epicentro colaborativo donde las grandes mentes se unen.
+                    </p>
+                    
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                       {['Movilidad Autónoma', 'Seguridad Ciudadana AI', 'Turismo Inmersivo', 'Medio Ambiente Sostenible'].map((reto, index) => (
+                         <div key={index} style={{ padding: '0.6rem 1.2rem', background: '#f8fafc', borderRadius: '50px', color: '#334155', fontSize: '0.95rem', fontWeight: 600, border: '1px solid rgba(0,0,0,0.05)' }}>
+                           {reto}
+                         </div>
+                       ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

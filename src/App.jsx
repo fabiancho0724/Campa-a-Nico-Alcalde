@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LandingPage from './components/LandingPage';
+import Joven20 from './components/Joven20';
 import ElectoralMetrics from './components/ElectoralMetrics';
 import BudgetVisualizer from './components/BudgetVisualizer';
 import Proposals from './components/Proposals';
@@ -37,7 +38,7 @@ export default function App() {
             setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
           }
         } catch (e) {
-          console.error("Error fetching user profile:", e);
+          console.warn("Could not fetch user profile (using defaults):", e.message);
         }
       } else {
         setUserProfile(null);
@@ -82,6 +83,13 @@ export default function App() {
 
           {/* Menú de Navegación de Pestañas (Desktop) */}
           <nav className="nav-tab-container" style={{ flexWrap: 'wrap' }}>
+            <button 
+              className={`nav-tab ${activeTab === 'joven' ? 'active' : ''}`}
+              onClick={() => setActiveTab('joven')}
+            >
+              <Sparkles size={16} />
+              Joven 2.0
+            </button>
             <button 
               className={`nav-tab ${activeTab === 'proposals' ? 'active' : ''}`}
               onClick={() => setActiveTab('proposals')}
@@ -160,6 +168,9 @@ export default function App() {
       {/* 2. Banner de Campaña y Presentación del Candidato */}
       <section style={{
         background: 'var(--secondary)',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%23ffffff' fill-opacity='0.05' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3Cpath fill='%23ffffff' fill-opacity='0.03' d='M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,122.7C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E")`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'bottom',
         padding: '2rem 0 1rem 0',
         borderBottom: '1px solid var(--border-color)',
         color: '#FFFFFF'
@@ -180,11 +191,11 @@ export default function App() {
             <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
               {/* Foto / Avatar del Candidato Oficial */}
               <div style={{
-                width: '80px',
-                height: '80px',
+                width: '112px',
+                height: '112px',
                 borderRadius: '50%',
                 background: 'var(--primary)',
-                padding: '3px',
+                padding: '4px',
                 boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
                 overflow: 'hidden',
                 display: 'flex',
@@ -195,12 +206,6 @@ export default function App() {
               </div>
 
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span className="pill pill-gold" style={{ fontSize: '0.65rem' }}>Perfil Autorizado</span>
-                  <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <MapPin size={12} /> Zona Norte
-                  </span>
-                </div>
                 <h2 style={{ fontSize: '1.8rem', color: '#ffffff', marginTop: '0.25rem' }}>
                   Nicolás Cortés
                 </h2>
@@ -221,6 +226,7 @@ export default function App() {
           
           {/* Renderizado Condicional del Componente Seleccionado */}
           <div className="animate-fade-in" key={activeTab}>
+            {activeTab === 'joven' && <Joven20 />}
             {activeTab === 'electoral' && canViewReports && <ElectoralMetrics />}
             {activeTab === 'budget' && canViewReports && <BudgetVisualizer />}
             {activeTab === 'proposals' && <Proposals />}

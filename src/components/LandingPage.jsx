@@ -39,7 +39,7 @@ export default function LandingPage({ onEnterApp }) {
             setUserProfile(userDoc.data());
           }
         } catch (e) {
-          console.error("Error fetching user profile:", e);
+          console.warn("Could not fetch user profile (using defaults):", e.message);
         }
       } else {
         setUserProfile(null);
@@ -224,19 +224,19 @@ export default function LandingPage({ onEnterApp }) {
               {user ? (
                 <>
                   <h1 style={{ fontSize: 'clamp(3.5rem, 5vw, 4.5rem)', lineHeight: '1.05', marginBottom: '1rem', color: '#FFFFFF', letterSpacing: '-0.03em' }}>
-                    Bienvenido,<br/>
                     <span style={{ 
                       background: 'linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       display: 'inline-block'
-                    }}>{user.displayName || user.email?.split('@')[0]}</span>
+                    }}>{user.displayName || user.email?.split('@')[0]}</span><br/>
+                    Esto es Tunja 2.0
                   </h1>
                   <p style={{ fontSize: '1.15rem', color: '#A1A1AA', marginBottom: '2.5rem', maxWidth: '580px', lineHeight: '1.6' }}>
-                    Tu panel de control está listo. Recomendaciones de IA generadas para hoy basadas en tu rol de <strong style={{ color: '#E4E4E7' }}>{userProfile?.role || 'Usuario Registrado'}</strong>.
+                    Donde tú te conviertes en protagonista de la transformación, construyendo juntos una ciudad más innovadora, participativa y preparada para el futuro.
                   </p>
                   
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
                     <button onClick={onEnterApp} style={{ 
                       background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '1.25rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', backdropFilter: 'blur(10px)'
                     }}
@@ -244,19 +244,8 @@ export default function LandingPage({ onEnterApp }) {
                     onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'translateY(0)' }}
                     >
                       <LayoutDashboard size={24} color="var(--secondary)" style={{ marginBottom: '0.75rem' }} />
-                      <h4 style={{ color: '#fff', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Panel Operativo (App)</h4>
+                      <h4 style={{ color: '#fff', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Conoce más de como estamos trabajando para transformar a Tunja</h4>
                       <p style={{ color: '#A1A1AA', margin: 0, fontSize: '0.85rem' }}>Accede al dashboard completo.</p>
-                    </button>
-
-                    <button onClick={() => setActiveModal('consulta')} style={{ 
-                      background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '1.25rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', backdropFilter: 'blur(10px)'
-                    }}
-                    onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-                    onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.transform = 'translateY(0)' }}
-                    >
-                      <Zap size={24} color="var(--primary)" style={{ marginBottom: '0.75rem' }} />
-                      <h4 style={{ color: '#fff', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Sugerencia IA</h4>
-                      <p style={{ color: '#A1A1AA', margin: 0, fontSize: '0.85rem' }}>Revisar Laboratorio Ciudadano.</p>
                     </button>
                   </div>
                 </>

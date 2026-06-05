@@ -279,37 +279,97 @@ export default function Proposals() {
 
                   {b.id === 'innova' && (
                     <div style={{ color: '#475569', fontSize: '1.15rem', lineHeight: 1.7 }}>
-                      Primer ecosistema municipal de innovación. Un espacio donde convergen la academia, las startups y la juventud para posicionar a Tunja como referente tecnológico nacional.
+                      <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Convertir a Tunja en el principal ecosistema regional de innovación, emprendimiento, economía digital y desarrollo tecnológico del centro-oriente colombiano.</p>
+                      <p style={{ marginBottom: '1rem' }}><strong>Misión:</strong> Diseñar e implementar una política integral de innovación y emprendimiento que articule universidades, sector privado, instituciones públicas, centros de investigación y ciudadanía.</p>
+                      
+                      <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Componentes Estratégicos</h4>
                       <ul style={{ marginTop: '1.5rem', listStyle: 'none', padding: 0 }}>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Centro de Coworking Juvenil</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Fondo Hunza Emprende (VC)</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Academia de Innovación Digital</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Laboratorio de Soluciones</li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Centro de Innovación y Coworking Juvenil:</strong> Incubación de emprendimientos y networking empresarial en un espacio especializado.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Fondo Hunza Emprende:</strong> Capital semilla municipal destinado a financiar emprendimientos de tecnología, innovación y economía creativa.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Academia de Innovación Digital:</strong> Formación gratuita y certificada en IA, programación y ciencia de datos.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Red de Mentores y Laboratorio de Soluciones:</strong> Asesoría especializada para resolver desafíos concretos de la ciudad.</div>
+                        </li>
                       </ul>
+                      
+                      <div style={{ background: '#f8fafc', borderLeft: `4px solid ${b.color}`, padding: '1.5rem', borderRadius: '0 16px 16px 0', marginTop: '2rem' }}>
+                        <h4 style={{ color: '#0f172a', fontWeight: 800, marginBottom: '0.5rem' }}>Metas Primeros 18 Meses</h4>
+                        <p style={{ fontSize: '1rem' }}>Crear HUNZA INNOVA, financiar 50 emprendimientos, capacitar 2.000 jóvenes y generar 500 oportunidades laborales.</p>
+                      </div>
                     </div>
                   )}
 
                   {b.id === 'seguridad' && (
                     <div style={{ color: '#475569', fontSize: '1.15rem', lineHeight: 1.7 }}>
-                      Transformamos la seguridad ciudadana con analítica de datos, prevención inteligente y protección prioritaria a mujeres y niños. Pasamos de reaccionar a predecir.
+                      <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Transformar a Tunja en una de las ciudades más seguras del país, integrando tecnología de punta, analítica de datos y participación ciudadana para garantizar la tranquilidad en todos los barrios.</p>
+                      <p style={{ marginBottom: '1rem' }}><strong>Misión:</strong> Pasar de un modelo reactivo a un modelo de prevención y predicción inteligente, priorizando la protección ciudadana en espacios públicos y comunitarios.</p>
+                      
+                      <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Componentes Estratégicos</h4>
                       <ul style={{ marginTop: '1.5rem', listStyle: 'none', padding: 0 }}>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Anillo de Cámaras Inteligentes</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Sistemas Predictivos de Delíto</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Botón de Pánico Digital</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Entornos Seguros Estudiantiles</li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Anillo de Cámaras Inteligentes:</strong> Red de alta definición para monitorear en tiempo real todos los sectores críticos de la ciudad.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Sistemas Predictivos de Delito:</strong> Uso de data y analítica (mapas de calor interactivos) para anticipar áreas de riesgo e incrementar presencia preventiva.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Protección a Mujeres y Niños:</strong> Estrategias específicas de reacción inmediata, botones de pánico y rutas seguras en entornos escolares.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Red de Entornos Seguros:</strong> Recuperación de parques y zonas comunes, integrando iluminación LED y dispositivos de auxilio comunitarios.</div>
+                        </li>
                       </ul>
+                      
+                      <div style={{ background: '#f8fafc', borderLeft: `4px solid ${b.color}`, padding: '1.5rem', borderRadius: '0 16px 16px 0', marginTop: '2rem' }}>
+                        <h4 style={{ color: '#0f172a', fontWeight: 800, marginBottom: '0.5rem' }}>Metas Primeros 18 Meses</h4>
+                        <p style={{ fontSize: '1rem' }}>Instalar el sistema central de monitoreo predictivo, equipar entornos escolares prioritarios con tecnología de seguridad y reducir el índice de delitos urbanos críticos.</p>
+                      </div>
                     </div>
                   )}
 
                   {b.id === 'salud' && (
                     <div style={{ color: '#475569', fontSize: '1.15rem', lineHeight: 1.7 }}>
-                      Toda familia merece salud oportuna. Implementaremos modelos descentralizados para llevar especialistas y prevención directamente a cada barrio de Tunja.
+                      <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Convertir a Tunja en la ciudad líder de Boyacá en atención primaria, prevención, salud digital y bienestar comunitario, garantizando que todos los ciudadanos accedan a servicios de calidad, cercanos y humanizados.</p>
+                      <p style={{ marginBottom: '1rem' }}><strong>Misión:</strong> Implementar un modelo innovador de atención en salud basado en prevención, atención primaria, telemedicina, salud mental y atención territorial para acercar los servicios médicos a las comunidades.</p>
+                      
+                      <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Componentes Estratégicos</h4>
                       <ul style={{ marginTop: '1.5rem', listStyle: 'none', padding: 0 }}>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Clínicas Móviles Barriales</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Red de Telemedicina 2.0</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Atención Integral a Mayores</li>
-                        <li style={{ marginBottom: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><CheckCircle2 color={b.color} size={20}/> Prevención de Salud Mental</li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Clínicas Móviles Periféricas:</strong> Unidades móviles de atención médica que recorrerán comunas y sectores rurales con medicina general, enfermería y prevención.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Red Municipal de Telemedicina:</strong> Red de atención digital para facilitar teleconsultas, seguimiento médico y acceso a especialistas con menores tiempos de espera.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Salud Mental para la Vida:</strong> Programa integral de promoción, atención psicológica comunitaria y prevención, prioritario para jóvenes, mujeres y adultos mayores.</div>
+                        </li>
+                        <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
+                          <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '5px' }}/>
+                          <div><strong>Ruta Integral para el Adulto Mayor:</strong> Programa especializado con valoración preventiva, atención domiciliaria y acompañamiento psicosocial.</div>
+                        </li>
                       </ul>
+                      
+                      <div style={{ background: '#f8fafc', borderLeft: `4px solid ${b.color}`, padding: '1.5rem', borderRadius: '0 16px 16px 0', marginTop: '2rem' }}>
+                        <h4 style={{ color: '#0f172a', fontWeight: 800, marginBottom: '0.5rem' }}>Metas Primeros 18 Meses</h4>
+                        <p style={{ fontSize: '1rem' }}>Poner en funcionamiento tres Clínicas Móviles Periféricas, implementar la Red Municipal de Telemedicina, y brindar acompañamiento psicológico a 5.000 ciudadanos.</p>
+                      </div>
                     </div>
                   )}
 

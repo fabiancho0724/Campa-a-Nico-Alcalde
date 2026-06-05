@@ -95,7 +95,7 @@ export default function NetworkBackground() {
             ctx.beginPath();
             // Opacidad basada en la distancia
             const opacity = 1 - (distance / 120);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
+            ctx.strokeStyle = `rgba(15, 76, 129, ${opacity * 0.15})`; // --primary
             ctx.lineWidth = 1;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

@@ -12,7 +12,7 @@ import AdminPanel from './components/AdminPanel';
 import { 
   Vote, Sliders, GraduationCap, Newspaper, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
-  Facebook, Twitter, Instagram, Map
+  Facebook, Twitter, Instagram, Map, Target
 } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -84,18 +84,18 @@ export default function App() {
           {/* Menú de Navegación de Pestañas (Desktop) */}
           <nav className="nav-tab-container" style={{ flexWrap: 'wrap' }}>
             <button 
+              className={`nav-tab ${activeTab === 'proposals' ? 'active' : ''}`}
+              onClick={() => setActiveTab('proposals')}
+            >
+              <Target size={16} />
+              Las 4 de Nico
+            </button>
+            <button 
               className={`nav-tab ${activeTab === 'joven' ? 'active' : ''}`}
               onClick={() => setActiveTab('joven')}
             >
               <Sparkles size={16} />
               Joven 2.0
-            </button>
-            <button 
-              className={`nav-tab ${activeTab === 'proposals' ? 'active' : ''}`}
-              onClick={() => setActiveTab('proposals')}
-            >
-              <GraduationCap size={16} />
-              Rutas
             </button>
             <button 
               className={`nav-tab ${activeTab === 'news' ? 'active' : ''}`}

@@ -208,7 +208,7 @@ export default function Joven20() {
           {showProposalForm && (
             <div className="animate-fade-in" style={{ marginTop: '2rem', background: '#fff', padding: '2.5rem', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', maxWidth: '700px', margin: '2rem auto 0 auto', textAlign: 'left' }}>
               <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>Ecosistema Joven 2.0</h3>
-              <p style={{ color: '#64748b', marginBottom: '1.5rem', fontSize: '1.05rem' }}>Escribe tu propuesta para mejorar el ecosistema y envíala al laboratorio de innovación.</p>
+              <p style={{ color: '#64748b', marginBottom: '1.5rem', fontSize: '1.05rem' }}>Las grandes transformaciones comienzan con una idea. Cuéntanos la tuya para construir la Tunja 2.0.</p>
               <textarea 
                 value={proposalText}
                 onChange={(e) => setProposalText(e.target.value)}
@@ -625,8 +625,17 @@ export default function Joven20() {
         </div>
       </section>
       
+      {/* CITA LLAMATIVA */}
+      <section style={{ padding: '6rem 2rem 2rem 2rem', background: '#f8fafc' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center', background: 'linear-gradient(135deg, var(--primary), var(--secondary))', padding: '4rem 3rem', borderRadius: '32px', boxShadow: '0 20px 40px rgba(15,76,129,0.2)' }}>
+          <h2 style={{ fontSize: '2.8rem', fontWeight: 800, color: '#fff', lineHeight: 1.3, letterSpacing: '-0.02em', fontStyle: 'italic' }}>
+            "Solo faltas tú para convertir tus ideas en la fuerza que transformará la Tunja 2.0."
+          </h2>
+        </div>
+      </section>
+
       {/* HISTORIAS DE TRANSFORMACIÓN */}
-      <section style={{ padding: '6rem 2rem', background: '#f8fafc', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+      <section style={{ padding: '2rem 2rem 6rem 2rem', background: '#f8fafc' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '3rem', textAlign: 'center', color: '#0f172a' }}>Historias Reales</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>

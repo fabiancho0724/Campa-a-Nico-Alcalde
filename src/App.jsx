@@ -165,60 +165,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* 2. Banner de Campaña y Presentación del Candidato */}
-      <section style={{
-        background: 'var(--secondary)',
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%23ffffff' fill-opacity='0.05' d='M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3Cpath fill='%23ffffff' fill-opacity='0.03' d='M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,122.7C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'bottom',
-        padding: '2rem 0 1rem 0',
-        borderBottom: '1px solid var(--border-color)',
-        color: '#FFFFFF'
-      }}>
-        <div className="container" style={{ margin: '0 auto', maxWidth: '1400px' }}>
-          <div className="glass-card" style={{
-            background: 'linear-gradient(to right, rgba(255,255,255,0.05), transparent)',
-            padding: '2rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '2rem',
-            border: '1px solid rgba(255,255,255,0.1)',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
-          }}>
-            
-            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-              {/* Foto / Avatar del Candidato Oficial */}
-              <div style={{
-                width: '112px',
-                height: '112px',
-                borderRadius: '50%',
-                background: 'var(--primary)',
-                padding: '4px',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
-                overflow: 'hidden',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <img src={urlNicoPhoto} alt="Nicolás Cortés" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
-              </div>
-
-              <div>
-                <h2 style={{ fontSize: '1.8rem', color: '#ffffff', marginTop: '0.25rem' }}>
-                  Nicolás Cortés
-                </h2>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', marginTop: '0.25rem', maxWidth: '650px' }}>
-                  Gestión inteligente de los recursos. Hacia una distribución transparente, conectividad efectiva y desarrollo social sustentable en nuestra ciudad capital.
-                </p>
-              </div>
-            </div>
-
-            {/* Removed Micro Widget de Resumen Financiero Rápido */}
-          </div>
-        </div>
-      </section>
+      {/* 2. Banner de Campaña y Presentación del Candidato removido */}
 
       {/* 3. Contenedor del Contenido Activo */}
       <main style={{ flex: 1, paddingBottom: '3rem' }}>

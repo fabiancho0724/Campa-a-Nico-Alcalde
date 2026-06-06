@@ -109,5 +109,12 @@ service cloud.firestore {
                     incoming().diff(existing()).affectedKeys().hasOnly(['content', 'updatedAt']);
       allow delete: if (isSignedIn() && existing().userId == request.auth.uid) || isAdmin();
     }
+
+    match /aportes/{aporteId} {
+      allow read: if true;
+      allow create: if true; // Permite a cualquier ciudadano enviar su propuesta
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
   }
 }

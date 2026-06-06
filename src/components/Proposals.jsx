@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building,
   Target,
@@ -14,6 +14,8 @@ import {
   Milestone,
   CheckCircle2
 } from 'lucide-react';
+import { db, auth } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 import las4Hero from '../assets/images/las_4_nico_hero_1780678514931.png';
 import las4Infra from '../assets/images/las_4_nico_infraestructura_1780678529053.png';
@@ -25,6 +27,35 @@ export default function Proposals() {
   const [activeBandera, setActiveBandera] = useState(null);
   const [proposalText, setProposalText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [recentAportes, setRecentAportes] = useState([]);
+  const [loadingAportes, setLoadingAportes] = useState(false);
+
+  const fetchRecentAportes = async () => {
+    setLoadingAportes(true);
+    try {
+      const { getDocs, collection } = await import('firebase/firestore');
+      const snap = await getDocs(collection(db, 'aportes'));
+      const items = snap.docs.map(doc => {
+        const data = doc.data();
+        return { id: doc.id, ...data };
+      })
+      .filter(item => item.origen === 'Las 4 de Nico')
+      .sort((a, b) => {
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+        return timeB - timeA;
+      });
+      setRecentAportes(items);
+    } catch (err) {
+      console.error("Error fetching recent proposals:", err);
+    } finally {
+      setLoadingAportes(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecentAportes();
+  }, []);
 
   const handleSubmitProposal = async () => {
     if(!proposalText.trim()) { 
@@ -34,26 +65,25 @@ export default function Proposals() {
     
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/aportes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          autor: 'Ciudadano Túña 2.0',
-          titulo: 'Nueva propuesta ciudadana',
-          contenido: proposalText
-        })
-      });
+      const currentUser = auth.currentUser;
+      const autorName = currentUser ? (currentUser.displayName || currentUser.email) : 'Ciudadano Tunja 2.0';
+      const autorEmail = currentUser ? currentUser.email : 'anonimo@tunja.gov.co';
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Error HTTP: ${response.status}`);
-      }
+      await addDoc(collection(db, 'aportes'), {
+        autor: autorName,
+        email: autorEmail,
+        titulo: 'Nueva propuesta ciudadana',
+        contenido: proposalText,
+        origen: 'Las 4 de Nico',
+        createdAt: serverTimestamp()
+      });
 
       alert('¡Idea enviada exitosamente y registrada como aporte!');
       setProposalText('');
+      fetchRecentAportes();
     } catch (error) {
       console.error('Error detallado:', error);
-      alert(`Hubo un error al enviar tu idea: ${error.message}. Revisa la consola o configuración del backend.`);
+      alert(`Hubo un error al enviar tu idea: ${error.message}. Revisa la consola o configuración de Firebase.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -487,6 +517,51 @@ export default function Proposals() {
             >
               {isSubmitting ? 'Enviando...' : 'Enviar propuesta ciudadana'}
             </button>
+          </div>
+
+          {/* Live Citizen Proposals List */}
+          <div style={{ marginTop: '4rem', textAlign: 'left', width: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '2px solid rgba(15,76,129,0.1)', paddingBottom: '0.75rem' }}>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Users size={22} color="var(--primary)" />
+                Propuestas de la Comunidad ({recentAportes.length})
+              </h3>
+              <button 
+                onClick={fetchRecentAportes} 
+                style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '700', fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+              >
+                Actualizar
+              </button>
+            </div>
+
+            {loadingAportes ? (
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem 0', color: '#64748b' }}>
+                <span>Cargando aportes ciudadanos...</span>
+              </div>
+            ) : recentAportes.length === 0 ? (
+              <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)', textAlign: 'center', color: '#64748b' }}>
+                ¡Sé el primero en enviar tu propuesta para Las 4 de Nico!
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {recentAportes.map((aporte) => {
+                  let formattedDate = '';
+                  if (aporte.createdAt) {
+                    const dateObj = aporte.createdAt.seconds ? new Date(aporte.createdAt.seconds * 1000) : new Date(aporte.createdAt);
+                    formattedDate = dateObj.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
+                  }
+                  return (
+                    <div key={aporte.id} style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '1rem' }}>{aporte.autor || 'Anónimo'}</span>
+                        <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: '500' }}>{formattedDate}</span>
+                      </div>
+                      <p style={{ margin: 0, color: '#475569', fontSize: '1rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{aporte.contenido}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Building, Network, Users, ChevronRight, Activity, Cpu, Play, Target,
   MessageSquare, FileText, CheckCircle, Send, X, ArrowUpRight, Check, MapPin, Globe, BarChart, LogOut, Settings, User as UserIcon, LayoutDashboard, Zap,
-  Calendar, Map, BarChart3, TrendingUp, Sparkles, Navigation, Layers, Facebook, Twitter, Instagram
+  Calendar, Map, BarChart3, TrendingUp, Sparkles, Navigation, Layers, Facebook, Twitter
 } from 'lucide-react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from '../lib/firebase';
@@ -34,17 +34,24 @@ export default function LandingPage({ onEnterApp }) {
       setUser(currentUser);
       if (currentUser) {
         setShowAuthModal(false);
+        const emailLower = (currentUser.email || '').toLowerCase().trim();
         try {
           const { doc, getDoc } = await import('firebase/firestore');
           const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
           if (userDoc.exists()) {
-            setUserProfile(userDoc.data());
+            const data = userDoc.data();
+            if (emailLower === 'fabian.cely0724@gmail.com') {
+              data.role = 'Administrador';
+            }
+            setUserProfile(data);
           } else {
-            setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
+            const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado';
+            setUserProfile({ role: defaultRole, email: currentUser.email });
           }
         } catch (e) {
           console.warn("Could not fetch user profile (using defaults):", e.message);
-          setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
+          const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado';
+          setUserProfile({ role: defaultRole, email: currentUser.email });
         }
       } else {
         setUserProfile(null);
@@ -837,7 +844,6 @@ export default function LandingPage({ onEnterApp }) {
             <div style={{ display: 'flex', gap: '1.5rem', marginBottom: '4rem' }}>
                <a href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Facebook size={20} /></a>
                <a href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Twitter size={20} /></a>
-               <a href="#" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Instagram size={20} /></a>
             </div>
 
             <div style={{ width: '100%', borderTop: '1px solid var(--border-color)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>

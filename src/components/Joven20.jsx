@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   Target, 
@@ -16,6 +16,9 @@ import {
   Laptop, 
   AlertCircle
 } from 'lucide-react';
+import { db, auth } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+
 import jovenHero from '../assets/images/joven_hero_tunja_1780673476635.png';
 import saberPlus from '../assets/images/saber_plus_education_1780673508458.png';
 
@@ -32,6 +35,35 @@ export default function Joven20() {
   const [showProposalForm, setShowProposalForm] = useState(false);
   const [proposalText, setProposalText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [recentAportes, setRecentAportes] = useState([]);
+  const [loadingAportes, setLoadingAportes] = useState(false);
+
+  const fetchRecentAportes = async () => {
+    setLoadingAportes(true);
+    try {
+      const { getDocs, collection } = await import('firebase/firestore');
+      const snap = await getDocs(collection(db, 'aportes'));
+      const items = snap.docs.map(doc => {
+        const data = doc.data();
+        return { id: doc.id, ...data };
+      })
+      .filter(item => item.origen === 'Ecosistema Joven 2.0')
+      .sort((a, b) => {
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+        return timeB - timeA;
+      });
+      setRecentAportes(items);
+    } catch (err) {
+      console.error("Error fetching recent Joven proposals:", err);
+    } finally {
+      setLoadingAportes(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecentAportes();
+  }, []);
 
   const handleSubmitProposal = async () => {
     if(!proposalText.trim()) { 
@@ -41,27 +73,26 @@ export default function Joven20() {
     
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/aportes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          autor: 'Joven Tunja 2.0',
-          titulo: 'Nueva idea ecosistema joven',
-          contenido: proposalText
-        })
-      });
+      const currentUser = auth.currentUser;
+      const autorName = currentUser ? (currentUser.displayName || currentUser.email) : 'Joven Tunja 2.0';
+      const autorEmail = currentUser ? currentUser.email : 'joven_anonimo@tunja.gov.co';
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Error HTTP: ${response.status}`);
-      }
+      await addDoc(collection(db, 'aportes'), {
+        autor: autorName,
+        email: autorEmail,
+        titulo: 'Nueva idea ecosistema joven',
+        contenido: proposalText,
+        origen: 'Ecosistema Joven 2.0',
+        createdAt: serverTimestamp()
+      });
 
       alert('¡Propuesta enviada con éxito al Laboratorio del Ecosistema!');
       setShowProposalForm(false);
       setProposalText('');
+      fetchRecentAportes();
     } catch (error) {
       console.error('Error detallado:', error);
-      alert(`Hubo un error al enviar tu idea: ${error.message}. Revisa la consola o configuración del backend.`);
+      alert(`Hubo un error al enviar tu idea: ${error.message}. Revisa la consola o configuración de Firebase.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -250,7 +281,7 @@ export default function Joven20() {
                 placeholder="Describe tu idea detalladamente..."
                 style={{ width: '100%', height: '150px', padding: '1rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.1)', marginBottom: '1.5rem', resize: 'none', fontSize: '1rem', fontFamily: 'inherit', color: '#0f172a' }}
               />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', marginBottom: '2rem' }}>
                 <button 
                   onClick={() => setShowProposalForm(false)}
                   style={{ background: 'transparent', color: '#64748b', padding: '0.8rem 1.5rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
@@ -262,6 +293,51 @@ export default function Joven20() {
                   style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 2rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: isSubmitting ? 'not-allowed' : 'pointer', boxShadow: '0 4px 15px rgba(15,76,129,0.2)', opacity: isSubmitting ? 0.7 : 1 }}>
                   {isSubmitting ? 'Enviando...' : 'Enviar Propuesta'}
                 </button>
+              </div>
+
+              {/* Dynamic community feed inside the proposal section of Joven20 */}
+              <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(0,0,0,0.1)', paddingTop: '2rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                  <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Users size={18} color="var(--primary)" />
+                    Ideas de la Comunidad Joven ({recentAportes.length})
+                  </h4>
+                  <button 
+                    onClick={fetchRecentAportes} 
+                    style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '700', fontSize: '0.85rem', cursor: 'pointer' }}
+                  >
+                    Actualizar
+                  </button>
+                </div>
+
+                {loadingAportes ? (
+                  <div style={{ display: 'flex', justifyContent: 'center', padding: '1.5rem 0', color: '#64748b', fontSize: '0.9rem' }}>
+                    <span>Cargando ideas de jóvenes...</span>
+                  </div>
+                ) : recentAportes.length === 0 ? (
+                  <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)', textAlign: 'center', color: '#64748b', fontSize: '0.95rem' }}>
+                    ¡Sé el primero en aportar una propuesta al Ecosistema Joven!
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '0.5rem' }}>
+                    {recentAportes.map((aporte) => {
+                      let formattedDate = '';
+                      if (aporte.createdAt) {
+                        const dateObj = aporte.createdAt.seconds ? new Date(aporte.createdAt.seconds * 1000) : new Date(aporte.createdAt);
+                        formattedDate = dateObj.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
+                      }
+                      return (
+                        <div key={aporte.id} style={{ background: '#f8fafc', padding: '1.2rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem' }}>
+                            <span style={{ fontWeight: '700', color: '#1e293b', fontSize: '0.95rem' }}>{aporte.autor || 'Anónimo'}</span>
+                            <span style={{ fontSize: '0.8rem', color: '#64748b' }}>{formattedDate}</span>
+                          </div>
+                          <p style={{ margin: 0, color: '#475569', fontSize: '0.92rem', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>{aporte.contenido}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           )}

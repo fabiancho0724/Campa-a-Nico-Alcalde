@@ -11,7 +11,7 @@ import AdminPanel from './components/AdminPanel';
 import { 
   Vote, Sliders, GraduationCap, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
-  Facebook, Twitter, Instagram, Map, Target
+  Facebook, Twitter, Map, Target
 } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -29,16 +29,23 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
+        const emailLower = (currentUser.email || '').toLowerCase().trim();
         try {
           const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
           if (userDoc.exists()) {
-            setUserProfile(userDoc.data());
+            const data = userDoc.data();
+            if (emailLower === 'fabian.cely0724@gmail.com') {
+              data.role = 'Administrador';
+            }
+            setUserProfile(data);
           } else {
-            setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
+            const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado';
+            setUserProfile({ role: defaultRole, email: currentUser.email });
           }
         } catch (e) {
           console.warn("Could not fetch user profile (using defaults):", e.message);
-          setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
+          const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado';
+          setUserProfile({ role: defaultRole, email: currentUser.email });
         }
       } else {
         setUserProfile(null);

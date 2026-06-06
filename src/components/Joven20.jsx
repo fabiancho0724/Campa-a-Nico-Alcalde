@@ -52,15 +52,16 @@ export default function Joven20() {
       });
 
       if (!response.ok) {
-        throw new Error('Error al enviar la propuesta');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Error HTTP: ${response.status}`);
       }
 
       alert('¡Propuesta enviada con éxito al Laboratorio del Ecosistema!');
       setShowProposalForm(false);
       setProposalText('');
     } catch (error) {
-      console.error('Error:', error);
-      alert('Hubo un error al enviar tu idea. Por favor, intenta de nuevo más tarde.');
+      console.error('Error detallado:', error);
+      alert(`Hubo un error al enviar tu idea: ${error.message}. Revisa la consola o configuración del backend.`);
     } finally {
       setIsSubmitting(false);
     }

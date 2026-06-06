@@ -4,13 +4,12 @@ import Joven20 from './components/Joven20';
 import ElectoralMetrics from './components/ElectoralMetrics';
 import BudgetVisualizer from './components/BudgetVisualizer';
 import Proposals from './components/Proposals';
-import NewsFeed from './components/NewsFeed';
 import Agenda from './components/Agenda';
 import InteractiveMap from './components/InteractiveMap';
 import BrandLogos from './components/BrandLogos';
 import AdminPanel from './components/AdminPanel';
 import { 
-  Vote, Sliders, GraduationCap, Newspaper, Shield, 
+  Vote, Sliders, GraduationCap, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
   Facebook, Twitter, Instagram, Map, Target
 } from 'lucide-react';
@@ -98,25 +97,18 @@ export default function App() {
               Joven 2.0
             </button>
             <button 
-              className={`nav-tab ${activeTab === 'news' ? 'active' : ''}`}
-              onClick={() => setActiveTab('news')}
-            >
-              <Newspaper size={16} />
-              Bitácora
-            </button>
-            <button 
               className={`nav-tab ${activeTab === 'agenda' ? 'active' : ''}`}
               onClick={() => setActiveTab('agenda')}
             >
               <Calendar size={16} />
-              Agenda
+              La Agenda de Nico
             </button>
             <button 
               className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`}
               onClick={() => setActiveTab('map')}
             >
-              <Map size={16} />
-              Mapa
+              <BarChart3 size={16} />
+              Historia Electoral de Tunja
             </button>
 
             {canViewReports && (
@@ -177,7 +169,6 @@ export default function App() {
             {activeTab === 'electoral' && canViewReports && <ElectoralMetrics />}
             {activeTab === 'budget' && canViewReports && <BudgetVisualizer />}
             {activeTab === 'proposals' && <Proposals />}
-            {activeTab === 'news' && <NewsFeed />}
             {activeTab === 'agenda' && <Agenda />}
             {activeTab === 'map' && <InteractiveMap />}
             {activeTab === 'admin' && isAdmin && <AdminPanel />}

@@ -128,10 +128,10 @@ export default function InteractiveMap() {
       {/* Encabezado sin bordes ni cajas extras */}
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '2rem', fontWeight: 'bold', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
-          Cartografía Electoral Tunja <span className="gradient-text-primary">2.0</span>
+          Historia Electoral de Tunja <span className="gradient-text-primary">2.0</span>
         </h2>
         <p style={{ color: 'var(--text-secondary)', marginTop: '0.25rem', fontSize: '0.95rem' }}>
-          Visualización de resultados oficiales Presidenciales (2da Vuelta 2022), participación comunal y potencial estratégico electoral en el territorio urbano y rural.
+          Visualización de resultados oficiales Presidenciales (2da Vuelta 2022), participación comunal y potencial de crecimiento del Pacto Histórico en el territorio urbano y rural.
         </p>
       </div>
 

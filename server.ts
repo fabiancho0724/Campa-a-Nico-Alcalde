@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
+import 'dotenv/config';
 
 async function startServer() {
   const app = express();
@@ -48,7 +49,13 @@ ${contenido}
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
         console.error('Error desde GitHub API:', errorData);
-        throw new Error(`GitHub API respondió con estado ${response.status}`);
+        if (response.status === 404) {
+             return res.status(404).json({ error: 'Configuración incorrecta: Repositorio o usuario de GitHub no encontrado. Por favor, verifica GITHUB_USERNAME y GITHUB_REPO en el archivo .env' });
+        }
+        if (response.status === 401) {
+             return res.status(401).json({ error: 'Token de GitHub inválido. Por favor, verifica GITHUB_TOKEN en el archivo .env' });
+        }
+        return res.status(response.status).json({ error: `Error de GitHub: ${errorData?.message || response.statusText}` });
       }
 
       const responseData = await response.json();

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Building, Network, Users, ChevronRight, Activity, Cpu, Play, Target,
-  MessageSquare, FileText, CheckCircle, Send, X, ArrowUpRight, Check, MapPin, Facebook, Twitter, Instagram, Globe, BarChart, LogOut, Settings, User as UserIcon, LayoutDashboard, Zap
+  MessageSquare, FileText, CheckCircle, Send, X, ArrowUpRight, Check, MapPin, Globe, BarChart, LogOut, Settings, User as UserIcon, LayoutDashboard, Zap,
+  Calendar, Map, BarChart3, TrendingUp, Sparkles, Navigation, Layers, Facebook, Twitter, Instagram
 } from 'lucide-react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from '../lib/firebase';
@@ -9,7 +10,6 @@ import { auth, db } from '../lib/firebase';
 import BrandLogos from './BrandLogos';
 import AuthModal from './AuthModal';
 import NetworkBackground from './NetworkBackground';
-import InstagramFeed from './InstagramFeed';
 
 export default function LandingPage({ onEnterApp }) {
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
@@ -123,10 +123,6 @@ export default function LandingPage({ onEnterApp }) {
           </div>
 
           <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-            <button onClick={() => setActiveModal('acuerdo')} className="nav-clean-btn-light hidden-mobile">Ecosistema</button>
-            <button onClick={() => setActiveModal('consulta')} className="nav-clean-btn-light hidden-mobile">Laboratorio</button>
-            <button onClick={() => setActiveModal('agenda')} className="nav-clean-btn-light hidden-mobile">Nodes</button>
-            
             {user ? (
               <div style={{ position: 'relative' }}>
                 <div 
@@ -216,317 +212,98 @@ export default function LandingPage({ onEnterApp }) {
             
             {/* Texto Hero */}
             <div style={{ animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.2)', padding: '6px 12px', borderRadius: '100px', marginBottom: '2rem' }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-green)', boxShadow: '0 0 10px var(--accent-green)' }}></div>
-                <span style={{ color: 'var(--accent-green)', fontSize: '0.75rem', fontWeight: '600', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Sistema Operativo Municipal Activo</span>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(15, 76, 129, 0.1)', border: '1px solid rgba(15, 76, 129, 0.2)', padding: '6px 12px', borderRadius: '100px', marginBottom: '2rem' }}>
+                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 10px var(--primary)' }}></div>
+                <span style={{ color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Sistema de Inteligencia Territorial</span>
               </div>
               
-              {user ? (
-                <>
-                  <h1 style={{ fontSize: 'clamp(3.5rem, 5vw, 4.5rem)', lineHeight: '1.05', marginBottom: '1rem', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                    <span style={{ 
-                      background: 'linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      display: 'inline-block'
-                    }}>{user.displayName || user.email?.split('@')[0]}</span><br/>
-                    Esto es Tunja 2.0
-                  </h1>
-                  <p style={{ fontSize: '1.15rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '580px', lineHeight: '1.6' }}>
-                    Donde tú te conviertes en protagonista de la transformación, construyendo juntos una ciudad más innovadora, participativa y preparada para el futuro.
-                  </p>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
-                    <button onClick={onEnterApp} style={{ 
-                      background: '#ffffff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '12px', padding: '1.25rem', textAlign: 'left', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px rgba(0,0,0,0.02)'
-                    }}
-                    onMouseOver={(e) => { e.currentTarget.style.boxShadow = '0 10px 15px rgba(0,0,0,0.05)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-                    onMouseOut={(e) => { e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.02)'; e.currentTarget.style.transform = 'translateY(0)' }}
-                    >
-                      <LayoutDashboard size={24} color="var(--primary)" style={{ marginBottom: '0.75rem' }} />
-                      <h4 style={{ color: '#0f172a', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Conoce más de como estamos trabajando para transformar a Tunja</h4>
-                      <p style={{ color: '#64748b', margin: 0, fontSize: '0.85rem' }}>Accede al dashboard completo.</p>
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h1 style={{ fontSize: 'clamp(3.5rem, 6vw, 5rem)', lineHeight: '1.05', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.03em' }}>
-                    Construyendo la<br/>
-                    <span style={{ 
-                      background: 'linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      display: 'inline-block'
-                    }}>Ciudad Inteligente.</span>
-                  </h1>
-                  <p style={{ fontSize: '1.15rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '580px', lineHeight: '1.6' }}>
-                    Arquitectura de gestión pública impulsada por datos. Monitoreo presupuestal en tiempo real, urbanismo conectado e innovación cívica para el futuro de Tunja.
-                  </p>
-                  
-                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <h1 style={{ fontSize: 'clamp(3.5rem, 6vw, 4.8rem)', lineHeight: '1.05', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.03em', fontWeight: '900' }}>
+                La inteligencia ciudadana que construye la <span style={{ color: 'var(--primary)' }}>Tunja del futuro.</span>
+              </h1>
+              <p style={{ fontSize: '1.25rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
+                Datos, participación e innovación corporativa.  Conoce, analiza y participa activamente en las decisiones que impulsan la transformación técnica de nuestra ciudad.
+              </p>
+              
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                {!user ? (
+                  <>
                     <button onClick={() => openAuth('login')} style={{ 
-                      background: 'var(--primary)', 
-                      color: '#ffffff', 
-                      border: 'none',
-                      borderRadius: '8px',
-                      padding: '0.85rem 2rem',
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      transition: 'all 0.2s',
-                      boxShadow: '0 10px 20px rgba(15,76,129,0.2)'
+                      background: 'var(--primary)', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '1rem 2.5rem', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.3s', boxShadow: '0 10px 25px rgba(15,76,129,0.3)'
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-                    onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    onMouseOver={(e) => {e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(15,76,129,0.4)';}}
+                    onMouseOut={(e) => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(15,76,129,0.3)';}}
                     >
-                      Iniciar Sesión <ArrowUpRight size={18} />
+                      Ingresar a la Plataforma <ArrowUpRight size={20} />
                     </button>
-                    <button onClick={() => setActiveModal('invitacion')} style={{ 
-                      background: '#ffffff', 
-                      color: '#0f172a', 
-                      border: '1px solid rgba(0,0,0,0.1)',
-                      borderRadius: '8px',
-                      padding: '0.85rem 2rem',
-                      fontSize: '1rem',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      transition: 'all 0.2s'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.background = '#f8fafc'}
-                    onMouseOut={(e) => e.currentTarget.style.background = '#ffffff'}
-                    >
-                      <Play size={16} fill="currentColor" /> Ver Visión 2.0
-                    </button>
-                  </div>
-                </>
-              )}
-
-              {/* Análisis del Panorama Destacado */}
-
-              <div style={{ 
-                marginTop: '3.5rem', 
-                background: '#ffffff',
-                border: '1px solid rgba(0,0,0,0.05)',
-                borderRadius: '16px',
-                padding: '2.5rem',
-                position: 'relative',
-                overflow: 'hidden',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.05)',
-              }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'linear-gradient(to bottom, var(--primary), var(--secondary))' }}></div>
-                
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                  <div style={{ background: 'rgba(15, 76, 129, 0.05)', padding: '0.75rem', borderRadius: '12px' }}>
-                    <Activity size={24} color="var(--primary)" />
-                  </div>
-                  <h3 style={{ margin: 0, fontSize: '1.4rem', color: '#0f172a', letterSpacing: '-0.02em' }}>Diagnóstico Estratégico</h3>
-                </div>
-
-                <p style={{ color: '#475569', fontSize: '1.15rem', lineHeight: '1.8', marginBottom: '2.5rem', fontWeight: '300' }}>
-                  El análisis financiero del panorama actual nos deja una conclusión clara: <strong style={{color: '#0f172a', fontWeight: '600'}}>Tunja no puede seguir gobernada bajo las fórmulas del pasado si pretende obtener resultados distintos.</strong> Frente a la rigidez presupuestal y la desatención de los sectores clave, surge la urgencia de una administración con energía renovada, visión de futuro y las manos libres de la política tradicional.
-                </p>
-                
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                  <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', position: 'relative', aspectRatio: '16/9' }}>
-                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg" alt="Catedral Basílica de Tunja" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }} onMouseOver={e=>e.currentTarget.style.transform='scale(1.05)'} onMouseOut={e=>e.currentTarget.style.transform='scale(1)'} />
-                    <div style={{position:'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', alignItems: 'flex-end', padding: '1rem'}}>
-                      <span style={{color: '#fff', fontSize: '0.85rem', fontWeight: '500'}}>Patrimonio Histórico</span>
-                    </div>
-                  </div>
-                  <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', position: 'relative', aspectRatio: '16/9' }}>
-                    <img src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg" alt="Lugares Turísticos de Tunja" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease' }} onMouseOver={e=>e.currentTarget.style.transform='scale(1.05)'} onMouseOut={e=>e.currentTarget.style.transform='scale(1)'} />
-                    <div style={{position:'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', display: 'flex', alignItems: 'flex-end', padding: '1rem'}}>
-                      <span style={{color: '#fff', fontSize: '0.85rem', fontWeight: '500'}}>Desarrollo Urbano</span>
-                    </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <button onClick={onEnterApp} style={{ 
+                    background: 'var(--primary)', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '1rem 2.5rem', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.3s', boxShadow: '0 10px 25px rgba(15,76,129,0.3)'
+                  }}
+                  onMouseOver={(e) => {e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(15,76,129,0.4)';}}
+                  onMouseOut={(e) => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(15,76,129,0.3)';}}
+                  >
+                    Abrir Dashboard Analítico <LayoutDashboard size={20} />
+                  </button>
+                )}
               </div>
+
+              {/* Removed redundant text block analysis highlight content */}
             </div>
 
-            {/* Imagen Hero Interactiva / Panel de Datos Mock */}
-            <div 
-              style={{ position: 'relative', perspective: '1500px', animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both', cursor: 'pointer' }}
-              onClick={() => setIsProfileFlipped(!isProfileFlipped)}
-            >
-               
-               <div style={{ 
-                  position: 'relative',
-                  transformStyle: 'preserve-3d',
-                  transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: isProfileFlipped ? 'rotateY(180deg)' : 'rotateY(-8deg) rotateX(4deg) scale(0.95)',
-                  width: '100%',
-               }}
-               onMouseOver={(e) => {
-                 if (!isProfileFlipped) e.currentTarget.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
-               }}
-               onMouseOut={(e) => {
-                 if (!isProfileFlipped) e.currentTarget.style.transform = 'rotateY(-8deg) rotateX(4deg) scale(0.95)';
-               }}
-               >
-                 {/* FRONT FACE */}
-                 <div style={{
-                    backfaceVisibility: 'hidden',
-                    borderRadius: '24px', 
-                    background: '#ffffff',
-                    border: '1px solid rgba(0,0,0,0.05)',
-                    padding: '1rem',
-                    boxShadow: '0 30px 60px rgba(0,0,0,0.08), 0 0 40px rgba(15, 76, 129, 0.05)',
-                 }}>
-                   {/* Top Bar of the Mock Dashboard */}
-                   <div style={{ display: 'flex', gap: '6px', marginBottom: '1rem', padding: '0.25rem' }}>
-                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EF4444' }}></div>
-                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F59E0B' }}></div>
-                      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22C55E' }}></div>
-                   </div>
+            {/* Modular Blocks Layout */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}>
+              
+              {/* Block 1 */}
+              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                   <div style={{ background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Map size={20} /></div>
+                   <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Historia Electoral</h3>
+                   <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Análisis cartográfico y estadístico del comportamiento electoral de Tunja.</p>
+                </div>
+              </div>
 
-                   {/* Contenido Visual Híbrido: Foto + Data */}
-                   <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden' }}>
-                      <img src={urlNicoPhoto} alt="Candidato" style={{ width: '100%', display: 'block', opacity: '1', filter: 'brightness(1.05)' }} />
-                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.1) 60%, transparent 100%)' }}></div>
-                      
-                      {/* Floating Data Widgets over Image */}
-                      <div style={{ position: 'absolute', bottom: '1.5rem', left: '1.5rem', right: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                         
-                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                            <div>
-                              <span style={{ background: 'var(--primary)', color: 'white', padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '0.5rem', display: 'inline-block' }}>Candidato a la Alcaldía de Tunja</span>
-                              <h3 style={{ fontSize: '1.6rem', color: '#fff', margin: 0 }}>Nicolás Cortés</h3>
-                              <p style={{ color: '#e2e8f0', fontSize: '0.9rem', margin: '0.2rem 0 0 0' }}>Plan de Transformación Urbana</p>
-                            </div>
-                            <div style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', padding: '0.5rem', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.3)' }}>
-                               <Globe size={20} color="#ffffff" />
-                            </div>
-                         </div>
-                         
-                         {/* Redes Sociales en lugar de Aprobación de Proyectos */}
-                         <div style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', borderRadius: '12px', padding: '1rem', border: '1px solid rgba(255,255,255,0.2)', display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
-                              <Facebook size={24} color="#fff" style={{ opacity: 1 }} />
-                              <span style={{ fontSize: '0.7rem', color: '#fff', opacity: 1, fontWeight: '500' }}>Facebook</span>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
-                              <Instagram size={24} color="#fff" style={{ opacity: 1 }} />
-                              <span style={{ fontSize: '0.7rem', color: '#fff', opacity: 1, fontWeight: '500' }}>Instagram</span>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', padding: '0.5rem' }}>
-                              <Twitter size={24} color="#fff" style={{ opacity: 1 }} />
-                              <span style={{ fontSize: '0.7rem', color: '#fff', opacity: 1, fontWeight: '500' }}>Twitter</span>
-                            </div>
-                         </div>
+              {/* Block 2 */}
+              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+                <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: 0.05 }}><Calendar size={120} /></div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                   <div style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Calendar size={20} /></div>
+                   <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>La Agenda de Nico</h3>
+                   <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Cronograma oficial de foros técnicos y encuentros sectoriales.</p>
+                </div>
+              </div>
 
-                      </div>
-                   </div>
-                 </div>
-                 
-                 {/* BACK FACE */}
-                 <div style={{
-                    backfaceVisibility: 'hidden',
-                    position: 'absolute',
-                    inset: 0,
-                    borderRadius: '24px', 
-                    background: '#ffffff',
-                    border: '1px solid rgba(0,0,0,0.05)',
-                    padding: '2.5rem',
-                    boxShadow: '0 30px 60px rgba(0,0,0,0.08), 0 0 40px rgba(15, 76, 129, 0.05)',
-                    transform: 'rotateY(180deg)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center'
-                 }}>
-                   <div style={{ width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', marginBottom: '1.5rem', border: '3px solid var(--primary)' }}>
-                     <img src={urlNicoPhoto} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Perfil de Nicolás Cortés" />
-                   </div>
-                   <h3 style={{ fontSize: '1.8rem', color: '#0f172a', marginBottom: '0.3rem' }}>Nicolás Cortés</h3>
-                   <span style={{ background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.25rem 0.75rem', borderRadius: '100px', fontSize: '0.75rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '1.5rem', fontWeight: '600' }}>Candidato a la Alcaldía</span>
-                   <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-                     Líder visionario comprometido con la transformación digital, el emprendimiento local, y la gobernanza de datos para construir la Tunja del futuro, una ciudad inteligente y participativa.
-                   </p>
-                   <button style={{
-                     background: 'var(--primary)',
-                     color: '#fff',
-                     border: 'none',
-                     padding: '0.75rem 2rem',
-                     borderRadius: '8px',
-                     fontWeight: '600',
-                     cursor: 'pointer',
-                     transition: 'opacity 0.2s',
-                     boxShadow: '0 10px 20px rgba(15,76,129,0.2)'
-                   }}
-                   onMouseOver={e => e.currentTarget.style.opacity = 0.8}
-                   onMouseOut={e => e.currentTarget.style.opacity = 1}
-                   >
-                     Conocer su Visión
-                   </button>
-                 </div>
-               </div>
+              {/* Block 3 */}
+              <div style={{ position: 'relative', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(15,76,129,0.2)', transition: 'all 0.3s', cursor: 'pointer', gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '1.5rem', color: '#fff', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+                <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.6)' }}></div>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--primary), transparent)' }}></div>
+                <div style={{ position: 'relative', zIndex: 1, padding: '1rem', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', borderRadius: '12px' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.2)', padding: '0.2rem 0.6rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: '700', marginBottom: '0.5rem' }}><Target size={12} /> ENFOQUE ESTRATÉGICO</div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', margin: '0 0 0.5rem 0', color: '#fff' }}>Participación Ciudadana</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.9rem', lineHeight: '1.4', margin: 0, maxWidth: '400px' }}>Plataforma donde las ideas de los tunjanos se convierten en código y políticas de acción real.</p>
+                </div>
+              </div>
+
+              {/* Block 4 */}
+              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+                <div style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Sparkles size={20} /></div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Las 4 de Nico & Joven 2.0</h3>
+                <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Pilares estratégicos y comunidad de transformación juvenil.</p>
+              </div>
+
+               {/* Block 5 */}
+               <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+                <div style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><BarChart3 size={20} /></div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Analítica & Presupuesto</h3>
+                <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Visualización clara de indicadores estratégicos y proyectos.</p>
+              </div>
+
             </div>
 
           </div>
         </div>
       </main>
-
-      {/* Componente Integrado de Instagram */}
-      <section style={{ padding: '0 2rem', background: '#f8fafc', borderTop: 'none', position: 'relative' }}>
-         <div className="container" style={{ position: 'relative', zIndex: 10, maxWidth: '1200px', margin: '0 auto' }}>
-            <InstagramFeed />
-         </div>
-      </section>
-
-      {/* MODULOS DE SERVICIO (Cards al estilo Linear) */}
-      <section style={{ padding: '6rem 0', background: '#ffffff', borderTop: '1px solid rgba(0,0,0,0.05)', position: 'relative' }}>
-         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ textAlign: 'center', marginBottom: '5rem', maxWidth: '700px', margin: '0 auto 5rem auto' }}>
-              <h2 style={{ fontSize: '2.5rem', color: '#0f172a', marginBottom: '1rem', letterSpacing: '-0.02em' }}>Infraestructura de Gestión</h2>
-              <p style={{ color: '#475569', fontSize: '1.05rem', lineHeight: '1.6' }}>Desplegamos herramientas modulares para auditar, proponer y ejecutar políticas públicas con precisión técnica y transparencia absoluta.</p>
-            </div>
-
-            <div className="grid-cols-3">
-               
-               {/* Card 1 */}
-               <div className="glass-card" onClick={() => setActiveModal('acuerdo')}>
-                 <div className="card-icon-wrapper" style={{ color: 'var(--primary)', background: 'rgba(15,76,129,0.05)', width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                   <BarChart size={24} />
-                 </div>
-                 <h3 style={{ fontSize: '1.25rem', color: '#0f172a', marginBottom: '0.75rem' }}>Alineación Estratégica</h3>
-                 <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-                   Monitor de ejecución fiscal y cumplimiento de metas. Analiza el marco tecnológico y presupuestal propuesto para el núcleo urbano.
-                 </p>
-               </div>
-
-               {/* Card 2 */}
-               <div className="glass-card" onClick={() => setActiveModal('consulta')}>
-                 <div className="card-icon-wrapper" style={{ color: 'var(--accent)', background: 'rgba(109,93,252,0.05)', width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                   <Cpu size={24} />
-                 </div>
-                 <h3 style={{ fontSize: '1.25rem', color: '#0f172a', marginBottom: '0.75rem' }}>Laboratorio Ciudadano</h3>
-                 <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-                   Motor de innovación abierta. Ingresa requerimientos estructurados y participa en la definición de la matriz de desarrollo local.
-                 </p>
-               </div>
-
-               {/* Card 3 */}
-               <div className="glass-card" onClick={() => setActiveModal('agenda')}>
-                 <div className="card-icon-wrapper" style={{ color: 'var(--secondary)', background: 'rgba(0,184,217,0.05)', width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                   <Network size={24} />
-                 </div>
-                 <h3 style={{ fontSize: '1.25rem', color: '#0f172a', marginBottom: '0.75rem' }}>Red de Nodos</h3>
-                 <p style={{ color: '#475569', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem' }}>
-                   Sincronización de eventos presenciales y virtuales. Inscríbete a los foros técnicos para construir alianzas estratégicas.
-                 </p>
-               </div>
-
-            </div>
-         </div>
-      </section>
 
       {/* FOOTER ULTRA MODERNO CLARO */}
       <footer style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid var(--border-color)' }}>

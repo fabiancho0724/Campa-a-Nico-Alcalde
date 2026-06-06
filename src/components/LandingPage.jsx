@@ -26,6 +26,8 @@ export default function LandingPage({ onEnterApp }) {
   const [proposalSubmitted, setProposalSubmitted] = useState(false);
   const [simulatedParticipants, setSimulatedParticipants] = useState(3452);
   const [isProfileFlipped, setIsProfileFlipped] = useState(false);
+  const [activeTimelinePhase, setActiveTimelinePhase] = useState(0);
+  const [activePillarTab, setActivePillarTab] = useState('data');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -201,18 +203,18 @@ export default function LandingPage({ onEnterApp }) {
       </header>
 
       {/* HERO SECTION DE ALTO IMPACTO (Linear style light) */}
-      <main style={{ position: 'relative', marginTop: '70px', padding: '8rem 0 6rem 0', overflow: 'hidden', minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
+      <main style={{ position: 'relative', marginTop: '70px', padding: '6rem 0 4rem 0', overflow: 'hidden', minHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
         
         {/* Fondo Interactivo de Red de Partículas */}
         <NetworkBackground />
         
         {/* Abstract Glows Animados */}
-        <div className="blob-1" style={{ position: 'absolute', top: '-10%', right: '-5%', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(15, 76, 129, 0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(40px)' }}></div>
-        <div className="blob-2" style={{ position: 'absolute', bottom: '-20%', left: '-10%', width: '70vw', height: '70vw', background: 'radial-gradient(circle, rgba(0, 184, 217, 0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(40px)' }}></div>
-        <div className="blob-3" style={{ position: 'absolute', top: '40%', left: '40%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(40px)' }}></div>
+        <div className="blob-1" style={{ position: 'absolute', top: '-5%', right: '-5%', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(15, 76, 129, 0.12) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(50px)' }}></div>
+        <div className="blob-2" style={{ position: 'absolute', bottom: '15%', left: '-10%', width: '70vw', height: '70vw', background: 'radial-gradient(circle, rgba(0, 184, 217, 0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(50px)' }}></div>
+        <div className="blob-3" style={{ position: 'absolute', top: '35%', left: '35%', width: '45vw', height: '45vw', background: 'radial-gradient(circle, rgba(109, 93, 252, 0.08) 0%, transparent 70%)', borderRadius: '50%', zIndex: 0, pointerEvents: 'none', filter: 'blur(50px)' }}></div>
         
         {/* Reticular Grid Pattern Animada */}
-        <div className="grid-bg-anim" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)', backgroundSize: '50px 50px', zIndex: 0, pointerEvents: 'none', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, transparent 90%)' }}></div>
+        <div className="grid-bg-anim" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'linear-gradient(rgba(15,76,129,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(15,76,129,0.035) 1px, transparent 1px)', backgroundSize: '60px 60px', zIndex: 0, pointerEvents: 'none', maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 50%, transparent 100%)' }}></div>
 
 
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
@@ -220,26 +222,26 @@ export default function LandingPage({ onEnterApp }) {
             
             {/* Texto Hero */}
             <div style={{ animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(15, 76, 129, 0.1)', border: '1px solid rgba(15, 76, 129, 0.2)', padding: '6px 12px', borderRadius: '100px', marginBottom: '2rem' }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 10px var(--primary)' }}></div>
-                <span style={{ color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Sistema de Inteligencia Territorial</span>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(15, 76, 129, 0.1)', border: '1px solid rgba(15, 76, 129, 0.18)', padding: '6px 14px', borderRadius: '100px', marginBottom: '2rem', boxShadow: '0 4px 12px rgba(15, 76, 129, 0.05)' }}>
+                <span className="live-dot-pulse" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', display: 'inline-block' }}></span>
+                <span style={{ color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '850', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Sistema de Inteligencia Territorial</span>
               </div>
               
               {user ? (
                 <>
-                  <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.4rem)', lineHeight: '1.2', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.02em', fontWeight: '900' }}>
+                  <h1 style={{ fontSize: 'clamp(2.3rem, 5vw, 3.5rem)', lineHeight: '1.15', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.02em', fontWeight: '900' }}>
                     Hola, <span style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #00b8d9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline' }}>{user.displayName || user.email?.split('@')[0]}</span>, bienvenido a <span style={{ color: 'var(--primary)' }}>Tunja 2.0</span>, el espacio donde las ideas se convierten en acciones y la innovación impulsa el futuro de nuestra ciudad.
                   </h1>
-                  <p style={{ fontSize: '1.15rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '650px', lineHeight: '1.6' }}>
+                  <p style={{ fontSize: '1.2rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '650px', lineHeight: '1.65' }}>
                     Súmate a la transformación digital de nuestra ciudad. Explora los indicadores electorales históricos, conoce los encuentros de la agenda y participa activamente construyendo comunidad.
                   </p>
                 </>
               ) : (
                 <>
-                  <h1 style={{ fontSize: 'clamp(3rem, 6vw, 4.5rem)', lineHeight: '1.1', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.03em', fontWeight: '900' }}>
-                    Ingresa y construyamos juntos la <span style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #00b8d9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>Tunja del futuro.</span>
+                  <h1 style={{ fontSize: 'clamp(3rem, 5.5vw, 4.2rem)', lineHeight: '1.1', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.03em', fontWeight: '900' }}>
+                    Ingresa y construyamos juntos la <span style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #00b8d9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline' }}>Tunja del futuro.</span>
                   </h1>
-                  <p style={{ fontSize: '1.25rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
+                  <p style={{ fontSize: '1.25rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '620px', lineHeight: '1.65' }}>
                     Datos, participación e innovación corporativa. Conoce, analiza y participa activamente en las decisiones que impulsan la transformación técnica de nuestra ciudad.
                   </p>
                 </>
@@ -262,66 +264,566 @@ export default function LandingPage({ onEnterApp }) {
                   </button>
                 )}
               </div>
-
-              {/* Removed redundant text block analysis highlight content */}
             </div>
 
-            {/* Modular Blocks Layout */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}>
+            {/* Modular Blocks Layout Rediseñado con Imágenes y Profundidad */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }} className="hero-blocks-grid">
               
-              {/* Block 1 */}
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
-                <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
+              {/* Block 1 (Historia Electoral) */}
+              <div 
+                style={{ 
+                  background: '#fff', 
+                  borderRadius: '20px', 
+                  padding: '1.50rem', 
+                  border: '1px solid rgba(15, 76, 129, 0.12)', 
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.035), 0 2px 8px rgba(15, 76, 129, 0.02)', 
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
+                  cursor: 'pointer', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  overflow: 'hidden', 
+                  position: 'relative' 
+                }} 
+                className="premium-interactive-hover-card"
+                onClick={handleEnterClick}
+              >
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.18, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0.4))' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                   <div style={{ background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Map size={20} /></div>
-                   <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Historia Electoral</h3>
-                   <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Análisis cartográfico y estadístico del comportamiento electoral de Tunja.</p>
+                   <div style={{ background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(15,76,129,0.12)' }} className="glowing-icon-container"><Map size={22} /></div>
+                   <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Historia Electoral</h3>
+                   <p style={{ color: '#52525B', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Análisis cartográfico y estadístico del comportamiento electoral de Tunja.</p>
                 </div>
               </div>
 
-              {/* Block 2 */}
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
+              {/* Block 2 (La Agenda de Nico) */}
+              <div 
+                style={{ 
+                  background: '#fff', 
+                  borderRadius: '20px', 
+                  padding: '1.50rem', 
+                  border: '1px solid rgba(16, 185, 129, 0.12)', 
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.035), 0 2px 8px rgba(16, 185, 129, 0.02)', 
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
+                  cursor: 'pointer', 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  position: 'relative', 
+                  overflow: 'hidden' 
+                }} 
+                className="premium-interactive-hover-card"
+                onClick={handleEnterClick}
+              >
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.12, backgroundImage: 'url(https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                 <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: 0.05 }}><Calendar size={120} /></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                   <div style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Calendar size={20} /></div>
-                   <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>La Agenda de Nico</h3>
-                   <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Cronograma oficial de foros técnicos y encuentros sectoriales.</p>
+                   <div style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(16,185,129,0.12)' }} className="glowing-icon-container"><Calendar size={22} /></div>
+                   <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>La Agenda de Nico</h3>
+                   <p style={{ color: '#52525B', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Cronograma oficial de foros técnicos y encuentros sectoriales.</p>
                 </div>
               </div>
 
-              {/* Block 3 */}
-              <div style={{ position: 'relative', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(15,76,129,0.2)', transition: 'all 0.3s', cursor: 'pointer', gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '1.5rem', color: '#fff', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
-                <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.6)' }}></div>
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--primary), transparent)' }}></div>
-                <div style={{ position: 'relative', zIndex: 1, padding: '1rem', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', borderRadius: '12px' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.2)', padding: '0.2rem 0.6rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: '700', marginBottom: '0.5rem' }}><Target size={12} /> ENFOQUE ESTRATÉGICO</div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', margin: '0 0 0.5rem 0', color: '#fff' }}>Participación Ciudadana</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.9rem', lineHeight: '1.4', margin: 0, maxWidth: '400px' }}>Plataforma donde las ideas de los tunjanos se convierten en código y políticas de acción real.</p>
+              {/* Block 3 (Participación Ciudadana Card Grande) */}
+              <div 
+                style={{ 
+                  position: 'relative', 
+                  borderRadius: '20px', 
+                  padding: '2rem', 
+                  border: '1px solid rgba(15, 76, 129, 0.15)', 
+                  boxShadow: '0 15px 35px rgba(15,76,129,0.18)', 
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
+                  cursor: 'pointer', 
+                  gridColumn: 'span 2', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '1.5rem', 
+                  color: '#fff', 
+                  overflow: 'hidden' 
+                }} 
+                className="premium-interactive-hover-card-large"
+                onClick={handleEnterClick}
+              >
+                <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.55)' }} className="zoom-bg"></div>
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(15,76,129,0.85) 0%, rgba(109, 93, 252, 0.6) 100%)' }}></div>
+                <div style={{ position: 'relative', zIndex: 1, padding: '0.5rem', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.15)', width: '100%' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.2)', padding: '0.3rem 0.8rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: '800', marginBottom: '0.75rem', letterSpacing: '0.05em' }}><Target size={12} /> ENFOQUE ESTRATÉGICO</div>
+                  <h3 style={{ fontSize: '1.35rem', fontWeight: '900', margin: '0 0 0.5rem 0', color: '#fff' }}>Participación Ciudadana</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.92)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0, maxWidth: '480px' }}>Plataforma donde las ideas de los tunjanos se convierten en código y políticas de acción real.</p>
                 </div>
               </div>
 
-              {/* Block 4 */}
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
-                <div style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Sparkles size={20} /></div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Las 4 de Nico & Joven 2.0</h3>
-                <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Pilares estratégicos y comunidad de transformación juvenil.</p>
+              {/* Block 4 (Las 4 de Nico & Joven 2.0) */}
+              <div 
+                style={{ 
+                  background: '#fff', 
+                  borderRadius: '20px', 
+                  padding: '1.50rem', 
+                  border: '1px solid rgba(245,158,11,0.12)', 
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.035), 0 2px 8px rgba(245, 158, 11, 0.02)', 
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
+                  cursor: 'pointer', 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }} 
+                className="premium-interactive-hover-card"
+                onClick={handleEnterClick}
+              >
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                   <div style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(245,158,11,0.12)' }} className="glowing-icon-container"><Sparkles size={22} /></div>
+                   <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Las 4 de Nico & Joven 2.0</h3>
+                   <p style={{ color: '#52525B', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Pilares estratégicos y comunidad de transformación juvenil.</p>
+                </div>
               </div>
 
-               {/* Block 5 */}
-               <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
-                <div style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><BarChart3 size={20} /></div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Analítica & Presupuesto</h3>
-                <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Visualización clara de indicadores estratégicos y proyectos.</p>
+               {/* Block 5 (Analítica & Presupuesto) */}
+               <div 
+                style={{ 
+                  background: '#fff', 
+                  borderRadius: '20px', 
+                  padding: '1.50rem', 
+                  border: '1px solid rgba(99,102,241,0.12)', 
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.035), 0 2px 8px rgba(99, 102, 241, 0.02)', 
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
+                  cursor: 'pointer', 
+                  display: 'flex', 
+                  flexDirection: 'column',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }} 
+                className="premium-interactive-hover-card"
+                onClick={handleEnterClick}
+              >
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                   <div style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(99,102,241,0.12)' }} className="glowing-icon-container"><BarChart3 size={22} /></div>
+                   <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Analítica & Presupuesto</h3>
+                   <p style={{ color: '#52525B', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Visualización clara de indicadores estratégicos y proyectos.</p>
+                </div>
               </div>
 
             </div>
-
           </div>
         </div>
+
+        {/* --- SECCIÓN 1: ESTADÍSTICAS EN TIEMPO REAL (Interactive Counter Dashboard Banner) --- */}
+        <section style={{ padding: '4rem 0', position: 'relative', zIndex: 2, background: 'rgba(255,255,255,0.4)', borderTop: '1px solid rgba(0,0,0,0.04)', borderBottom: '1px solid rgba(0,0,0,0.04)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}>
+          <div className="container" style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '850', color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Monitoreo Territorial Co-Operativo</span>
+              <h2 style={{ fontSize: '2.5rem', fontWeight: '850', marginTop: '0.5rem', color: '#0F172A' }}>Métricas en Tiempo Real de Tunja 2.0</h2>
+              <p style={{ color: '#52525B', fontSize: '1rem', marginTop: '0.25rem', maxWidth: '600px', margin: '0.5rem auto 0 auto' }}>Visualiza los datos actuales que impulsan la toma de decisiones ciudadanas.</p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }} className="stats-interactive-grid">
+              
+              {/* Stat Card 1 */}
+              <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(15, 76, 129, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', textAlign: 'center', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }} className="tech-stat-card">
+                <div style={{ position: 'absolute', top: '10px', right: '10px', width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e' }} className="live-pulse"></div>
+                <span style={{ display: 'flex', background: 'rgba(15, 76, 129, 0.06)', color: 'var(--primary)', padding: '0.5rem', borderRadius: '12px', marginBottom: '0.75rem' }}><Users size={20} /></span>
+                <span style={{ fontSize: '2rem', fontWeight: '900', color: '#0F172A', display: 'block', fontFamily: 'var(--font-heading)' }}>{simulatedParticipants}</span>
+                <span style={{ fontSize: '0.85rem', color: '#52525B', fontWeight: '600', marginTop: '0.25rem' }}>Tunjanos Activos</span>
+                <span style={{ fontSize: '0.7rem', color: '#91919C', marginTop: '0.2rem' }}>Participantes en la asamblea</span>
+              </div>
+
+              {/* Stat Card 2 */}
+              <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0, 184, 217, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', textAlign: 'center', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }} className="tech-stat-card">
+                <div style={{ position: 'absolute', top: '10px', right: '10px', width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e' }} className="live-pulse"></div>
+                <span style={{ display: 'flex', background: 'rgba(0, 184, 217, 0.06)', color: 'var(--secondary)', padding: '0.5rem', borderRadius: '12px', marginBottom: '0.75rem' }}><FileText size={20} /></span>
+                <span style={{ fontSize: '2rem', fontWeight: '900', color: '#0F172A', display: 'block', fontFamily: 'var(--font-heading)' }}>{proposals.length + 142}</span>
+                <span style={{ fontSize: '0.85rem', color: '#52525B', fontWeight: '600', marginTop: '0.25rem' }}>Propuestas de Ciudad</span>
+                <span style={{ fontSize: '0.7rem', color: '#91919C', marginTop: '0.2rem' }}>Ideas de desarrollo territorial</span>
+              </div>
+
+              {/* Stat Card 3 */}
+              <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(109, 93, 252, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', textAlign: 'center', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }} className="tech-stat-card">
+                <div style={{ position: 'absolute', top: '10px', right: '10px', width: '8px', height: '8px', borderRadius: '50%', background: '#22c55e' }} className="live-pulse"></div>
+                <span style={{ display: 'flex', background: 'rgba(109, 93, 252, 0.06)', color: 'var(--accent)', padding: '0.5rem', borderRadius: '12px', marginBottom: '0.75rem' }}><Calendar size={20} /></span>
+                <span style={{ fontSize: '2rem', fontWeight: '900', color: '#0F172A', display: 'block', fontFamily: 'var(--font-heading)' }}>{localAgenda.length + 12}</span>
+                <span style={{ fontSize: '0.85rem', color: '#52525B', fontWeight: '600', marginTop: '0.25rem' }}>Foros & Nodos Activos</span>
+                <span style={{ fontSize: '0.7rem', color: '#91919C', marginTop: '0.2rem' }}>Reuniones de co-diseño programadas</span>
+              </div>
+
+              {/* Stat Card 4 */}
+              <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(245, 158, 11, 0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.02)', textAlign: 'center', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyItems: 'center', alignItems: 'center' }} className="tech-stat-card">
+                <span style={{ display: 'flex', background: 'rgba(245, 158, 11, 0.06)', color: '#f59e0b', padding: '0.5rem', borderRadius: '12px', marginBottom: '0.75rem' }}><Globe size={20} /></span>
+                <span style={{ fontSize: '2rem', fontWeight: '900', color: '#0F172A', display: 'block', fontFamily: 'var(--font-heading)' }}>15 <span style={{ fontSize: '1rem', color: '#52525B', fontWeight: '700' }}>Comunas</span></span>
+                <span style={{ fontSize: '0.85rem', color: '#52525B', fontWeight: '600', marginTop: '0.25rem' }}>Zonas Geocodificadas</span>
+                <span style={{ fontSize: '0.7rem', color: '#91919C', marginTop: '0.2rem' }}>Cobertura urbana y rural</span>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* --- SECCIÓN 2: PILARES DE LA GOBERNANZA DIGITAL (Sleek category explorer with real photos) --- */}
+        <section style={{ padding: '6rem 0', position: 'relative', zIndex: 11 }}>
+          <div className="container" style={{ maxWidth: '1300px', margin: '0 auto' }}>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 0.8fr) minmax(0, 1.2fr)', gap: '4rem', alignItems: 'center' }} className="pillars-grid">
+              
+              {/* Interactive Left selectors */}
+              <div>
+                <span style={{ fontSize: '0.8rem', fontWeight: '850', color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Pilares Fundacionales</span>
+                <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0F172A', marginTop: '0.5rem', lineHeight: '1.2' }}>¿Qué define a Tunja 2.0?</h2>
+                <p style={{ color: '#52525B', fontSize: '1rem', marginTop: '1rem', marginBottom: '2.5rem', lineHeight: '1.6' }}>
+                  Una plataforma moderna, integral y técnica que conecta la analítica territorial con la inteligencia colectiva para reorganizar el futuro de nuestra comunidad.
+                </p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <button 
+                    onClick={() => setActivePillarTab('data')}
+                    style={{
+                      background: activePillarTab === 'data' ? 'rgba(15, 76, 129, 0.08)' : 'transparent',
+                      border: '1px solid',
+                      borderColor: activePillarTab === 'data' ? 'rgba(15, 76, 129, 0.2)' : 'rgba(0,0,0,0.04)',
+                      borderRadius: '14px',
+                      padding: '1.25rem 1.5rem',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      transition: 'all 0.3s'
+                    }}
+                    className={activePillarTab === 'data' ? 'pulsing-border-tech' : ''}
+                  >
+                    <span style={{ background: 'var(--primary)', color: '#fff', borderRadius: '8px', padding: '6px', display: 'flex' }}><Layers size={18} /></span>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#0F172A', fontWeight: '800' }}>Inteligencia y Datos</h4>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748B' }}>Cartografía y visualización electoral.</p>
+                    </div>
+                  </button>
+
+                  <button 
+                    onClick={() => setActivePillarTab('participation')}
+                    style={{
+                      background: activePillarTab === 'participation' ? 'rgba(0, 184, 217, 0.06)' : 'transparent',
+                      border: '1px solid',
+                      borderColor: activePillarTab === 'participation' ? 'rgba(0, 184, 217, 0.2)' : 'rgba(0,0,0,0.04)',
+                      borderRadius: '14px',
+                      padding: '1.25rem 1.5rem',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      transition: 'all 0.3s'
+                    }}
+                    className={activePillarTab === 'participation' ? 'pulsing-border-tech-cyan' : ''}
+                  >
+                    <span style={{ background: 'var(--secondary)', color: '#fff', borderRadius: '8px', padding: '6px', display: 'flex' }}><Users size={18} /></span>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#0F172A', fontWeight: '800' }}>Co-diseño Ciudadano</h4>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748B' }}>Mapeo vecinal de propuestas directas.</p>
+                    </div>
+                  </button>
+
+                  <button 
+                    onClick={() => setActivePillarTab('youth')}
+                    style={{
+                      background: activePillarTab === 'youth' ? 'rgba(109, 93, 252, 0.06)' : 'transparent',
+                      border: '1px solid',
+                      borderColor: activePillarTab === 'youth' ? 'rgba(109, 93, 252, 0.2)' : 'rgba(0,0,0,0.04)',
+                      borderRadius: '14px',
+                      padding: '1.25rem 1.5rem',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      transition: 'all 0.3s'
+                    }}
+                    className={activePillarTab === 'youth' ? 'pulsing-border-tech-purple' : ''}
+                  >
+                    <span style={{ background: 'var(--accent)', color: '#fff', borderRadius: '8px', padding: '6px', display: 'flex' }}><Sparkles size={18} /></span>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#0F172A', fontWeight: '800' }}>Poder Joven 2.0</h4>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748B' }}>Semilleros y aceleración local.</p>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Dynamic Content Display Card */}
+              <div 
+                style={{ 
+                  background: '#ffffff', 
+                  borderRadius: '24px', 
+                  padding: '2.5rem', 
+                  boxShadow: '0 20px 50px rgba(0,0,0,0.04), 0 4px 15px rgba(0,0,0,0.01)', 
+                  border: '1px solid rgba(0,0,0,0.05)', 
+                  position: 'relative', 
+                  overflow: 'hidden', 
+                  minHeight: '440px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+                className="category-showcase-panel"
+              >
+                {/* Visual Backdrop Decorative Frame */}
+                <div style={{ position: 'absolute', right: '0', top: '0', width: '220px', height: '220px', borderRadius: '50%', background: activePillarTab === 'data' ? 'rgba(15,76,129,0.03)' : activePillarTab === 'participation' ? 'rgba(0,184,217,0.03)' : 'rgba(109, 93, 252, 0.03)', zIndex: 0, filter: 'blur(30px)', pointerEvents: 'none' }}></div>
+
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                    <span style={{ background: activePillarTab === 'data' ? 'rgba(15,76,129,0.1)' : activePillarTab === 'participation' ? 'rgba(0,184,217,0.1)' : 'rgba(109,93,252,0.1)', color: activePillarTab === 'data' ? 'var(--primary)' : activePillarTab === 'participation' ? 'var(--secondary)' : 'var(--accent)', padding: '0.4rem 1rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: '850', letterSpacing: '0.05em' }}>
+                      {activePillarTab === 'data' ? 'INTELIGENCIA TERRITORIAL' : activePillarTab === 'participation' ? 'CO-DISEÑO ACTIVO' : 'IMPULSO DE EMPRENDIMIENTO'}
+                    </span>
+                    <span style={{ color: '#A1A1AA', fontSize: '0.85rem' }}>VISTA DE PILAR v2.0</span>
+                  </div>
+
+                  <h3 style={{ fontSize: '1.75rem', fontWeight: '900', color: '#0F172A', marginBottom: '1rem' }}>
+                    {activePillarTab === 'data' && "Inteligencia Territorial y Datos Abiertos"}
+                    {activePillarTab === 'participation' && "Co-creación Abierta Ciudad-Gobernante"}
+                    {activePillarTab === 'youth' && "Poder Joven 2.0 y Emprendimiento Digital"}
+                  </h3>
+
+                  <p style={{ color: '#52525B', fontSize: '0.98rem', lineHeight: '1.65', marginBottom: '1.5rem' }}>
+                    {activePillarTab === 'data' && "El futuro se planifica con bases sólidas. En Tunja 2.0 abrimos datos electorales históricos, indicadores demográficos y mapas de participación vecinal. Analiza el comportamiento electoral urbano y rural de la 2da vuelta presidencial de 2022 y descubre focos de crecimiento para fortalecer iniciativas conjuntas."}
+                    {activePillarTab === 'participation' && "La ciudadanía ya no es un espectador. Hemos creado un canal bidireccional donde ingenieros, urbanistas y vecinos pueden reportar y registrar requerimientos técnicos que nutren de inmediato los planes de inversión pública. Tus ideas configuran el presupuesto local."}
+                    {activePillarTab === 'youth' && "La juventud es el código fuente del cambio en Boyacá. Enlazamos los liderazgos locales con el Hub de startups, los esquemas de aceleración técnica, y las 4 propuestas capitales promovidas por liderazgos jóvenes como Nico. Impulsamos empleo técnico calificado."}
+                  </p>
+
+                  <ul style={{ listStyleType: 'none', padding: 0, margin: '1rem 0', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {activePillarTab === 'data' && (
+                      <>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--primary)' }} /> Visualizaciones interactivas de las elecciones colombianas en Tunja.</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--primary)' }} /> Mapeo georreferenciado de necesidades vecinales específicas.</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--primary)' }} /> Acceso directo a bases estadísticas estructuradas de participación.</li>
+                      </>
+                    )}
+                    {activePillarTab === 'participation' && (
+                      <>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--secondary)' }} /> Formulación y priorización directa de propuestas en vivo.</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--secondary)' }} /> Participación directa en foros y comités de movilidad y diseño vial.</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--secondary)' }} /> Veeduría electrónica sobre la ejecución presupuestaria.</li>
+                      </>
+                    )}
+                    {activePillarTab === 'youth' && (
+                      <>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--accent)' }} /> Semilleros locales de desarrollo de software e innovación urbana.</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--accent)' }} /> Debates continuos del comité juvenil y foros presenciales activos.</li>
+                        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.9rem', color: '#334155', fontWeight: '500' }}><CheckCircle size={16} style={{ color: 'var(--accent)' }} /> Acceso preferencial a capacitaciones de robótica e inteligencia comercial.</li>
+                      </>
+                    )}
+                  </ul>
+                </div>
+
+                {/* Highly aesthetic photo banner on bottom of tab */}
+                <div style={{ marginTop: '1.5rem', width: '100%', height: '140px', borderRadius: '14px', overflow: 'hidden', position: 'relative' }}>
+                  <img 
+                    src={
+                      activePillarTab === 'data' 
+                        ? 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop'
+                        : activePillarTab === 'participation' 
+                          ? 'https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?q=80&w=800&auto=format&fit=crop'
+                          : 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop'
+                    } 
+                    alt="Tunja 2.0 Feature" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.02)' }}
+                  />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.8), transparent)' }}></div>
+                  <span style={{ position: 'absolute', bottom: '12px', left: '16px', color: '#fff', fontSize: '0.8rem', fontWeight: '700', letterSpacing: '0.04em' }}>
+                    {activePillarTab === 'data' && "NÚCLEO DIGITAL DE DATOS E INDICADORES"}
+                    {activePillarTab === 'participation' && "SALA DE CO-DISEÑO PARA INTELIGENCIA CIUDADANA"}
+                    {activePillarTab === 'youth' && "HUB DE IMPULSO Y EMPLEABILIDAD JUVENIL"}
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* --- SECCIÓN 3: EL CAMINO DE LA CO-CREACIÓN - INTERACTIVE PROCESS TIMELINE --- */}
+        <section style={{ padding: '6rem 0', position: 'relative', zIndex: 12, background: 'linear-gradient(180deg, transparent, rgba(15, 76, 129, 0.02) 50%, transparent)' }}>
+          <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: '850', color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Storytelling & Ruta de Impacto</span>
+              <h2 style={{ fontSize: '2.5rem', fontWeight: '900', color: '#0F172A', marginTop: '0.5rem' }}>El Camino de la Transformación Decisiva</h2>
+              <p style={{ color: '#52525B', fontSize: '1rem', marginTop: '0.5rem', maxWidth: '650px', margin: '0.5rem auto 0 auto', lineHeight: '1.6' }}>
+                Conoce las fases secuenciales para integrar tu opinión dentro del algoritmo de políticas de Tunja. Haz clic en las fases para interactuar.
+              </p>
+            </div>
+
+            {/* Interactive Timeline Layout Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)', gap: '4rem', alignItems: 'center' }} className="timeline-grid">
+              
+              {/* Left Timeline Path Selectors */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', position: 'relative' }}>
+                {/* Connecting glowing vector line (vertical mockup) */}
+                <div style={{ position: 'absolute', left: '23px', top: '2.5rem', bottom: '2.5rem', width: '2px', background: 'linear-gradient(to bottom, var(--primary), var(--secondary), var(--accent))', zIndex: 0 }} className="hidden-mobile"></div>
+
+                {[
+                  { phase: 0, title: "Fase 1: Mapeo Georeferenciado", icon: <Layers size={16} />, color: 'var(--primary)', label: "Mes 1" },
+                  { phase: 1, title: "Fase 2: Diálogos de Co-diseño", icon: <Users size={16} />, color: '#10b981', label: "Mes 2" },
+                  { phase: 2, title: "Fase 3: Presupuesto y Priorización", icon: <BarChart3 size={16} />, color: '#f59e0b', label: "Mes 3" },
+                  { phase: 3, title: "Fase 4: Despliegue de Código de Ciudad", icon: <Cpu size={16} />, color: '#6d5dfc', label: "Mes 4" }
+                ].map((step) => (
+                  <div 
+                    key={step.phase}
+                    onClick={() => setActiveTimelinePhase(step.phase)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '1.5rem',
+                      cursor: 'pointer',
+                      padding: '1rem 1.25rem',
+                      borderRadius: '16px',
+                      background: activeTimelinePhase === step.phase ? '#FFFFFF' : 'rgba(255,255,255,0.3)',
+                      border: '1px solid',
+                      borderColor: activeTimelinePhase === step.phase ? 'rgba(0,0,0,0.06)' : 'transparent',
+                      boxShadow: activeTimelinePhase === step.phase ? '0 10px 25px rgba(0,0,0,0.04)' : 'none',
+                      transition: 'all 0.3s',
+                      position: 'relative',
+                      zIndex: 1
+                    }}
+                    className="timeline-item"
+                  >
+                    {/* Bullet selector inside timeline */}
+                    <div 
+                      style={{
+                        width: '46px',
+                        height: '46px',
+                        borderRadius: '50%',
+                        background: activeTimelinePhase === step.phase ? step.color : '#FFFFFF',
+                        color: activeTimelinePhase === step.phase ? '#fff' : '#A1A1AA',
+                        border: `2px solid ${step.color}`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.3s',
+                        boxShadow: activeTimelinePhase === step.phase ? `0 0 15px ${step.color}60` : 'none'
+                      }}
+                      className="glowing-circle"
+                    >
+                      {step.icon}
+                    </div>
+
+                    <div>
+                      <span style={{ fontSize: '0.75rem', fontWeight: '800', color: step.color, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{step.label}</span>
+                      <h4 style={{ margin: '0.1rem 0 0 0', color: '#0F172A', fontWeight: '850', fontSize: '1.1rem' }}>{step.title}</h4>
+                    </div>
+
+                    {activeTimelinePhase === step.phase && (
+                      <span style={{ marginLeft: 'auto', background: `${step.color}15`, color: step.color, padding: '2px 8px', borderRadius: '100px', fontSize: '0.7rem', fontWeight: '700' }}>ACTIVO</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Right Panel Viewer displaying active phase */}
+              <div 
+                style={{ 
+                  background: '#FFFFFF', 
+                  borderRadius: '24px', 
+                  padding: '2.5rem', 
+                  border: '1px solid rgba(0,0,0,0.05)', 
+                  boxShadow: '0 25px 60px rgba(15, 76, 129, 0.05)', 
+                  position: 'relative', 
+                  minHeight: '380px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  animation: 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1)' 
+                }}
+                className="category-showcase-panel"
+                key={activeTimelinePhase} /* Force animate on stage changes */
+              >
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '900', color: 'var(--primary)', letterSpacing: '0.05em' }}>COORDENADAS DE PROCESO</span>
+                    <span style={{ background: '#f1f5f9', padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', color: '#475569', fontWeight: '700' }} className="hidden-mobile">
+                      {activeTimelinePhase === 0 && "MES 1: INVESTIGACIÓN"}
+                      {activeTimelinePhase === 1 && "MES 2: DIÁLOGOS"}
+                      {activeTimelinePhase === 2 && "MES 3: ESTADÍSTICA"}
+                      {activeTimelinePhase === 3 && "MES 4: DESPLIEGUE"}
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(15, 76, 129, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {activeTimelinePhase === 0 && <Layers style={{ color: 'var(--primary)' }} size={24} />}
+                      {activeTimelinePhase === 1 && <Users style={{ color: '#10b981' }} size={24} />}
+                      {activeTimelinePhase === 2 && <BarChart3 style={{ color: '#f59e0b' }} size={24} />}
+                      {activeTimelinePhase === 3 && <Cpu style={{ color: '#6d5dfc' }} size={24} />}
+                    </div>
+                    <div>
+                      <h3 style={{ margin: 0, fontSize: '1.5rem', fontWeight: '900', color: '#0F172A' }}>
+                        {activeTimelinePhase === 0 && "Fase 1: Recolección Geocodificada y Mapeo"}
+                        {activeTimelinePhase === 1 && "Fase 2: Diálogos Públicos de Co-Diseño"}
+                        {activeTimelinePhase === 2 && "Fase 3: Presupuesto Participativo Algorítmico"}
+                        {activeTimelinePhase === 3 && "Fase 4: Despliegue de Código de Ciudad"}
+                      </h3>
+                      <p style={{ margin: '0.2rem 0 0 0', fontSize: '0.85rem', color: '#64748B', fontWeight: '600' }}>
+                        {activeTimelinePhase === 0 && "Diagnóstico Activo de Necesidades Territoriales"}
+                        {activeTimelinePhase === 1 && "Mesas Abiertas con Enfoque de Solución Local"}
+                        {activeTimelinePhase === 2 && "Asignación Directa por Veeduría de Votos"}
+                        {activeTimelinePhase === 3 && "Ejecución de Código Abierto e Impacto Territorial"}
+                      </p>
+                    </div>
+                  </div>
+
+                  <p style={{ color: '#52525B', fontSize: '0.98rem', lineHeight: '1.65', marginBottom: '2rem' }}>
+                    {activeTimelinePhase === 0 && "Recopilamos mapas de calor electorales, datos de participación y densidad comunal para diagnosticar las prioridades de desarrollo en cada franja de Tunja. Esto nos permite detectar el potencial estratégico real."}
+                    {activeTimelinePhase === 1 && "Discutimos presencialmente y de forma digital a través de los nodos de debate las metas técnicas de movilidad, empleo juvenil, y conectividad pública en el territorio urbano y rural de Tunja."}
+                    {activeTimelinePhase === 2 && "Sometemos a análisis las propuestas de los ciudadanos para actuar sobre lo priorizado, garantizando absoluta transparencia fiscal mediante paneles interactivos de analítica tributaria."}
+                    {activeTimelinePhase === 3 && "Ejecutamos en conjunto con dependencias gubernamentales, Hubs universitarios y asambleas comunales los portales, optimizaciones inteligentes e ideas de base ciudadanas construidas colectivamente."}
+                  </p>
+                </div>
+
+                <div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#475569' }}>Nivel de Maduración Técnico</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--primary)' }}>
+                      {activeTimelinePhase === 0 && "95% Completado"}
+                      {activeTimelinePhase === 1 && "70% En Ejecución Activa"}
+                      {activeTimelinePhase === 2 && "45% Fase de Diseño"}
+                      {activeTimelinePhase === 3 && "20% Próxima Apertura"}
+                    </span>
+                  </div>
+
+                  {/* Aesthetic visual progress bar */}
+                  <div style={{ width: '100%', height: '8px', background: '#F1F5F9', borderRadius: '100px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                    <div 
+                      style={{ 
+                        height: '100%', 
+                        background: activeTimelinePhase === 0 ? 'var(--primary)' : activeTimelinePhase === 1 ? '#10b981' : activeTimelinePhase === 2 ? '#f59e0b' : '#6d5dfc', 
+                        width: activeTimelinePhase === 0 ? '95%' : activeTimelinePhase === 1 ? '70%' : activeTimelinePhase === 2 ? '45%' : '20%',
+                        borderRadius: '100px',
+                        transition: 'all 0.5s ease-out'
+                      }}
+                    ></div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#F8FAFC', padding: '0.75rem 1rem', borderRadius: '12px', border: '1px solid rgba(0,0,0,0.02)' }}>
+                    <span style={{ color: activeTimelinePhase === 0 ? 'var(--primary)' : activeTimelinePhase === 1 ? '#10b981' : activeTimelinePhase === 2 ? '#f59e0b' : '#6d5dfc', display: 'flex' }}><Check size={16} /></span>
+                    <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: '500' }}>
+                      <strong>Impacto de Fase:</strong>{" "}
+                      {activeTimelinePhase === 0 && "Mapeo territorial estratégico preciso en las 15 comunas de Tunja."}
+                      {activeTimelinePhase === 1 && "Más de 3,450 ciudadanos interactuando activamente en la asamblea."}
+                      {activeTimelinePhase === 2 && "Estructuración de fondos descentralizados y visibilidad presupuestal integral."}
+                      {activeTimelinePhase === 3 && "Sincronización en tiempo real de soluciones urbanísticas e infraestructura lógica."}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </section>
+
       </main>
 
       {/* FOOTER ULTRA MODERNO CLARO */}
-      <footer style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid var(--border-color)' }}>
+      <footer style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid var(--border-color)', position: 'relative', zIndex: 10 }}>
          <div className="container" style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             
             {/* BRANDING INTEGRADO */}
@@ -642,9 +1144,112 @@ export default function LandingPage({ onEnterApp }) {
         }
         .linear-card:hover .card-action { opacity: 1; gap: 0.4rem; }
 
+        /* Premium redesign animation classes */
+        .premium-interactive-hover-card {
+          position: relative;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .premium-interactive-hover-card:hover {
+          transform: translateY(-6px) scale(1.02) !important;
+          box-shadow: 0 15px 35px rgba(15, 76, 129, 0.08), 0 4px 15px rgba(0,0,0,0.03) !important;
+          border-color: rgba(15, 76, 129, 0.3) !important;
+        }
+        .premium-interactive-hover-card-large {
+          position: relative;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .premium-interactive-hover-card-large:hover {
+          transform: translateY(-6px) scale(1.01) !important;
+          box-shadow: 0 20px 45px rgba(15, 76, 129, 0.28) !important;
+        }
+        .premium-interactive-hover-card-large:hover .zoom-bg {
+          transform: scale(1.08);
+        }
+        .zoom-bg {
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glowing-icon-container {
+          transition: all 0.3s ease;
+        }
+        .premium-interactive-hover-card:hover .glowing-icon-container {
+          transform: scale(1.1) rotate(4deg);
+        }
+
+        /* Pulsing states */
+        .live-dot-pulse {
+          box-shadow: 0 0 0 0 rgba(15, 76, 129, 0.7);
+          animation: radialPulse 1.8s infinite;
+        }
+        @keyframes radialPulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(15,76,129, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 8px rgba(15,76,129, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(15,76,129, 0);
+          }
+        }
+
+        .live-pulse {
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+          animation: greenPulse 2s infinite;
+        }
+        @keyframes greenPulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+          }
+          70% {
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+          }
+        }
+
+        .tech-stat-card {
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tech-stat-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+          border-color: rgba(15, 76, 129, 0.15);
+        }
+
+        .pulsing-border-tech {
+          box-shadow: 0 0 15px rgba(15, 76, 129, 0.12) !important;
+          border-color: var(--primary) !important;
+        }
+        .pulsing-border-tech-cyan {
+          box-shadow: 0 0 15px rgba(0, 184, 217, 0.12) !important;
+          border-color: var(--secondary) !important;
+        }
+        .pulsing-border-tech-purple {
+          box-shadow: 0 0 15px rgba(109, 93, 252, 0.12) !important;
+          border-color: var(--accent) !important;
+        }
+
+        .timeline-item {
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .timeline-item:hover {
+          transform: translateX(6px);
+          background: #ffffff !important;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.035);
+        }
+
         @media (max-width: 900px) {
-          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+          .hero-blocks-grid { grid-template-columns: 1fr !important; }
+          .premium-interactive-hover-card-large { grid-column: span 1 !important; }
+          .stats-interactive-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .pillars-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+          .timeline-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
           .hidden-mobile { display: none !important; }
+        }
+        @media (max-width: 480px) {
+          .stats-interactive-grid { grid-template-columns: 1fr !important; }
         }
 
         @keyframes modalSlideUp {
@@ -663,19 +1268,18 @@ export default function LandingPage({ onEnterApp }) {
           0%, 100% { transform: scale(1); opacity: 0.8; }
           50% { transform: scale(1.1); opacity: 1; }
         }
-        .blob-1 { animation: spinSlow 30s linear infinite; transform-origin: 40% 40%; }
-        .blob-2 { animation: spinSlow 40s linear infinite reverse; transform-origin: 60% 60%; }
-        .blob-3 { animation: pulseGlow 10s ease-in-out infinite; }
+        .blob-1 { animation: spinSlow 35s linear infinite; transform-origin: 40% 40%; }
+        .blob-2 { animation: spinSlow 45s linear infinite reverse; transform-origin: 60% 60%; }
+        .blob-3 { animation: pulseGlow 12s ease-in-out infinite; }
         
         .grid-bg-anim {
-          animation: slideDown 20s linear infinite;
+          animation: slideDown 25s linear infinite;
         }
         @keyframes slideDown {
           from { background-position: 0 0; }
-          to { background-position: 50px 50px; }
+          to { background-position: 60px 60px; }
         }
       `}</style>
     </div>
   );
 }
-

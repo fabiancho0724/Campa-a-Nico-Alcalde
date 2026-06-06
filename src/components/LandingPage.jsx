@@ -87,6 +87,14 @@ export default function LandingPage({ onEnterApp }) {
     }, 3000);
   };
 
+  const handleEnterClick = () => {
+    if (user) {
+      onEnterApp();
+    } else {
+      openAuth('login');
+    }
+  };
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -217,33 +225,40 @@ export default function LandingPage({ onEnterApp }) {
                 <span style={{ color: 'var(--primary)', fontSize: '0.75rem', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Sistema de Inteligencia Territorial</span>
               </div>
               
-              <h1 style={{ fontSize: 'clamp(3.5rem, 6vw, 4.8rem)', lineHeight: '1.05', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.03em', fontWeight: '900' }}>
-                La inteligencia ciudadana que construye la <span style={{ color: 'var(--primary)' }}>Tunja del futuro.</span>
-              </h1>
-              <p style={{ fontSize: '1.25rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
-                Datos, participación e innovación corporativa.  Conoce, analiza y participa activamente en las decisiones que impulsan la transformación técnica de nuestra ciudad.
-              </p>
+              {user ? (
+                <>
+                  <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.4rem)', lineHeight: '1.2', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.02em', fontWeight: '900' }}>
+                    Hola, <span style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #00b8d9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline' }}>{user.displayName || user.email?.split('@')[0]}</span>, bienvenido a <span style={{ color: 'var(--primary)' }}>Tunja 2.0</span>, el espacio donde las ideas se convierten en acciones y la innovación impulsa el futuro de nuestra ciudad.
+                  </h1>
+                  <p style={{ fontSize: '1.15rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '650px', lineHeight: '1.6' }}>
+                    Súmate a la transformación digital de nuestra ciudad. Explora los indicadores electorales históricos, conoce los encuentros de la agenda y participa activamente construyendo comunidad.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h1 style={{ fontSize: 'clamp(3rem, 6vw, 4.5rem)', lineHeight: '1.1', marginBottom: '1.5rem', color: '#0f172a', letterSpacing: '-0.03em', fontWeight: '900' }}>
+                    Ingresa y construyamos juntos la <span style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #00b8d9 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>Tunja del futuro.</span>
+                  </h1>
+                  <p style={{ fontSize: '1.25rem', color: '#475569', marginBottom: '2.5rem', maxWidth: '600px', lineHeight: '1.6' }}>
+                    Datos, participación e innovación corporativa. Conoce, analiza y participa activamente en las decisiones que impulsan la transformación técnica de nuestra ciudad.
+                  </p>
+                </>
+              )}
               
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '1rem' }}>
                 {!user ? (
-                  <>
-                    <button onClick={() => openAuth('login')} style={{ 
-                      background: 'var(--primary)', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '1rem 2.5rem', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.3s', boxShadow: '0 10px 25px rgba(15,76,129,0.3)'
-                    }}
-                    onMouseOver={(e) => {e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(15,76,129,0.4)';}}
-                    onMouseOut={(e) => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(15,76,129,0.3)';}}
-                    >
-                      Ingresar a la Plataforma <ArrowUpRight size={20} />
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={onEnterApp} style={{ 
-                    background: 'var(--primary)', color: '#ffffff', border: 'none', borderRadius: '8px', padding: '1rem 2.5rem', fontSize: '1.1rem', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.3s', boxShadow: '0 10px 25px rgba(15,76,129,0.3)'
-                  }}
-                  onMouseOver={(e) => {e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(15,76,129,0.4)';}}
-                  onMouseOut={(e) => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(15,76,129,0.3)';}}
+                  <button 
+                    onClick={() => openAuth('login')} 
+                    className="premium-cta-btn"
                   >
-                    Abrir Dashboard Analítico <LayoutDashboard size={20} />
+                    🚀 Ingresa y construyamos juntos la Tunja del futuro <ArrowUpRight size={22} className="hidden-mobile" />
+                  </button>
+                ) : (
+                  <button 
+                    onClick={onEnterApp} 
+                    className="premium-cta-btn"
+                  >
+                    🚀 Ingresa y construyamos juntos la Tunja del futuro <ChevronRight size={22} className="hidden-mobile" />
                   </button>
                 )}
               </div>
@@ -255,7 +270,7 @@ export default function LandingPage({ onEnterApp }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem', animation: 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}>
               
               {/* Block 1 */}
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Map size={20} /></div>
@@ -265,7 +280,7 @@ export default function LandingPage({ onEnterApp }) {
               </div>
 
               {/* Block 2 */}
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
                 <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: 0.05 }}><Calendar size={120} /></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Calendar size={20} /></div>
@@ -275,7 +290,7 @@ export default function LandingPage({ onEnterApp }) {
               </div>
 
               {/* Block 3 */}
-              <div style={{ position: 'relative', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(15,76,129,0.2)', transition: 'all 0.3s', cursor: 'pointer', gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '1.5rem', color: '#fff', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+              <div style={{ position: 'relative', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(15,76,129,0.2)', transition: 'all 0.3s', cursor: 'pointer', gridColumn: 'span 2', display: 'flex', alignItems: 'center', gap: '1.5rem', color: '#fff', overflow: 'hidden' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
                 <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.6)' }}></div>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--primary), transparent)' }}></div>
                 <div style={{ position: 'relative', zIndex: 1, padding: '1rem', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', borderRadius: '12px' }}>
@@ -286,14 +301,14 @@ export default function LandingPage({ onEnterApp }) {
               </div>
 
               {/* Block 4 */}
-              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+              <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
                 <div style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><Sparkles size={20} /></div>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Las 4 de Nico & Joven 2.0</h3>
                 <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Pilares estratégicos y comunidad de transformación juvenil.</p>
               </div>
 
                {/* Block 5 */}
-               <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={onEnterApp}>
+               <div style={{ background: '#fff', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'} onClick={handleEnterClick}>
                 <div style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}><BarChart3 size={20} /></div>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '0.5rem', color: '#0f172a' }}>Analítica & Presupuesto</h3>
                 <p style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Visualización clara de indicadores estratégicos y proyectos.</p>
@@ -427,7 +442,7 @@ export default function LandingPage({ onEnterApp }) {
                 <p style={{ color: '#52525B', fontSize: '0.95rem', lineHeight: '1.6' }}>
                   Convoco a ingenieros, estrategas empresariales y urbanistas a unirse a la plataforma técnica que replanteará el futuro del municipio.
                 </p>
-                <button onClick={onEnterApp} className="btn" style={{ width: '100%', marginTop: '2rem', background: 'var(--primary)', color: '#fff', padding: '0.8rem', borderRadius: '8px' }}>
+                <button onClick={handleEnterClick} className="btn" style={{ width: '100%', marginTop: '2rem', background: 'var(--primary)', color: '#fff', padding: '0.8rem', borderRadius: '8px' }}>
                   Inicializar Sesión
                 </button>
               </div>
@@ -527,6 +542,44 @@ export default function LandingPage({ onEnterApp }) {
       />
 
       <style>{`
+        .premium-cta-btn {
+          background: linear-gradient(135deg, var(--primary) 0%, #0284c7 50%, #0d9488 100%);
+          color: #ffffff !important;
+          border: none;
+          border-radius: 12px;
+          padding: 1.25rem 2.5rem;
+          font-family: var(--font-heading);
+          font-size: 1.25rem;
+          font-weight: 850;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+          box-shadow: 0 12px 30px rgba(15,76,129,0.35), 0 4px 15px rgba(13,148,136,0.2);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          text-align: center;
+          line-height: 1.4;
+          text-decoration: none;
+          max-width: 100%;
+          border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .premium-cta-btn:hover {
+          transform: translateY(-4px) scale(1.02);
+          box-shadow: 0 18px 38px rgba(15,76,129,0.45), 0 8px 25px rgba(13,148,136,0.3);
+          background: linear-gradient(135deg, #1e40af 0%, #0369a1 50%, #0f766e 100%);
+        }
+        .premium-cta-btn:active {
+          transform: translateY(-1px) scale(0.98);
+        }
+        @media (max-width: 600px) {
+          .premium-cta-btn {
+            font-size: 0.95rem !important;
+            padding: 1rem 1.25rem !important;
+            gap: 0.5rem !important;
+          }
+        }
+
         .nav-clean-btn {
           background: transparent;
           border: none;

@@ -39,9 +39,12 @@ export default function LandingPage({ onEnterApp }) {
           const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
           if (userDoc.exists()) {
             setUserProfile(userDoc.data());
+          } else {
+            setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
           }
         } catch (e) {
           console.warn("Could not fetch user profile (using defaults):", e.message);
+          setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
         }
       } else {
         setUserProfile(null);

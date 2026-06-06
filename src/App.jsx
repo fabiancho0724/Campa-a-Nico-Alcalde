@@ -38,6 +38,7 @@ export default function App() {
           }
         } catch (e) {
           console.warn("Could not fetch user profile (using defaults):", e.message);
+          setUserProfile({ role: 'Usuario Registrado', email: currentUser.email });
         }
       } else {
         setUserProfile(null);

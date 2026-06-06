@@ -58,6 +58,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
   if (!isOpen) return null;
 
   const checkAndCreateUserDoc = async (userCred) => {
+    try {
       const userDocRef = doc(db, 'users', userCred.user.uid);
       const userDocSnap = await getDoc(userDocRef);
       if (!userDocSnap.exists()) {
@@ -73,6 +74,9 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
             updatedAt: serverTimestamp()
         });
       }
+    } catch (e) {
+      console.warn("Could not check or create user document in Firestore (client might be offline):", e.message);
+    }
   };
 
   const handleEmailAuth = async (e) => {

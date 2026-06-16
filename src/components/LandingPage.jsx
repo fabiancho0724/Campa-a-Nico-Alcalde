@@ -362,7 +362,7 @@ export default function LandingPage({ onEnterApp }) {
                 </div>
               </div>
 
-              {/* Block 4 (Las 4 de Nico & Joven 2.0) */}
+              {/* Block 4 (Las 5 de Nico & Joven 2.0) */}
               <div 
                 style={{ 
                   background: '#fff', 
@@ -383,7 +383,7 @@ export default function LandingPage({ onEnterApp }) {
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(245,158,11,0.12)' }} className="glowing-icon-container"><Sparkles size={22} /></div>
-                   <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Las 4 de Nico & Joven 2.0</h3>
+                   <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Las 5 de Nico & Joven 2.0</h3>
                    <p style={{ color: '#52525B', fontSize: '0.85rem', lineHeight: '1.5', margin: 0 }}>Pilares estratégicos y comunidad de transformación juvenil.</p>
                 </div>
               </div>

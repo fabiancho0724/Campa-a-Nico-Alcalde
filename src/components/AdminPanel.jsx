@@ -430,13 +430,13 @@ export default function AdminPanel() {
                       </td>
                       <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top' }}>
                         <span style={{ 
-                          background: item.origen === 'Las 4 de Nico' ? '#E0F2FE' : '#F3E8FF',
-                          color: item.origen === 'Las 4 de Nico' ? '#0369A1' : '#6B21A8',
+                          background: item.origen === 'Las 5 de Nico' ? '#E0F2FE' : '#F3E8FF',
+                          color: item.origen === 'Las 5 de Nico' ? '#0369A1' : '#6B21A8',
                           padding: '0.25rem 0.65rem',
                           borderRadius: '8px',
                           fontSize: '0.78rem',
                           fontWeight: '800',
-                          border: `1px solid ${item.origen === 'Las 4 de Nico' ? '#BAE6FD' : '#E9D5FF'}`
+                          border: `1px solid ${item.origen === 'Las 5 de Nico' ? '#BAE6FD' : '#E9D5FF'}`
                         }}>
                           {item.origen || 'General'}
                         </span>

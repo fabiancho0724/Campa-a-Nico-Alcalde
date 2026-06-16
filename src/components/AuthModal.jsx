@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Mail, Lock, Eye, EyeOff, Loader, Github } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
@@ -138,7 +139,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
     }
   };
 
-  return (
+  const modalContent = (
     <div style={{
       position: 'fixed',
       top: 0, left: 0, right: 0, bottom: 0,
@@ -147,7 +148,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      zIndex: 2000,
+      zIndex: 9999,
       padding: '1.5rem',
       animation: 'fadeIn 0.2s ease'
     }}
@@ -335,4 +336,9 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
       </div>
     </div>
   );
+
+  if (typeof document !== 'undefined') {
+    return createPortal(modalContent, document.body);
+  }
+  return modalContent;
 }

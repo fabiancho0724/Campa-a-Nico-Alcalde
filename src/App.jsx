@@ -8,10 +8,12 @@ import Agenda from './components/Agenda';
 import InteractiveMap from './components/InteractiveMap';
 import BrandLogos from './components/BrandLogos';
 import AdminPanel from './components/AdminPanel';
+import UneteCampaign from './components/UneteCampaign';
+import TunjaAvanza from './components/TunjaAvanza';
 import { 
   Vote, Sliders, GraduationCap, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
-  Facebook, Twitter, Map, Target
+  Facebook, Twitter, Map, Target, UserPlus
 } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -95,7 +97,7 @@ export default function App() {
               onClick={() => setActiveTab('proposals')}
             >
               <Target size={16} />
-              Las 4 de Nico
+              Las 5 de Nico
             </button>
             <button 
               className={`nav-tab ${activeTab === 'joven' ? 'active' : ''}`}
@@ -105,11 +107,26 @@ export default function App() {
               Joven 2.0
             </button>
             <button 
+              className={`nav-tab ${activeTab === 'tunja_avanza' ? 'active' : ''}`}
+              onClick={() => setActiveTab('tunja_avanza')}
+            >
+              <Building size={16} />
+              Tunja Avanza
+            </button>
+            <button 
               className={`nav-tab ${activeTab === 'agenda' ? 'active' : ''}`}
               onClick={() => setActiveTab('agenda')}
             >
               <Calendar size={16} />
               La Agenda de Nico
+            </button>
+            <button 
+              className={`nav-tab ${activeTab === 'unete' ? 'active' : ''}`}
+              onClick={() => setActiveTab('unete')}
+              style={{ background: activeTab === 'unete' ? '#0f766e' : 'rgba(15, 118, 110, 0.05)', color: activeTab === 'unete' ? '#fff' : '#0f766e', borderColor: activeTab === 'unete' ? 'transparent' : 'rgba(15, 118, 110, 0.2)' }}
+            >
+              <UserPlus size={16} />
+              Únete a la Campaña
             </button>
             <button 
               className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`}
@@ -174,6 +191,8 @@ export default function App() {
           {/* Renderizado Condicional del Componente Seleccionado */}
           <div className="animate-fade-in" key={activeTab}>
             {activeTab === 'joven' && <Joven20 />}
+            {activeTab === 'tunja_avanza' && <TunjaAvanza />}
+            {activeTab === 'unete' && <UneteCampaign />}
             {activeTab === 'electoral' && canViewReports && <ElectoralMetrics />}
             {activeTab === 'budget' && canViewReports && <BudgetVisualizer />}
             {activeTab === 'proposals' && <Proposals />}

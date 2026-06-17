@@ -20,11 +20,12 @@ import {
 import { db, auth } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-import las4Hero from '../assets/images/las_4_nico_hero_1780678514931.png';
-import las4Infra from '../assets/images/las_4_nico_infraestructura_1780678529053.png';
-import las4Seguridad from '../assets/images/las_4_nico_seguridad_1780678542508.png';
-import las4Salud from '../assets/images/las_4_nico_salud_1780678554520.png';
-import hunzaInnovaHub from '../assets/images/hunza_coworking_1780675677359.png';
+const img1 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%201.png';
+const img2 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%202.png';
+const img3 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%203.png';
+const img4 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%204.png';
+const img5 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%205.png';
+const img6 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%206.png';
 
 export default function Proposals() {
   const [activeBandera, setActiveBandera] = useState(null);
@@ -98,35 +99,35 @@ export default function Proposals() {
       title: 'Tunja Se Mueve: Transporte y Movilidad',
       slogan: '"Transformar la movilidad de Tunja no es solo un asunto de pavimentar calles, es el eje fundamental para construir una ciudad verdaderamente moderna, habitable y equitativa."',
       icon: <Target size={32} />,
-      image: las4Infra, color: '#0ea5e9'
+      image: img1, color: '#0ea5e9'
     },
     {
       id: 'empleo',
       title: 'Me Quedo en Tunja: Empleo y Economía Local',
       slogan: '"No podemos seguir exportando talento humano; necesitamos encender la economía local."',
       icon: <Briefcase size={32} />,
-      image: hunzaInnovaHub, color: '#8b5cf6'
+      image: img2, color: '#8b5cf6'
     },
     {
       id: 'seguridad',
       title: 'Estoy Seguro en Tunja: Seguridad y Convivencia',
       slogan: '"La tranquilidad de los tunjanos no se negocia con discursos, se defiende con autoridad y gerencia."',
       icon: <Shield size={32} />,
-      image: las4Seguridad, color: '#f59e0b'
+      image: img3, color: '#f59e0b'
     },
     {
       id: 'dignidad',
       title: 'Tunja Digna: Dignidad Social, Educación y Salud',
       slogan: '"Queremos una ciudad donde el barrio en el que naces no condicione tu futuro, y donde el acceso a una vida digna sea un derecho garantizado."',
       icon: <HeartPulse size={32} />,
-      image: las4Salud, color: '#10b981'
+      image: img4, color: '#10b981'
     },
     {
       id: 'viva',
       title: 'Tunja Viva: Nuestra Ciudad, Nuestra Gente',
       slogan: '"Gobernar a Tunja desde adentro significa reconocer que la ciudad no se construye únicamente desde las instituciones, sino desde las esquinas, los parques y las comunidades que les dan vida."',
       icon: <Users size={32} />,
-      image: las4Hero, color: '#e11d48'
+      image: img5, color: '#e11d48'
     }
   ];
 
@@ -153,24 +154,25 @@ export default function Proposals() {
       }}>
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          backgroundImage: `url(${las4Hero})`,
+          backgroundImage: `url(${img6})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: 0.25,
+          transform: 'scale(1.05)',
+          animation: 'slowZoom 20s infinite alternate ease-in-out',
           zIndex: 0
         }} />
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          background: 'linear-gradient(to bottom, rgba(248, 250, 252, 0.2) 0%, rgba(248, 250, 252, 1) 100%)',
+          background: 'linear-gradient(to right, rgba(248, 250, 252, 0.95) 0%, rgba(248, 250, 252, 0.6) 100%)',
           zIndex: 1
         }} />
         
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '900px' }}>
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'left', maxWidth: '1000px', width: '100%' }}>
           <div style={{ 
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '0.5rem', 
-            background: 'rgba(255,255,255,0.9)', 
+            background: 'rgba(255,255,255,0.8)', 
             padding: '0.6rem 1.5rem', 
             borderRadius: '50px',
             marginBottom: '2rem',
@@ -180,7 +182,7 @@ export default function Proposals() {
           }}>
             <Target size={18} fill="var(--primary)" color="var(--primary)" />
             <span style={{ fontSize: '0.9rem', fontWeight: 800, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--primary)' }}>
-              Cinco banderas, una sola misión: transformar Tunja
+              Ingresa y construyamos juntos la Tunja del futuro
             </span>
           </div>
           
@@ -207,17 +209,16 @@ export default function Proposals() {
 
           <p style={{ 
             fontSize: '1.1rem', 
-            color: '#64748b',
+            color: '#475569',
             marginBottom: '3rem',
             fontWeight: 500,
-            maxWidth: '700px',
-            margin: '0 auto 3rem auto',
+            maxWidth: '600px',
             lineHeight: 1.6
           }}>
-            Cuatro grandes apuestas para transformar la calidad de vida de todos los tunjanos. 
+            Cinco grandes apuestas para transformar la calidad de vida de todos los tunjanos. 
           </p>
           
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-start' }}>
             <button 
               onClick={() => document.getElementById('ecosistema-pilares').scrollIntoView({behavior: 'smooth'})}
               style={{
@@ -232,7 +233,7 @@ export default function Proposals() {
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              boxShadow: '0 15px 30px rgba(15, 76, 129, 0.3)',
+              boxShadow: '0 15px 30px rgba(15, 76, 129, 0.4)',
               transition: 'all 0.3s ease'
             }}
             onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
@@ -253,52 +254,96 @@ export default function Proposals() {
         }} />
         
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '3rem', fontWeight: 900, color: '#0f172a', marginBottom: '4rem', letterSpacing: '-0.03em' }}>
+          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, color: '#0f172a', marginBottom: '4rem', letterSpacing: '-0.03em' }}>
             Descubre el ecosistema Tunja 2.0
           </h2>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: activeBandera ? '2.5rem' : '0', transition: 'margin 0.3s' }}>
-            {banderas.map((bandera) => (
+            {banderas.map((bandera, i) => (
               <div 
                 key={bandera.id}
                 onClick={() => setActiveBandera(bandera.id === activeBandera ? null : bandera.id)}
                 style={{
+                  position: 'relative',
+                  overflow: 'hidden',
                   background: activeBandera === bandera.id ? bandera.color : '#ffffff',
-                  border: `1px solid ${activeBandera === bandera.id ? bandera.color : 'rgba(0,0,0,0.05)'}`,
+                  border: `1px solid ${activeBandera === bandera.id ? bandera.color : 'rgba(15,76,129,0.1)'}`,
                   borderRadius: '24px',
                   padding: '2rem',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   transform: activeBandera === bandera.id ? 'translateY(-8px)' : 'translateY(0)',
-                  boxShadow: activeBandera === bandera.id ? `0 15px 30px ${bandera.color}30` : '0 10px 30px rgba(0,0,0,0.03)',
+                  boxShadow: activeBandera === bandera.id ? `0 15px 30px ${bandera.color}50` : '0 10px 30px rgba(0,0,0,0.08)',
                   textAlign: 'left',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '1rem'
+                  gap: '1rem',
+                  minHeight: '220px',
+                  justifyContent: 'flex-end',
                 }}
                 onMouseOver={e => {
                   if (activeBandera !== bandera.id) {
                     e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 15px 30px rgba(0,0,0,0.06)';
+                    e.currentTarget.style.boxShadow = '0 15px 30px rgba(0,0,0,0.12)';
+                    if(e.currentTarget.querySelector('.card-bg-overlay')) e.currentTarget.querySelector('.card-bg-overlay').style.opacity = '0.85';
                   }
                 }}
                 onMouseOut={e => {
                   if (activeBandera !== bandera.id) {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.03)';
+                    e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)';
+                    if(e.currentTarget.querySelector('.card-bg-overlay')) e.currentTarget.querySelector('.card-bg-overlay').style.opacity = '0.95';
                   }
                 }}
               >
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                  backgroundImage: `url(${bandera.image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  zIndex: 0,
+                  transition: 'transform 0.5s ease',
+                  transform: activeBandera === bandera.id ? 'scale(1.1)' : 'scale(1)',
+                }} />
+                
+                <div className="card-bg-overlay" style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                  background: activeBandera === bandera.id 
+                    ? `linear-gradient(to top, ${bandera.color} 0%, rgba(255,255,255,0.3) 100%)`
+                    : 'linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 100%)',
+                  zIndex: 1,
+                  transition: 'all 0.4s ease',
+                  opacity: activeBandera === bandera.id ? 0.8 : 0.95
+                }} />
+
+                {/* Progress dot indicator */}
+                <div style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 2 }}>
+                  <div style={{ 
+                    width: '8px', height: '8px', borderRadius: '50%', 
+                    background: activeBandera === bandera.id ? '#fff' : bandera.color,
+                    boxShadow: activeBandera === bandera.id ? `0 0 10px rgba(255,255,255,0.8)` : `0 0 10px ${bandera.color}`
+                  }}></div>
+                </div>
+
                 <div style={{ 
-                  background: activeBandera === bandera.id ? '#ffffff' : `${bandera.color}15`, 
-                  color: activeBandera === bandera.id ? bandera.color : bandera.color, 
+                  position: 'relative', zIndex: 2,
+                  background: activeBandera === bandera.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', 
+                  backdropFilter: 'blur(10px)',
+                  color: activeBandera === bandera.id ? '#ffffff' : bandera.color, 
                   width: '56px', height: '56px', borderRadius: '16px', 
                   display: 'flex', alignItems: 'center', justifyContent: 'center', 
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  marginBottom: 'auto'
                 }}>
                   {bandera.icon}
                 </div>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: activeBandera === bandera.id ? '#fff' : '#0f172a', lineHeight: 1.25 }}>
+                
+                <h3 style={{ 
+                  position: 'relative', zIndex: 2, 
+                  fontSize: '1.3rem', fontWeight: 800, 
+                  color: activeBandera === bandera.id ? '#ffffff' : '#0f172a', lineHeight: 1.25,
+                  textShadow: activeBandera === bandera.id ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'
+                }}>
                   {bandera.title}
                 </h3>
               </div>

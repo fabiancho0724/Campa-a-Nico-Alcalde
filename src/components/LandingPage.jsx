@@ -11,6 +11,8 @@ import BrandLogos from './BrandLogos';
 import AuthModal from './AuthModal';
 import NetworkBackground from './NetworkBackground';
 
+const img6 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%206.png';
+
 export default function LandingPage({ onEnterApp }) {
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
 
@@ -297,7 +299,7 @@ export default function LandingPage({ onEnterApp }) {
                 className="premium-interactive-hover-card"
                 onClick={handleEnterClick}
               >
-                <div style={{ position: 'absolute', inset: 0, opacity: 0.18, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/lugares-turisticos-de-Tunja.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.18, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%203.png)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0.4))' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(15,76,129,0.12)' }} className="glowing-icon-container"><Map size={22} /></div>
@@ -324,7 +326,7 @@ export default function LandingPage({ onEnterApp }) {
                 className="premium-interactive-hover-card"
                 onClick={handleEnterClick}
               >
-                <div style={{ position: 'absolute', inset: 0, opacity: 0.12, backgroundImage: 'url(https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.12, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%204.png)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
                 <div style={{ position: 'absolute', right: '-10px', top: '-10px', opacity: 0.05 }}><Calendar size={120} /></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(16,185,129,0.12)' }} className="glowing-icon-container"><Calendar size={22} /></div>
@@ -353,7 +355,7 @@ export default function LandingPage({ onEnterApp }) {
                 className="premium-interactive-hover-card-large"
                 onClick={handleEnterClick}
               >
-                <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/catedral-basilica-tunja.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.55)' }} className="zoom-bg"></div>
+                <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%205.png)', backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.55)' }} className="zoom-bg"></div>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(15,76,129,0.85) 0%, rgba(109, 93, 252, 0.6) 100%)' }}></div>
                 <div style={{ position: 'relative', zIndex: 1, padding: '0.5rem', background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.15)', width: '100%' }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.2)', padding: '0.3rem 0.8rem', borderRadius: '50px', fontSize: '0.75rem', fontWeight: '800', marginBottom: '0.75rem', letterSpacing: '0.05em' }}><Target size={12} /> ENFOQUE ESTRATÉGICO</div>
@@ -380,7 +382,7 @@ export default function LandingPage({ onEnterApp }) {
                 className="premium-interactive-hover-card"
                 onClick={handleEnterClick}
               >
-                <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.15, backgroundImage: `url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%201.png)`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(245,158,11,0.1)', color: '#f59e0b', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(245,158,11,0.12)' }} className="glowing-icon-container"><Sparkles size={22} /></div>
                    <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Las 5 de Nico & Joven 2.0</h3>
@@ -406,7 +408,7 @@ export default function LandingPage({ onEnterApp }) {
                 className="premium-interactive-hover-card"
                 onClick={handleEnterClick}
               >
-                <div style={{ position: 'absolute', inset: 0, opacity: 0.1, backgroundImage: 'url(https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400&auto=format&fit=crop)', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
+                <div style={{ position: 'absolute', inset: 0, opacity: 0.15, backgroundImage: `url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%202.png)`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'grayscale(100%)' }}></div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
                    <div style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1', width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 4px 10px rgba(99,102,241,0.12)' }} className="glowing-icon-container"><BarChart3 size={22} /></div>
                    <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.4rem', color: '#0f172a' }}>Analítica & Presupuesto</h3>
@@ -628,10 +630,10 @@ export default function LandingPage({ onEnterApp }) {
                   <img 
                     src={
                       activePillarTab === 'data' 
-                        ? 'https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop'
+                        ? 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%201.png'
                         : activePillarTab === 'participation' 
-                          ? 'https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?q=80&w=800&auto=format&fit=crop'
-                          : 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop'
+                          ? 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%203.png'
+                          : 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%206.png'
                     } 
                     alt="Tunja 2.0 Feature" 
                     style={{ width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.02)' }}

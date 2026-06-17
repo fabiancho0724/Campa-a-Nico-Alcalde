@@ -172,13 +172,15 @@ export default function Proposals() {
             display: 'inline-flex', 
             alignItems: 'center', 
             gap: '0.5rem', 
-            background: 'rgba(255,255,255,0.8)', 
+            gap: '0.5rem', 
+            background: 'rgba(255,255,255,0.85)', 
             padding: '0.6rem 1.5rem', 
             borderRadius: '50px',
             marginBottom: '2rem',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(15,76,129,0.1)',
-            boxShadow: '0 10px 20px rgba(0,0,0,0.05)'
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            border: '1px solid rgba(255,255,255,0.4)',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
           }}>
             <Target size={18} fill="var(--primary)" color="var(--primary)" />
             <span style={{ fontSize: '0.9rem', fontWeight: 800, letterSpacing: '1.5px', textTransform: 'uppercase', color: 'var(--primary)' }}>
@@ -327,13 +329,15 @@ export default function Proposals() {
 
                 <div style={{ 
                   position: 'relative', zIndex: 2,
-                  background: activeBandera === bandera.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.6)', 
-                  backdropFilter: 'blur(10px)',
+                  background: activeBandera === bandera.id ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.8)', 
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
                   color: activeBandera === bandera.id ? '#ffffff' : bandera.color, 
                   width: '56px', height: '56px', borderRadius: '16px', 
                   display: 'flex', alignItems: 'center', justifyContent: 'center', 
                   transition: 'all 0.3s ease',
-                  marginBottom: 'auto'
+                  marginBottom: 'auto',
+                  border: '1px solid rgba(255,255,255,0.3)'
                 }}>
                   {bandera.icon}
                 </div>
@@ -353,13 +357,12 @@ export default function Proposals() {
           {/* PANEL DE DETALLE INFERIOR DINÁMICO */}
           {activeBandera && (
             <div 
-              className="animate-fade-in"
+              className="animate-fade-in glass"
               style={{
-                background: '#ffffff', borderRadius: '24px', width: '100%',
+                borderRadius: '24px', width: '100%',
                 position: 'relative', textAlign: 'left',
-                boxShadow: '0 25px 50px -12px rgba(0,0,0,0.1)',
-                border: '1px solid rgba(0,0,0,0.05)',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                marginTop: '1rem'
               }}
             >
               {banderas.map((b) => b.id === activeBandera && (

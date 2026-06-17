@@ -212,7 +212,7 @@ export default function Joven20() {
             lineHeight: 1.1,
             color: '#0f172a'
           }}>
-            JUVENTUD <span style={{ color: 'var(--primary)' }}>TUNJA 2.0</span>
+            Juventud <span style={{ color: 'var(--primary)' }}>Tunja 2.0</span>
           </h1>
           
           <p style={{ 
@@ -402,7 +402,7 @@ export default function Joven20() {
       <section id="ecosistema" style={{ padding: '6rem 2rem', background: '#f8fafc', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <div style={{ display: 'inline-block', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.4rem 1.2rem', borderRadius: '50px', fontWeight: 700, fontSize: '0.85rem', marginBottom: '1rem' }}>PROPUESTA PROGRAMÁTICA</div>
+            <div style={{ display: 'inline-block', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.4rem 1.2rem', borderRadius: '50px', fontWeight: 700, fontSize: '0.85rem', marginBottom: '1rem' }}>Propuesta Programática</div>
             <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', color: '#0f172a' }}>Ecosistema Joven 2.0</h2>
             <p style={{ color: '#64748b', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto' }}>
               Convertir a Tunja en la ciudad líder de Colombia en innovación, formación digital y generación de oportunidades.
@@ -482,10 +482,10 @@ export default function Joven20() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(250px, 300px) 1fr', gap: '2rem', height: '100%' }}>
+          <div className="ecosystem-grid">
             
             {/* Ecosistema Navigation Sidebar */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+            <div className="nav-tab-container" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', height: 'fit-content', background: 'transparent', border: 'none', boxShadow: 'none' }}>
               {[
                 { id: 'coworking', title: 'Centro de Innovación', icon: <Laptop size={18}/>, subtitle: 'Coworking y Laboratorios' },
                 { id: 'fondo', title: 'Fondo Hunza Emprende', icon: <TrendingUp size={18}/>, subtitle: 'Capital Semilla' },
@@ -708,7 +708,7 @@ export default function Joven20() {
             </div>
           ) : (
             <div className="animate-fade-in">
-              <div style={{ display: 'inline-block', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.5rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '1.5rem' }}>RESULTADO</div>
+              <div style={{ display: 'inline-block', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.5rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '1.5rem' }}>Resultado</div>
               <h2 style={{ fontSize: '3.5rem', fontWeight: 900, color: '#0f172a', marginBottom: '1rem' }}>{testResult}</h2>
               <p style={{ color: '#475569', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
                 ¡Excelente! Tu perfil encaja perfectamente. Participa en la Escuela de Liderazgo o solicita apoyo en nuestras líneas de talento.

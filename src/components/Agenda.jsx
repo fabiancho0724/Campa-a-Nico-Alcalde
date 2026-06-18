@@ -99,11 +99,11 @@ export default function Agenda() {
             <CalendarIcon size={20} />
             <span style={{ fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.85rem' }}>Agenda Pública</span>
           </div>
-          <h1 style={{ fontSize: '2.8rem', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.03em', lineHeight: 1 }}>La Agenda de Nico</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem' }}>Acompaña las actividades y compromisos en la construcción de Tunja 2.0.</p>
+          <h1 style={{ fontSize: '2.8rem', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '-0.03em', lineHeight: 1 }}>La Agenda de Nico</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginTop: '0.5rem' }}>Acompaña las actividades y compromisos en la construcción de Tunja 2.0.</p>
         </div>
         
-        <div style={{ display: 'flex', background: '#fff', borderRadius: '12px', padding: '0.4rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+        <div style={{ display: 'flex', background: 'var(--bg-card)', borderRadius: '12px', padding: '0.4rem', border: '1px solid var(--border-color)', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
           {['mes', 'semana', 'dia'].map(v => (
             <button 
               key={v}
@@ -129,17 +129,17 @@ export default function Agenda() {
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 300px', gap: '2rem', alignItems: 'start' }}>
         
         {/* MAIN CALENDAR AREA */}
-        <div style={{ background: '#fff', borderRadius: '24px', padding: '2rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 20px 40px rgba(0,0,0,0.02)' }}>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '24px', padding: '2rem', border: '1px solid var(--border-color)', boxShadow: '0 20px 40px rgba(0,0,0,0.02)' }}>
           
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
             </h2>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button onClick={prevMonth} style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0,0,0,0.1)', background: '#fff', color: '#0f172a', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e=>e.currentTarget.style.background='#f8fafc'} onMouseOut={e=>e.currentTarget.style.background='#fff'}>
+              <button onClick={prevMonth} style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-primary)', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e=>e.currentTarget.style.background='#f8fafc'} onMouseOut={e=>e.currentTarget.style.background='#fff'}>
                 <ChevronLeft size={20} />
               </button>
-              <button onClick={nextMonth} style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(0,0,0,0.1)', background: '#fff', color: '#0f172a', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e=>e.currentTarget.style.background='#f8fafc'} onMouseOut={e=>e.currentTarget.style.background='#fff'}>
+              <button onClick={nextMonth} style={{ width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', background: 'var(--bg-card)', color: 'var(--text-primary)', cursor: 'pointer', transition: 'all 0.2s' }} onMouseOver={e=>e.currentTarget.style.background='#f8fafc'} onMouseOut={e=>e.currentTarget.style.background='#fff'}>
                 <ChevronRight size={20} />
               </button>
             </div>
@@ -171,7 +171,7 @@ export default function Agenda() {
             <div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '10px', marginBottom: '10px' }}>
                 {days.map(day => (
-                  <div key={day} style={{ textAlign: 'center', fontWeight: 700, color: '#94a3b8', fontSize: '0.9rem', textTransform: 'uppercase' }}>
+                  <div key={day} style={{ textAlign: 'center', fontWeight: 700, color: 'var(--text-muted)', fontSize: '0.9rem', textTransform: 'uppercase' }}>
                     {day}
                   </div>
                 ))}
@@ -185,17 +185,17 @@ export default function Agenda() {
           {view !== 'mes' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {filteredEvents.map(event => (
-                <div key={event.id} style={{ display: 'flex', gap: '1.5rem', padding: '1.5rem', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '16px', background: '#f8fafc', transition: 'all 0.2s' }} className="list-event-card">
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#fff', width: '80px', borderRadius: '12px', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
+                <div key={event.id} style={{ display: 'flex', gap: '1.5rem', padding: '1.5rem', border: '1px solid var(--border-color)', borderRadius: '16px', background: 'var(--bg-primary)', transition: 'all 0.2s' }} className="list-event-card">
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-card)', width: '80px', borderRadius: '12px', boxShadow: '0 4px 10px rgba(0,0,0,0.02)' }}>
                     <span style={{ fontSize: '0.9rem', color: 'var(--primary)', fontWeight: 800, textTransform: 'uppercase' }}>{monthNames[event.date.getMonth()].slice(0,3)}</span>
-                    <span style={{ fontSize: '2rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>{event.date.getDate()}</span>
+                    <span style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1 }}>{event.date.getDate()}</span>
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                       <span style={{ background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>{event.category}</span>
                     </div>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem' }}>{event.title}</h3>
-                    <div style={{ display: 'flex', gap: '1.5rem', color: '#64748b', fontSize: '0.9rem', fontWeight: 500 }}>
+                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.8rem' }}>{event.title}</h3>
+                    <div style={{ display: 'flex', gap: '1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Clock size={16}/> {event.time}</div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><MapPin size={16}/> {event.location}</div>
                     </div>
@@ -203,7 +203,7 @@ export default function Agenda() {
                 </div>
               ))}
               {filteredEvents.length === 0 && (
-                 <div style={{ textAlign: 'center', padding: '3rem', color: '#94a3b8', fontSize: '1.1rem' }}>
+                 <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)', fontSize: '1.1rem' }}>
                    No hay eventos para esta vista.
                  </div>
               )}
@@ -235,30 +235,30 @@ export default function Agenda() {
           </div>
 
           {/* Quick Stats */}
-          <div style={{ background: '#fff', borderRadius: '24px', padding: '2rem', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
-             <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.5rem' }}>Resumen Mensual</h3>
+          <div style={{ background: 'var(--bg-card)', borderRadius: '24px', padding: '2rem', border: '1px solid var(--border-color)', boxShadow: '0 10px 30px rgba(0,0,0,0.02)' }}>
+             <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>Resumen Mensual</h3>
              
              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1rem', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: '#475569', fontWeight: 600 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
                     <div style={{ background: 'rgba(15,76,129,0.1)', padding: '0.5rem', borderRadius: '8px', color: 'var(--primary)' }}><Activity size={16}/></div>
                     Eventos Activos
                   </div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>{mockEvents.length}</div>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>{mockEvents.length}</div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1rem', borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: '#475569', fontWeight: 600 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
                     <div style={{ background: 'rgba(16,185,129,0.1)', padding: '0.5rem', borderRadius: '8px', color: '#10b981' }}><Users size={16}/></div>
                     Comunidades
                   </div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>4</div>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>4</div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: '#475569', fontWeight: 600 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
                     <div style={{ background: 'rgba(245,158,11,0.1)', padding: '0.5rem', borderRadius: '8px', color: '#f59e0b' }}><Navigation size={16}/></div>
                     Localidades
                   </div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>2</div>
+                  <div style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)' }}>2</div>
                 </div>
              </div>
           </div>

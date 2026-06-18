@@ -168,12 +168,12 @@ export default function AdminPanel() {
   );
 
   return (
-    <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
+    <div style={{ background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', overflow: 'hidden' }}>
       
       {/* 1. Encabezado del Panel */}
-      <div style={{ padding: '2rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', background: '#fafafa' }}>
+      <div style={{ padding: '2rem', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', background: 'var(--bg-overlay)' }}>
         <div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '900', margin: '0 0 0.35rem 0', display: 'flex', alignItems: 'center', gap: '0.65rem', fontFamily: 'var(--font-heading)', color: '#0f172a' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '900', margin: '0 0 0.35rem 0', display: 'flex', alignItems: 'center', gap: '0.65rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)' }}>
             <Shield size={24} color="var(--primary)" />
             Panel de Administración Gubernamental
           </h2>
@@ -182,7 +182,7 @@ export default function AdminPanel() {
       </div>
 
       {/* 2. Filtros y Selector de Pestañas */}
-      <div style={{ padding: '1rem 2rem', background: '#ffffff', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ padding: '1rem 2rem', background: 'var(--bg-card)', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         
         {/* Selector de Pestañas Premium */}
         <div style={{ display: 'flex', gap: '0.5rem', background: '#F1F5F9', padding: '0.25rem', borderRadius: '10px' }}>
@@ -242,7 +242,7 @@ export default function AdminPanel() {
               placeholder="Buscar usuarios por correo o nombre..." 
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              style={{ width: '100%', padding: '0.65rem 0.65rem 0.65rem 2.4rem', borderRadius: '8px', border: '1px solid #E4E4E7', outline: 'none', fontSize: '0.85rem' }}
+              style={{ width: '100%', padding: '0.65rem 0.65rem 0.65rem 2.4rem', borderRadius: '8px', border: '1px solid var(--border-color)', outline: 'none', fontSize: '0.85rem' }}
             />
           </div>
         ) : (
@@ -257,7 +257,7 @@ export default function AdminPanel() {
                 placeholder="Buscar en ideas, autor u origen..." 
                 value={aportesSearchTerm}
                 onChange={e => setAportesSearchTerm(e.target.value)}
-                style={{ width: '100%', padding: '0.65rem 0.65rem 0.65rem 2.4rem', borderRadius: '8px', border: '1px solid #E4E4E7', outline: 'none', fontSize: '0.85rem' }}
+                style={{ width: '100%', padding: '0.65rem 0.65rem 0.65rem 2.4rem', borderRadius: '8px', border: '1px solid var(--border-color)', outline: 'none', fontSize: '0.85rem' }}
               />
             </div>
 
@@ -314,7 +314,7 @@ export default function AdminPanel() {
       {activeTab === 'users' && (
         <>
           {loading ? (
-            <div style={{ padding: '4rem', textAlign: 'center', color: '#71717A' }}>
+            <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
               <Loader size={36} className="animate-spin" style={{ margin: '0 auto 1.25rem auto', color: 'var(--primary)' }} />
               <p style={{ fontWeight: 500 }}>Sincronizando cuentas ciudadanas...</p>
             </div>
@@ -326,7 +326,7 @@ export default function AdminPanel() {
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
-                  <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748B' }}>
+                  <tr style={{ background: 'var(--bg-primary)', borderBottom: '1px solid #E2E8F0', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
                     <th style={{ padding: '1.25rem 1.5rem', fontWeight: '700' }}>Usuario</th>
                     <th style={{ padding: '1.25rem 1.5rem', fontWeight: '700' }}>Rol en Plataforma</th>
                     <th style={{ padding: '1.25rem 1.5rem', fontWeight: '700' }}>Estado de Conexión</th>
@@ -336,7 +336,7 @@ export default function AdminPanel() {
                 <tbody>
                   {filteredUsers.length === 0 ? (
                     <tr>
-                      <td colSpan="4" style={{ padding: '3rem', textAlign: 'center', color: '#94A3B8', fontSize: '0.95rem' }}>No se encontraron usuarios que coincidan con la búsqueda.</td>
+                      <td colSpan="4" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.95rem' }}>No se encontraron usuarios que coincidan con la búsqueda.</td>
                     </tr>
                   ) : filteredUsers.map((user) => (
                     <tr key={user.id} style={{ borderBottom: '1px solid #F1F5F9', transition: 'background 0.2s' }} onMouseOver={e=>e.currentTarget.style.background='#F8FAFC'} onMouseOut={e=>e.currentTarget.style.background='transparent'}>
@@ -346,8 +346,8 @@ export default function AdminPanel() {
                             {(user.displayName || user.email || '?')[0].toUpperCase()}
                           </div>
                           <div>
-                            <div style={{ fontWeight: '700', color: '#0F172A', fontSize: '0.95rem' }}>{user.displayName || 'Ciudadano Activo'}</div>
-                            <div style={{ color: '#475569', fontSize: '0.85rem' }}>{user.email}</div>
+                            <div style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '0.95rem' }}>{user.displayName || 'Ciudadano Activo'}</div>
+                            <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{user.email}</div>
                           </div>
                         </div>
                       </td>
@@ -377,7 +377,7 @@ export default function AdminPanel() {
                       <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
                         <button 
                           onClick={() => handleEdit(user)}
-                          style={{ background: '#F1F5F9', border: 'none', color: '#475569', cursor: 'pointer', padding: '0.5rem 0.75rem', borderRadius: '8px', transition: 'all 0.2s', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                          style={{ background: '#F1F5F9', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '0.5rem 0.75rem', borderRadius: '8px', transition: 'all 0.2s', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
                           onMouseOver={e=>{e.currentTarget.style.color='#0F172A'; e.currentTarget.style.background='#E2E8F0'}}
                           onMouseOut={e=>{e.currentTarget.style.color='#475569'; e.currentTarget.style.background='#F1F5F9'}}
                         >
@@ -397,7 +397,7 @@ export default function AdminPanel() {
       {activeTab === 'aportes' && (
         <>
           {aportesLoading ? (
-            <div style={{ padding: '4rem', textAlign: 'center', color: '#71717A' }}>
+            <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
               <Loader size={36} className="animate-spin" style={{ margin: '0 auto 1.25rem auto', color: 'var(--primary)' }} />
               <p style={{ fontWeight: 500 }}>Sincronizando el repositorio de voces ciudadanas...</p>
             </div>
@@ -405,7 +405,7 @@ export default function AdminPanel() {
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
-                  <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748B' }}>
+                  <tr style={{ background: 'var(--bg-primary)', borderBottom: '1px solid #E2E8F0', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
                     <th style={{ padding: '1.25rem 1.5rem', fontWeight: '700', width: '220px' }}>Ciudadano</th>
                     <th style={{ padding: '1.25rem 1.5rem', fontWeight: '700', width: '180px' }}>Sección / Origen</th>
                     <th style={{ padding: '1.25rem 1.5rem', fontWeight: '700' }}>Idea / Propuesta Registrada</th>
@@ -416,17 +416,17 @@ export default function AdminPanel() {
                 <tbody>
                   {filteredAportes.length === 0 ? (
                     <tr>
-                      <td colSpan="5" style={{ padding: '4rem 1.5rem', textAlign: 'center', color: '#94A3B8' }}>
+                      <td colSpan="5" style={{ padding: '4rem 1.5rem', textAlign: 'center', color: 'var(--text-muted)' }}>
                         <Inbox size={48} style={{ margin: '0 auto 1rem', opacity: 0.4 }} />
-                        <div style={{ fontSize: '1rem', fontWeight: '600', color: '#475569' }}>No se han registrado aportes aún</div>
+                        <div style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--text-secondary)' }}>No se han registrado aportes aún</div>
                         <p style={{ margin: '0.25rem 0 0 0', fontSize: '0.85rem' }}>Las respuestas o ideas de los ciudadano aparecerán aquí al enviarla.</p>
                       </td>
                     </tr>
                   ) : filteredAportes.map((item) => (
                     <tr key={item.id} style={{ borderBottom: '1px solid #F1F5F9', transition: 'background 0.2s' }} onMouseOver={e=>e.currentTarget.style.background='#F8FAFC'} onMouseOut={e=>e.currentTarget.style.background='transparent'}>
                       <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top' }}>
-                        <div style={{ fontWeight: '700', color: '#0F172A', fontSize: '0.95rem' }}>{item.autor || 'Anónimo'}</div>
-                        <div style={{ color: '#64748B', fontSize: '0.82rem', fontFamily: 'monospace' }}>{item.email}</div>
+                        <div style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '0.95rem' }}>{item.autor || 'Anónimo'}</div>
+                        <div style={{ color: 'var(--text-muted)', fontSize: '0.82rem', fontFamily: 'monospace' }}>{item.email}</div>
                       </td>
                       <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top' }}>
                         <span style={{ 
@@ -442,17 +442,17 @@ export default function AdminPanel() {
                         </span>
                       </td>
                       <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top' }}>
-                        <div style={{ fontSize: '0.92rem', color: '#334155', fontWeight: '500', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
+                        <div style={{ fontSize: '0.92rem', color: 'var(--text-primary)', fontWeight: '500', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
                           {item.contenido}
                         </div>
                       </td>
-                      <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top', color: '#64748B', fontSize: '0.85rem', fontWeight: '500' }}>
+                      <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top', color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '500' }}>
                         {item.dateStr}
                       </td>
                       <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top', textAlign: 'right' }}>
                         <button 
                           onClick={() => handleDeleteAporte(item.id)}
-                          style={{ background: 'transparent', border: 'none', color: '#94A3B8', cursor: 'pointer', padding: '0.35rem', borderRadius: '6px', transition: 'all 0.2s' }}
+                          style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.35rem', borderRadius: '6px', transition: 'all 0.2s' }}
                           title="Eliminar de la base de datos"
                           onMouseOver={e=>{e.currentTarget.style.color='#DC2626'; e.currentTarget.style.background='#FEF2F2'}}
                           onMouseOut={e=>{e.currentTarget.style.color='#94A3B8'; e.currentTarget.style.background='transparent'}}
@@ -472,16 +472,16 @@ export default function AdminPanel() {
       {/* 4. Modal de Edición de Usuario */}
       {editingUser && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(4px)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ background: '#fff', borderRadius: '16px', padding: '2rem', width: '90%', maxWidth: '420px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', border: '1px solid #F1F5F9', animation: 'fadeIn 0.2s ease' }}>
-            <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.25rem', fontWeight: '800', color: '#0F172A' }}>Editar Perfil Ciudadano</h3>
-            <p style={{ margin: '0 0 1.5rem 0', color: '#64748B', fontSize: '0.85rem' }}>Ajusta el nivel de privilegios y accesos para: <strong>{editingUser.email}</strong></p>
+          <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '2rem', width: '90%', maxWidth: '420px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', border: '1px solid #F1F5F9', animation: 'fadeIn 0.2s ease' }}>
+            <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-primary)' }}>Editar Perfil Ciudadano</h3>
+            <p style={{ margin: '0 0 1.5rem 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>Ajusta el nivel de privilegios y accesos para: <strong>{editingUser.email}</strong></p>
             
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', fontWeight: '700', color: '#334155' }}>Asignar Rol Administrativo</label>
+              <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Asignar Rol Administrativo</label>
               <select 
                 value={editRole} 
                 onChange={e => setEditRole(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #E2E8F0', outline: 'none', fontSize: '0.9rem', color: '#334155', fontWeight: '600' }}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #E2E8F0', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '600' }}
               >
                 <option value="Administrador">Administrador (Control Total)</option>
                 <option value="Editor">Editor (Gestión de Contenido)</option>
@@ -492,11 +492,11 @@ export default function AdminPanel() {
             </div>
 
             <div style={{ marginBottom: '1.75rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', fontWeight: '700', color: '#334155' }}>Estado de la Cuenta</label>
+              <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>Estado de la Cuenta</label>
               <select 
                 value={editStatus} 
                 onChange={e => setEditStatus(e.target.value)}
-                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #E2E8F0', outline: 'none', fontSize: '0.9rem', color: '#334155', fontWeight: '600' }}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #E2E8F0', outline: 'none', fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: '600' }}
               >
                 <option value="activo">Cuenta Activa (Accede al panel)</option>
                 <option value="inactivo">Cuenta Suspedida (Denegado)</option>
@@ -506,7 +506,7 @@ export default function AdminPanel() {
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
               <button 
                 onClick={() => setEditingUser(null)}
-                style={{ background: '#F1F5F9', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', color: '#475569', fontSize: '0.9rem' }}
+                style={{ background: '#F1F5F9', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', color: 'var(--text-secondary)', fontSize: '0.9rem' }}
               >
                 Cerrar
               </button>

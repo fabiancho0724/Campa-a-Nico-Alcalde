@@ -43,7 +43,7 @@ export default function UneteCampaign() {
 
   return (
     <div className="animate-fade-in" style={{ padding: '0 1rem' }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto', background: '#fff', borderRadius: '16px', boxShadow: '0 10px 40px -10px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', background: 'var(--bg-card)', borderRadius: '16px', boxShadow: '0 10px 40px -10px rgba(0,0,0,0.08)', overflow: 'hidden' }}>
         
         {/* Header */}
         <div style={{ background: 'linear-gradient(135deg, var(--primary) 0%, #0c3866 100%)', color: '#fff', padding: '3rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
@@ -52,7 +52,7 @@ export default function UneteCampaign() {
           
           <div style={{ position: 'relative', zIndex: 1 }}>
             <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem', letterSpacing: '-0.02em' }}>Únete a la Campaña de Nico</h2>
-            <p style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.9)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '1.15rem', color: 'var(--bg-glass)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
               Permitir que ciudadanos, simpatizantes y voluntarios se vinculen a la campaña. Llenemos juntos de esperanza a Tunja.
             </p>
           </div>
@@ -191,7 +191,7 @@ const labelStyle = {
   display: 'block',
   fontSize: '0.9rem',
   fontWeight: '600',
-  color: '#334155',
+  color: 'var(--text-primary)',
   marginBottom: '0.5rem'
 };
 
@@ -204,7 +204,7 @@ const inputWrapperStyle = {
 const iconStyle = {
   position: 'absolute',
   left: '1rem',
-  color: '#94a3b8'
+  color: 'var(--text-muted)'
 };
 
 const inputStyle = {
@@ -216,7 +216,7 @@ const inputStyle = {
   color: '#1e293b',
   outline: 'none',
   transition: 'border-color 0.3s, box-shadow 0.3s',
-  background: '#f8fafc'
+  background: 'var(--bg-primary)'
 };
 
 const CheckSquare = ({ size, color }) => (

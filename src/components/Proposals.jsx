@@ -133,12 +133,12 @@ export default function Proposals() {
 
   return (
     <div className="las4nico-container animate-fade-in" style={{ 
-      color: '#0f172a', 
-      background: '#f8fafc', 
+      color: 'var(--text-primary)', 
+      background: 'var(--bg-primary)', 
       borderRadius: '24px',
       overflow: 'hidden',
       boxShadow: '0 20px 40px rgba(0,0,0,0.05)',
-      border: '1px solid rgba(0,0,0,0.05)',
+      border: '1px solid var(--border-color)',
       marginTop: '1rem'
     }}>
       
@@ -194,14 +194,14 @@ export default function Proposals() {
             letterSpacing: '-0.05em',
             margin: '0 0 1rem 0',
             lineHeight: 1,
-            color: '#0f172a'
+            color: 'var(--text-primary)'
           }}>
             LAS 5 DE <span style={{ color: 'var(--secondary)', textShadow: '0 10px 30px rgba(0,229,255,0.2)' }}>NICO</span>
           </h1>
           
           <p style={{ 
             fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', 
-            color: '#334155',
+            color: 'var(--text-primary)',
             marginBottom: '1rem',
             fontWeight: 800,
             lineHeight: 1.2,
@@ -211,7 +211,7 @@ export default function Proposals() {
 
           <p style={{ 
             fontSize: '1.1rem', 
-            color: '#475569',
+            color: 'var(--text-secondary)',
             marginBottom: '3rem',
             fontWeight: 500,
             maxWidth: '600px',
@@ -248,7 +248,7 @@ export default function Proposals() {
       </section>
 
       {/* EXPERIENCIA CENTRAL - ECOSISTEMA DE PILARES */}
-      <section id="ecosistema-pilares" style={{ padding: '8rem 2rem', background: '#f8fafc', position: 'relative', overflow: 'hidden' }}>
+      <section id="ecosistema-pilares" style={{ padding: '8rem 2rem', background: 'var(--bg-primary)', position: 'relative', overflow: 'hidden' }}>
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
           background: 'radial-gradient(circle at center, rgba(15,76,129,0.03) 0%, transparent 70%)',
@@ -256,7 +256,7 @@ export default function Proposals() {
         }} />
         
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, color: '#0f172a', marginBottom: '4rem', letterSpacing: '-0.03em' }}>
+          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '4rem', letterSpacing: '-0.03em' }}>
             Descubre el ecosistema Tunja 2.0
           </h2>
           
@@ -323,13 +323,13 @@ export default function Proposals() {
                   <div style={{ 
                     width: '8px', height: '8px', borderRadius: '50%', 
                     background: activeBandera === bandera.id ? '#fff' : bandera.color,
-                    boxShadow: activeBandera === bandera.id ? `0 0 10px rgba(255,255,255,0.8)` : `0 0 10px ${bandera.color}`
+                    boxShadow: activeBandera === bandera.id ? `0 0 10px var(--bg-glass)` : `0 0 10px ${bandera.color}`
                   }}></div>
                 </div>
 
                 <div style={{ 
                   position: 'relative', zIndex: 2,
-                  background: activeBandera === bandera.id ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.8)', 
+                  background: activeBandera === bandera.id ? 'rgba(255,255,255,0.25)' : 'var(--bg-glass)', 
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)',
                   color: activeBandera === bandera.id ? '#ffffff' : bandera.color, 
@@ -377,7 +377,7 @@ export default function Proposals() {
                         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: `linear-gradient(to bottom, transparent, rgba(255,255,255,0.2))` }} />
                     </div>
                     
-                    <div style={{ flex: '2 1 400px', padding: 'clamp(2rem, 5vw, 3.5rem)', background: '#fff', position: 'relative' }}>
+                    <div style={{ flex: '2 1 400px', padding: 'clamp(2rem, 5vw, 3.5rem)', background: 'var(--bg-card)', position: 'relative' }}>
                       <button 
                         onClick={() => setActiveBandera(null)}
                         style={{
@@ -385,7 +385,7 @@ export default function Proposals() {
                           background: 'rgba(0,0,0,0.05)', border: 'none', borderRadius: '50%',
                           width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center',
                           cursor: 'pointer', transition: 'background 0.2s', zIndex: 10,
-                          fontSize: '1.2rem', fontWeight: 'bold', color: '#0f172a'
+                          fontSize: '1.2rem', fontWeight: 'bold', color: 'var(--text-primary)'
                         }}
                         onMouseOver={e => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
                         onMouseOut={e => e.currentTarget.style.background = 'rgba(0,0,0,0.05)'}
@@ -397,14 +397,14 @@ export default function Proposals() {
                         <div style={{ marginRight: '0.5rem', display: 'flex' }}>{b.icon}</div>
                         Visión Programática
                       </div>
-                      <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', marginBottom: '1rem', lineHeight: 1.1, letterSpacing: '-0.03em' }}>{b.title}</h2>
+                      <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1rem', lineHeight: 1.1, letterSpacing: '-0.03em' }}>{b.title}</h2>
                       <p style={{ fontSize: '1.25rem', color: b.color, fontStyle: 'italic', fontWeight: 600, marginBottom: '2rem' }}>{b.slogan}</p>
                       
                       {b.id === 'movilidad' && (
-                        <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7 }}>
                           <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Construir una ciudad verdaderamente moderna, habitable y equitativa. Nuestro compromiso va más allá de la gestión urbana tradicional: nos enfocamos en diseñar un entorno público seguro, eficiente y pensado para el bienestar y el encuentro de todos los tunjanos.</p>
                           
-                          <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
+                          <h4 style={{ color: 'var(--text-primary)', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
                           <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0 }}>
                             <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
                               <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '4px' }}/>
@@ -427,10 +427,10 @@ export default function Proposals() {
                       )}
 
                       {b.id === 'empleo' && (
-                        <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7 }}>
                           <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Tunja es la capital universitaria y cultural, no podemos seguir rezagados. Nuestro compromiso es transformar la ciudad en un territorio atractivo para la inversión, competitivo para los empresarios y digno para los trabajadores.</p>
                           
-                          <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
+                          <h4 style={{ color: 'var(--text-primary)', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
                           <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0 }}>
                             <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
                               <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '4px' }}/>
@@ -453,10 +453,10 @@ export default function Proposals() {
                       )}
 
                       {b.id === 'seguridad' && (
-                        <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7 }}>
                           <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Nuestra meta es recuperar la paz en las calles, reconstruir la confianza entre los vecinos y transformar la administración municipal en un motor transparente, eficiente y libre de las mañas de la vieja política.</p>
                           
-                          <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
+                          <h4 style={{ color: 'var(--text-primary)', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
                           <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0 }}>
                             <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
                               <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '4px' }}/>
@@ -479,10 +479,10 @@ export default function Proposals() {
                       )}
 
                       {b.id === 'dignidad' && (
-                        <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7 }}>
                           <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Asumimos el compromiso ético y legal de nivelar la cancha para que el acceso a una vida digna sea un derecho garantizado, priorizando la Salud y la Educación de calidad.</p>
                           
-                          <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
+                          <h4 style={{ color: 'var(--text-primary)', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
                           <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0 }}>
                             <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
                               <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '4px' }}/>
@@ -505,10 +505,10 @@ export default function Proposals() {
                       )}
 
                       {b.id === 'viva' && (
-                        <div style={{ color: '#475569', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                        <div style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7 }}>
                           <p style={{ marginBottom: '1rem' }}><strong>Visión:</strong> Gobernar a Tunja desde adentro. Devolver la fiesta, el cuidado y el espacio público a quienes realmente les pertenecen, asegurando que cada habitante tenga un lugar.</p>
                           
-                          <h4 style={{ color: '#0f172a', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
+                          <h4 style={{ color: 'var(--text-primary)', fontWeight: 800, marginTop: '2rem', marginBottom: '1rem' }}>Líneas de Acción</h4>
                           <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0 }}>
                             <li style={{ marginBottom: '1rem', display: 'flex', alignItems: 'flex-start', gap: '0.8rem' }}>
                               <CheckCircle2 color={b.color} size={20} style={{ flexShrink: 0, marginTop: '4px' }}/>
@@ -537,8 +537,8 @@ export default function Proposals() {
       {/* INDICADORES DE IMPACTO EN TIEMPO REAL */}
       <section style={{ padding: '6rem 2rem', background: '#f1f5f9' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '3rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>Lo que logramos juntos</h2>
-          <p style={{ color: '#64748b', fontSize: '1.2rem', marginBottom: '4rem' }}>La fuerza de nuestra campaña está en la gente. Únete al movimiento.</p>
+          <h2 style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>Lo que logramos juntos</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', marginBottom: '4rem' }}>La fuerza de nuestra campaña está en la gente. Únete al movimiento.</p>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
             {[
@@ -548,13 +548,13 @@ export default function Proposals() {
               { num: '24', label: 'Eventos Realizados', icon: <Target size={32}/> },
               { num: '120', label: 'Voluntarios Vinculados', icon: <Heart size={32}/> }
             ].map((stat, i) => (
-              <div key={i} style={{ background: '#fff', padding: '3rem 2rem', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'all 0.3s', cursor: 'default' }}
+              <div key={i} style={{ background: 'var(--bg-card)', padding: '3rem 2rem', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', alignItems: 'center', transition: 'all 0.3s', cursor: 'default' }}
                 onMouseOver={e => e.currentTarget.style.transform = 'translateY(-10px)'}
                 onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
               >
                 <div style={{ color: 'var(--primary)', marginBottom: '1.5rem', background: 'rgba(15,76,129,0.05)', padding: '1.2rem', borderRadius: '50%' }}>{stat.icon}</div>
-                <div style={{ fontSize: '3.5rem', fontWeight: 900, color: '#0f172a', lineHeight: 1 }}>{stat.num}</div>
-                <div style={{ fontSize: '1.1rem', color: '#64748b', fontWeight: 600, marginTop: '1rem' }}>{stat.label}</div>
+                <div style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1 }}>{stat.num}</div>
+                <div style={{ fontSize: '1.1rem', color: 'var(--text-muted)', fontWeight: 600, marginTop: '1rem' }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -571,25 +571,25 @@ export default function Proposals() {
       </section>
 
       {/* PARTICIPACIÓN CIUDADANA */}
-      <section style={{ padding: '8rem 2rem', background: '#f8fafc', color: '#0f172a', textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+      <section style={{ padding: '8rem 2rem', background: 'var(--bg-primary)', color: 'var(--text-primary)', textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', padding: '0.6rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '2rem', border: '1px solid rgba(15,76,129,0.2)' }}>
             PARTICIPA
           </div>
-          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.03em', color: '#0f172a' }}>Tu Voz Construye Tunja</h2>
-          <p style={{ color: '#64748b', fontSize: '1.3rem', marginBottom: '3rem' }}>
+          <h2 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>Tu Voz Construye Tunja</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.3rem', marginBottom: '3rem' }}>
             Cada gran transformación comenzó con una idea. Escríbenos tu propuesta, reporta una necesidad o comparte tus ideas.
           </p>
           
-          <div style={{ background: '#ffffff', padding: '3rem', borderRadius: '24px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }}>
+          <div style={{ background: 'var(--bg-card)', padding: '3rem', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: '0 20px 40px rgba(0,0,0,0.05)' }}>
             <textarea 
               value={proposalText}
               onChange={(e) => setProposalText(e.target.value)}
               placeholder="Ej: Me gustaría proponer un laboratorio de robótica en el sur de la ciudad..."
               style={{ 
                 width: '100%', height: '180px', padding: '1.5rem', borderRadius: '16px', 
-                background: '#f8fafc', border: '1px solid rgba(0,0,0,0.1)', 
-                color: '#0f172a', fontSize: '1.1rem', resize: 'none', marginBottom: '2rem',
+                background: 'var(--bg-primary)', border: '1px solid var(--border-color)', 
+                color: 'var(--text-primary)', fontSize: '1.1rem', resize: 'none', marginBottom: '2rem',
                 fontFamily: 'inherit'
               }}
             />
@@ -613,7 +613,7 @@ export default function Proposals() {
           {/* Live Citizen Proposals List */}
           <div style={{ marginTop: '4rem', textAlign: 'left', width: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', borderBottom: '2px solid rgba(15,76,129,0.1)', paddingBottom: '0.75rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Users size={22} color="var(--primary)" />
                 Propuestas de la Comunidad ({recentAportes.length})
               </h3>
@@ -626,11 +626,11 @@ export default function Proposals() {
             </div>
 
             {loadingAportes ? (
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem 0', color: '#64748b' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem 0', color: 'var(--text-muted)' }}>
                 <span>Cargando aportes ciudadanos...</span>
               </div>
             ) : recentAportes.length === 0 ? (
-              <div style={{ background: '#fff', padding: '2rem', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)', textAlign: 'center', color: '#64748b' }}>
+              <div style={{ background: 'var(--bg-card)', padding: '2rem', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'center', color: 'var(--text-muted)' }}>
                 ¡Sé el primero en enviar tu propuesta para Las 5 de Nico!
               </div>
             ) : (
@@ -642,12 +642,12 @@ export default function Proposals() {
                     formattedDate = dateObj.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' });
                   }
                   return (
-                    <div key={aporte.id} style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <div key={aporte.id} style={{ background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: '0 4px 10px rgba(0,0,0,0.01)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
                         <span style={{ fontWeight: '800', color: '#1e293b', fontSize: '1rem' }}>{aporte.autor || 'Anónimo'}</span>
-                        <span style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: '500' }}>{formattedDate}</span>
+                        <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: '500' }}>{formattedDate}</span>
                       </div>
-                      <p style={{ margin: 0, color: '#475569', fontSize: '1rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{aporte.contenido}</p>
+                      <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{aporte.contenido}</p>
                     </div>
                   );
                 })}

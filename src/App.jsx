@@ -10,10 +10,13 @@ import BrandLogos from './components/BrandLogos';
 import AdminPanel from './components/AdminPanel';
 import UneteCampaign from './components/UneteCampaign';
 import TunjaAvanza from './components/TunjaAvanza';
+import LegalPolicies from './components/LegalPolicies';
+import UserProfile from './components/UserProfile';
+import Settings from './components/Settings';
 import { 
   Vote, Sliders, GraduationCap, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
-  Facebook, Twitter, Map, Target, UserPlus
+  Facebook, Twitter, Instagram, Map, Target, UserPlus
 } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
@@ -26,10 +29,46 @@ export default function App() {
   // viewMode puede ser 'landing' (portada) o 'dashboard' (interfaz principal)
   const [viewMode, setViewMode] = useState('landing');
   const [activeTab, setActiveTab] = useState('proposals'); // Default to a public tab
+  const [activeLegalDoc, setActiveLegalDoc] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+  const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    // Inicializar el tema
+    const storedTheme = localStorage.getItem('tunja-theme');
+    if (storedTheme) {
+      setTheme(storedTheme);
+      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        setTheme('dark');
+        document.documentElement.classList.add('dark');
+      }
+    }
+  }, []);
+
+  const changeTheme = (newTheme) => {
+    setTheme(newTheme);
+    localStorage.setItem('tunja-theme', newTheme);
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  };
+
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
+  };
+
+  const handleLegalClick = (docId) => {
+    setActiveLegalDoc(docId);
+    setActiveTab('legal');
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setUser(currentUser);
       if (currentUser) {
         const emailLower = (currentUser.email || '').toLowerCase().trim();
         try {
@@ -58,7 +97,19 @@ export default function App() {
 
   // Si estamos en modo Portada, renderizamos la portada premium
   if (viewMode === 'landing') {
-    return <LandingPage onEnterApp={() => setViewMode('dashboard')} />;
+    return <LandingPage 
+      onEnterApp={(targetTab = 'proposals') => {
+        setViewMode('dashboard');
+        setActiveTab(targetTab);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
+      }} 
+      onLegalClick={(docId) => {
+        setViewMode('dashboard');
+        setActiveLegalDoc(docId);
+        setActiveTab('legal');
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
+      }}
+    />;
   }
 
   const role = userProfile?.role || userProfile?.rol || 'Usuario Invitado';
@@ -70,7 +121,7 @@ export default function App() {
       
       {/* 1. Encabezado de Navegación Premium */}
       <header style={{
-        background: 'rgba(255, 255, 255, 0.9)',
+        background: 'var(--bg-glass)',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
         borderBottom: '1px solid var(--border-color)',
@@ -94,35 +145,35 @@ export default function App() {
           <nav className="nav-tab-container" style={{ flexWrap: 'wrap' }}>
             <button 
               className={`nav-tab ${activeTab === 'proposals' ? 'active' : ''}`}
-              onClick={() => setActiveTab('proposals')}
+              onClick={() => handleTabChange('proposals')}
             >
               <Target size={16} />
               Las 5 de Nico
             </button>
             <button 
               className={`nav-tab ${activeTab === 'joven' ? 'active' : ''}`}
-              onClick={() => setActiveTab('joven')}
+              onClick={() => handleTabChange('joven')}
             >
               <Sparkles size={16} />
               Joven 2.0
             </button>
             <button 
               className={`nav-tab ${activeTab === 'tunja_avanza' ? 'active' : ''}`}
-              onClick={() => setActiveTab('tunja_avanza')}
+              onClick={() => handleTabChange('tunja_avanza')}
             >
               <Building size={16} />
               Tunja Avanza
             </button>
             <button 
               className={`nav-tab ${activeTab === 'agenda' ? 'active' : ''}`}
-              onClick={() => setActiveTab('agenda')}
+              onClick={() => handleTabChange('agenda')}
             >
               <Calendar size={16} />
               La Agenda de Nico
             </button>
             <button 
               className={`nav-tab ${activeTab === 'unete' ? 'active' : ''}`}
-              onClick={() => setActiveTab('unete')}
+              onClick={() => handleTabChange('unete')}
               style={{ background: activeTab === 'unete' ? '#0f766e' : 'rgba(15, 118, 110, 0.05)', color: activeTab === 'unete' ? '#fff' : '#0f766e', borderColor: activeTab === 'unete' ? 'transparent' : 'rgba(15, 118, 110, 0.2)' }}
             >
               <UserPlus size={16} />
@@ -130,7 +181,7 @@ export default function App() {
             </button>
             <button 
               className={`nav-tab ${activeTab === 'map' ? 'active' : ''}`}
-              onClick={() => setActiveTab('map')}
+              onClick={() => handleTabChange('map')}
             >
               <BarChart3 size={16} />
               Historia Electoral de Tunja
@@ -140,14 +191,14 @@ export default function App() {
               <>
                 <button 
                   className={`nav-tab ${activeTab === 'electoral' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('electoral')}
+                  onClick={() => handleTabChange('electoral')}
                 >
                   <BarChart3 size={16} />
                   Balance
                 </button>
                 <button 
                   className={`nav-tab ${activeTab === 'budget' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('budget')}
+                  onClick={() => handleTabChange('budget')}
                 >
                   <Sliders size={16} />
                   Simulador
@@ -158,7 +209,7 @@ export default function App() {
             {isAdmin && (
               <button 
                 className={`nav-tab ${activeTab === 'admin' ? 'active' : ''}`}
-                onClick={() => setActiveTab('admin')}
+                onClick={() => handleTabChange('admin')}
                 style={{ background: activeTab === 'admin' ? 'var(--primary)' : 'rgba(15, 76, 129, 0.05)', color: activeTab === 'admin' ? '#fff' : 'var(--primary)', borderColor: activeTab === 'admin' ? 'transparent' : 'rgba(15, 76, 129, 0.2)' }}
               >
                 <Shield size={16} />
@@ -199,6 +250,9 @@ export default function App() {
             {activeTab === 'agenda' && <Agenda />}
             {activeTab === 'map' && <InteractiveMap />}
             {activeTab === 'admin' && isAdmin && <AdminPanel />}
+            {activeTab === 'legal' && <LegalPolicies activeLegalDoc={activeLegalDoc} />}
+            {activeTab === 'profile' && <UserProfile user={user} userProfile={userProfile} />}
+            {activeTab === 'settings' && <Settings theme={theme} changeTheme={changeTheme} />}
           </div>
           
         </div>
@@ -208,28 +262,58 @@ export default function App() {
       <footer style={{
         background: 'var(--bg-card)',
         borderTop: '1px solid var(--border-color)',
-        padding: '2rem 0',
+        padding: '3rem 0 2rem',
         marginTop: 'auto',
         fontSize: '0.85rem',
         color: 'var(--text-muted)'
       }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', margin: '0 auto', maxWidth: '1400px' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-              <BrandLogos variant="header" />
+        <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', margin: '0 auto', maxWidth: '1400px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                <BrandLogos variant="header" />
+              </div>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                Plataforma de transparencia en gestión pública y desarrollo urbano.
+              </p>
+              <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+                <a href="mailto:info@nicoalcaldetunja.co" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 500 }}>
+                  info@nicoalcaldetunja.co
+                </a>
+              </div>
             </div>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              Plataforma de transparencia en gestión pública y desarrollo urbano.
-            </p>
+            
+            <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Políticas</h4>
+                <button onClick={() => handleLegalClick('tratamiento')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                  Autorización de Tratamiento de Datos
+                </button>
+                <button onClick={() => handleLegalClick('privacidad')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                  Política de Privacidad
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Avisos Legales</h4>
+                <button onClick={() => handleLegalClick('aviso')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                  Aviso de Privacidad
+                </button>
+                <button onClick={() => handleLegalClick('cookies')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                  Uso de Cookies
+                </button>
+              </div>
+            </div>
           </div>
-          
-          <div style={{ textAlign: 'right' }}>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-              Innovación para la toma de decisiones ciudadanas.
+
+          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+            <p style={{ marginTop: '0.25rem', fontSize: '0.85rem' }}>
+              &copy; 2026 Nicolás Cortés - Alcalde Tunja 2026. Diseñado para liderar.
             </p>
-            <p style={{ marginTop: '0.25rem', fontSize: '0.75rem' }}>
-              &copy; 2026 Tunja 2.0. Diseñado para liderar.
-            </p>
+            <div style={{ display: 'flex', gap: '1.5rem' }}>
+              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Facebook size={20} /></a>
+              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Twitter size={20} /></a>
+              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Instagram size={20} /></a>
+            </div>
           </div>
         </div>
       </footer>

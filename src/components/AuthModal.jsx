@@ -18,12 +18,12 @@ const defaultInputStyle = {
   width: '100%',
   padding: '0.8rem 1rem',
   borderRadius: '8px',
-  border: '1px solid #E4E4E7',
+  border: '1px solid var(--border-color)',
   backgroundColor: '#F9FAFB',
   outline: 'none',
   fontSize: '0.95rem',
   transition: 'border-color 0.2s, box-shadow 0.2s',
-  color: '#171717'
+  color: 'var(--text-primary)'
 };
 
 const providersStyle = {
@@ -35,8 +35,8 @@ const providersStyle = {
 };
 
 const providerBtnStyle = {
-  background: '#FFFFFF',
-  border: '1px solid #E4E4E7',
+  background: 'var(--bg-card)',
+  border: '1px solid var(--border-color)',
   padding: '0.75rem',
   borderRadius: '8px',
   cursor: 'pointer',
@@ -157,7 +157,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
       <div style={{
         background: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(20px)',
-        color: '#171717',
+        color: 'var(--text-primary)',
         border: '1px solid rgba(255,255,255,0.2)',
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
         borderRadius: '24px',
@@ -172,7 +172,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
         <button 
           onClick={onClose}
           style={{
-            position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'transparent', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#71717A', cursor: 'pointer', transition: 'background 0.2s'
+            position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'transparent', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', cursor: 'pointer', transition: 'background 0.2s'
           }}
           onMouseOver={e=>e.currentTarget.style.background='#F4F4F5'}
           onMouseOut={e=>e.currentTarget.style.background='transparent'}
@@ -181,10 +181,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
         </button>
 
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#171717', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em', fontFamily: 'var(--font-heading)' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em', fontFamily: 'var(--font-heading)' }}>
             {mode === 'login' ? 'Bienvenido de nuevo' : mode === 'register' ? 'Crear Cuenta' : 'Recuperar Acceso'}
           </h2>
-          <p style={{ color: '#71717A', fontSize: '0.95rem', margin: 0 }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', margin: 0 }}>
             {mode === 'login' ? 'Accede a la plataforma de gobernanza inteligente.' 
              : mode === 'register' ? 'Únete al ecosistema Tunja 2.0.' 
              : 'Te enviaremos un enlace mágico seguro a tu correo.'}
@@ -243,7 +243,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
 
           {mode === 'login' && (
              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
-               <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#52525B', cursor: 'pointer' }}>
+               <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                  <input type="checkbox" style={{ accentColor: 'var(--primary)' }} /> Recordarme
                </label>
                <button type="button" onClick={() => setMode('reset')} style={{ background: 'transparent', border: 'none', color: '#0F4C81', fontWeight: '500', cursor: 'pointer', padding: 0 }}>
@@ -320,7 +320,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
           </>
         )}
 
-        <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: '#52525B' }}>
+        <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
           {mode === 'login' ? (
             <>
               ¿No tienes una cuenta? <button type="button" onClick={() => { setMode('register'); setError(null); }} style={{ background: 'transparent', border: 'none', color: '#0F4C81', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Regístrate</button>

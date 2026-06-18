@@ -412,13 +412,13 @@ export default function ElectoralHeatmap() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
         
         {/* Panel de Filtros Generales */}
-        <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Compass size={20} color="var(--primary)" />
             <h4 style={{ fontWeight: 'bold', margin: 0, fontSize: '1rem' }}>Dimensiones de Consulta</h4>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 500 }}>Filtros de Análisis</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 500 }}>Filtros de Análisis</span>
             <div style={{ display: 'flex', gap: '0.35rem' }}>
               {[
                 { id: 'demografia', label: 'Demografía' },
@@ -450,14 +450,14 @@ export default function ElectoralHeatmap() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 500 }}>Ámbito Territorial</span>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 500 }}>Ámbito Territorial</span>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
               <div>
-                <label style={{ fontSize: '0.65rem', color: '#94a3b8', fontWeight: 'bold', textTransform: 'uppercase' }}>Barrio</label>
+                <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 'bold', textTransform: 'uppercase' }}>Barrio</label>
                 <select
                   value={selectedBarrio}
                   onChange={(e) => setSelectedBarrio(e.target.value)}
-                  style={{ width: '100%', padding: '0.4rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.75rem', background: '#fff', outline: 'none' }}
+                  style={{ width: '100%', padding: '0.4rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.75rem', background: 'var(--bg-card)', outline: 'none' }}
                 >
                   <option value="Todos">Todos los barrios</option>
                   {selectedZone.barrios.map(b => (
@@ -466,11 +466,11 @@ export default function ElectoralHeatmap() {
                 </select>
               </div>
               <div>
-                <label style={{ fontSize: '0.65rem', color: '#94a3b8', fontWeight: 'bold', textTransform: 'uppercase' }}>Puesto</label>
+                <label style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 'bold', textTransform: 'uppercase' }}>Puesto</label>
                 <select
                   value={selectedPuesto}
                   onChange={(e) => setSelectedPuesto(e.target.value)}
-                  style={{ width: '100%', padding: '0.4rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.75rem', background: '#fff', outline: 'none' }}
+                  style={{ width: '100%', padding: '0.4rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.75rem', background: 'var(--bg-card)', outline: 'none' }}
                 >
                   <option value="Todos">Todos los puestos</option>
                   {selectedZone.puestos.map(p => (
@@ -483,10 +483,10 @@ export default function ElectoralHeatmap() {
         </div>
 
         {/* Panel de Indicadores según Selección */}
-        <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Población Total</span>
-            <span style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Población Total</span>
+            <span style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
               {selectedBarrio === 'Todos' ? selectedZone.poblacion.toLocaleString() : Math.round(selectedZone.poblacion / selectedZone.barrios.length).toLocaleString()}
             </span>
             <span style={{ fontSize: '0.7rem', color: 'var(--secondary)', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '2px', marginTop: '0.25rem' }}>
@@ -495,8 +495,8 @@ export default function ElectoralHeatmap() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Censo Electoral</span>
-            <span style={{ fontSize: '1.75rem', fontWeight: '800', color: '#0f172a', fontFamily: 'var(--font-heading)' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Censo Electoral</span>
+            <span style={{ fontSize: '1.75rem', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'var(--font-heading)' }}>
               {selectedZone.censo.toLocaleString()}
             </span>
             <span style={{ fontSize: '0.7rem', color: '#22c55e', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '2px', marginTop: '0.25rem' }}>
@@ -505,21 +505,21 @@ export default function ElectoralHeatmap() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Afinidad Progresista (2026)</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Afinidad Progresista (2026)</span>
             <span style={{ fontSize: '1.5rem', fontWeight: '805', color: 'var(--primary)', fontFamily: 'var(--font-heading)' }}>
               {selectedZone.presi2026_2v_pct}%
             </span>
-            <span style={{ fontSize: '0.65rem', color: '#64748b' }}>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
               Meta: {selectedZone.metaApoyo.toLocaleString()} votos
             </span>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem' }}>
-            <span style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Avance del Voluntariado</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Avance del Voluntariado</span>
             <span style={{ fontSize: '1.5rem', fontWeight: '805', color: '#10b981', fontFamily: 'var(--font-heading)' }}>
               {((selectedZone.avanceApoyo / selectedZone.metaApoyo) * 100).toFixed(1)}%
             </span>
-            <span style={{ fontSize: '0.65rem', color: '#64748b' }}>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
               Logrado: {selectedZone.avanceApoyo.toLocaleString()}
             </span>
           </div>
@@ -527,7 +527,7 @@ export default function ElectoralHeatmap() {
         </div>
 
         {/* Resumen de Ciudad de Tunja */}
-        <div style={{ background: '#0f172a', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.1)', color: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.5rem', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid rgba(255,255,255,0.1)', color: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '0.5rem', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: '-10px', bottom: '-10px', opacity: '0.05', transform: 'scale(1.5)' }}>
             <Shield size={120} />
           </div>
@@ -535,19 +535,19 @@ export default function ElectoralHeatmap() {
           <h4 style={{ margin: 0, fontWeight: '700', fontSize: '1.1rem', color: '#cbd5e1' }}>Potencial de Ciudad Inteligente</h4>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' }}>
             <div>
-              <span style={{ display: 'block', fontSize: '0.65rem', color: '#94a3b8' }}>POBLACIÓN</span>
+              <span style={{ display: 'block', fontSize: '0.65rem', color: 'var(--text-muted)' }}>POBLACIÓN</span>
               <strong style={{ fontSize: '0.95rem' }}>{globales.totalPob.toLocaleString()}</strong>
             </div>
             <div>
-              <span style={{ display: 'block', fontSize: '0.65rem', color: '#94a3b8' }}>CENSO TOTAL</span>
+              <span style={{ display: 'block', fontSize: '0.65rem', color: 'var(--text-muted)' }}>CENSO TOTAL</span>
               <strong style={{ fontSize: '0.95rem' }}>{globales.totalCenso.toLocaleString()}</strong>
             </div>
             <div>
-              <span style={{ display: 'block', fontSize: '0.65rem', color: '#94a3b8' }}>PART. HISTÓRICA</span>
+              <span style={{ display: 'block', fontSize: '0.65rem', color: 'var(--text-muted)' }}>PART. HISTÓRICA</span>
               <strong style={{ fontSize: '0.95rem', color: '#10b981' }}>{globales.promPart}%</strong>
             </div>
             <div>
-              <span style={{ display: 'block', fontSize: '0.65rem', color: '#94a3b8' }}>METRIC JUVENIL</span>
+              <span style={{ display: 'block', fontSize: '0.65rem', color: 'var(--text-muted)' }}>METRIC JUVENIL</span>
               <strong style={{ fontSize: '0.95rem', color: 'var(--secondary)' }}>{globales.promJoven}%</strong>
             </div>
           </div>
@@ -561,11 +561,11 @@ export default function ElectoralHeatmap() {
         {/* Contenedor del Mapa Cartográfico */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           
-          <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem' }}>
               <div>
                 <h4 style={{ fontWeight: 'bold', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Mapa Temático Comunal</h4>
-                <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                   {activeCategory === 'demografia' && 'Intensidad de Población por Comunas'}
                   {activeCategory === 'presidenciales' && 'Soporte y Votos Pacto Histórico 2026'}
                   {activeCategory === 'congreso' && 'Reserva y Votos Legislativos Senado 2026'}
@@ -574,7 +574,7 @@ export default function ElectoralHeatmap() {
 
               {/* Minibúsqueda integrada para comunas */}
               <div style={{ position: 'relative' }}>
-                <Search size={14} style={{ position: 'absolute', left: '10px', top: '10px', color: '#94a3b8' }} />
+                <Search size={14} style={{ position: 'absolute', left: '10px', top: '10px', color: 'var(--text-muted)' }} />
                 <input
                   type="text"
                   placeholder="Escribe comuna o barrio..."
@@ -664,7 +664,7 @@ export default function ElectoralHeatmap() {
 
               {/* Leyenda Dinámica de la Escala */}
               <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', bg: '#ffffff', background: 'rgba(255,255,255,0.95)', border: '1px solid #cbd5e1', padding: '0.75rem', borderRadius: '8px', zIndex: 10, width: '150px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-                <span style={{ fontSize: '0.6rem', fontWeight: 'bold', display: 'block', textTransform: 'uppercase', color: '#475569', marginBottom: '0.25rem' }}>Nivel de Concentración</span>
+                <span style={{ fontSize: '0.6rem', fontWeight: 'bold', display: 'block', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '0.25rem' }}>Nivel de Concentración</span>
                 <div style={{ 
                   height: '8px', 
                   borderRadius: '4px', 
@@ -674,7 +674,7 @@ export default function ElectoralHeatmap() {
                     ? 'linear-gradient(to right, #eff6ff, #93c5fd, #2563eb, #1e3a8a)'
                     : 'linear-gradient(to right, #faf5ff, #ddd6fe, #8b5cf6, #581c87)'
                 }}></div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.55rem', color: '#64748b', marginTop: '0.25rem', fontWeight: 'bold' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '0.25rem', fontWeight: 'bold' }}>
                   <span>Menor</span>
                   <span>Mayor</span>
                 </div>
@@ -683,11 +683,11 @@ export default function ElectoralHeatmap() {
           </div>
 
           {/* Serie Temporal y Comparativa Histórica */}
-          <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <div>
                 <h4 style={{ fontWeight: 'bold', margin: 0, fontSize: '1rem' }}>Evolución Presidencial PH</h4>
-                <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Resultados históricos de Primera y Segunda Vuelta 2022 vs 2026 para {selectedZone.name}</p>
+                <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resultados históricos de Primera y Segunda Vuelta 2022 vs 2026 para {selectedZone.name}</p>
               </div>
               <div style={{ background: 'rgba(15, 76, 129, 0.05)', borderRadius: '100px', padding: '4px 12px', fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 'bold' }}>
                 Comparativo Directo
@@ -721,7 +721,7 @@ export default function ElectoralHeatmap() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           
           {/* Selector Rápido de Zona */}
-          <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
             <h4 style={{ fontWeight: 'bold', margin: '0 0 1rem 0', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Target size={18} color="var(--primary)" />
               Selección de Comuna
@@ -750,7 +750,7 @@ export default function ElectoralHeatmap() {
                 >
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
                     <span style={{ fontSize: '0.8rem', fontWeight: 'bold', color: selectedZone.id === zone.id ? 'var(--primary)' : '#1e293b' }}>{zone.name}</span>
-                    <span style={{ fontSize: '0.65rem', color: '#64748b' }}>{zone.barrios.length} barrios | {zone.censo.toLocaleString()} votantes</span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{zone.barrios.length} barrios | {zone.censo.toLocaleString()} votantes</span>
                   </div>
                   <ChevronRight size={16} color={selectedZone.id === zone.id ? 'var(--primary)' : '#94a3b8'} />
                 </button>
@@ -765,7 +765,7 @@ export default function ElectoralHeatmap() {
               <h4 style={{ fontWeight: '800', margin: 0, fontSize: '0.95rem', letterSpacing: '0.5px', textTransform: 'uppercase' }}>Sistema de Inteligencia Territorial</h4>
             </div>
 
-            <p style={{ margin: 0, fontSize: '0.8rem', color: '#94a3b8', lineHeight: '1.4' }}>
+            <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
               Análisis estratégico generado dinámicamente según el comportamiento e historial electoral en: <strong style={{ color: '#fff' }}>{selectedZone.name}</strong>.
             </p>
 
@@ -788,13 +788,13 @@ export default function ElectoralHeatmap() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', flexWrap: 'wrap' }} className="responsive-charts-grid">
         
         {/* Radar de Comportamiento Territorial */}
-        <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
             <div>
               <h4 style={{ fontWeight: 'bold', margin: 0, fontSize: '1rem' }}>Radar Territorial</h4>
-              <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Evaluación de potencial, soporte y organización voluntaria</p>
+              <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Evaluación de potencial, soporte y organización voluntaria</p>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', border: '1px solid #e2e8f0', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', color: '#64748b', fontWeight: 'bold' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', border: '1px solid #e2e8f0', padding: '2px 8px', borderRadius: '20px', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>
               Alineación y Fortaleza
             </div>
           </div>
@@ -814,26 +814,26 @@ export default function ElectoralHeatmap() {
         </div>
 
         {/* Migración Electoral Estimada (Sankey Conceptualizado) */}
-        <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+        <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <div>
               <h4 style={{ fontWeight: 'bold', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Flujo y Migración de Votos</h4>
-              <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Análisis técnico de proveniencia del caudal electoral proyectado para 2026</p>
+              <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Análisis técnico de proveniencia del caudal electoral proyectado para 2026</p>
             </div>
             <div style={{ fontSize: '0.7rem', color: '#10b981', background: 'rgba(16, 185, 129, 0.08)', padding: '3px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
               Tasa de Reclutamiento Alta
             </div>
           </div>
 
-          <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '0 0 1.25rem 0', lineHeight: '1.4' }}>
-            Visualiza cómo se compone el soporte electoral actual en <strong style={{ color: '#0f172a' }}>{selectedZone.name}</strong>, estimando la transferencia de votos alternativos y tradicionales.
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: '0 0 1.25rem 0', lineHeight: '1.4' }}>
+            Visualiza cómo se compone el soporte electoral actual en <strong style={{ color: 'var(--text-primary)' }}>{selectedZone.name}</strong>, estimando la transferencia de votos alternativos y tradicionales.
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
             {migraciónData.map((flujo, idx) => (
               <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 'bold', color: '#334155' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 'bold', color: 'var(--text-primary)' }}>
                     <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: flujo.color }}></div>
                     {flujo.origen}
                   </div>
@@ -845,7 +845,7 @@ export default function ElectoralHeatmap() {
                   <div style={{ width: `${flujo.porcentaje}%`, background: flujo.color, height: '100%', borderRadius: '4px', transition: 'width 0.4s ease' }}></div>
                 </div>
                 
-                <span style={{ fontSize: '0.65rem', color: '#64748b', fontStyle: 'italic', display: 'block', marginTop: '0.1rem' }}>
+                <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontStyle: 'italic', display: 'block', marginTop: '0.1rem' }}>
                   {flujo.desc}
                 </span>
               </div>
@@ -857,11 +857,11 @@ export default function ElectoralHeatmap() {
       </div>
 
       {/* 4. Treemap de Barrio de la Comuna Seleccionada */}
-      <div style={{ background: '#ffffff', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+      <div style={{ background: 'var(--bg-card)', borderRadius: '16px', padding: '1.5rem', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
           <div>
             <h4 style={{ fontWeight: 'bold', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Matriz de Distribución por Barrios (Treemap)</h4>
-            <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Visualización de proporción del censo y afinidad histórica por barrios individuales en {selectedZone.name}</p>
+            <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Visualización de proporción del censo y afinidad histórica por barrios individuales en {selectedZone.name}</p>
           </div>
           <div style={{ fontSize: '0.7rem', color: 'var(--primary)', background: 'rgba(15, 76, 129, 0.08)', padding: '3px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
             Desglose Vecinal
@@ -895,11 +895,11 @@ export default function ElectoralHeatmap() {
 
               <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '0.75rem', marginTop: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <span style={{ display: 'block', fontSize: '0.6rem', color: '#64748b' }}>CENSO ESTIMADO</span>
+                  <span style={{ display: 'block', fontSize: '0.6rem', color: 'var(--text-muted)' }}>CENSO ESTIMADO</span>
                   <strong style={{ fontSize: '0.85rem', color: 'var(--text-primary)' }}>{barr.size.toLocaleString()}</strong>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ display: 'block', fontSize: '0.6rem', color: '#64748b' }}>VOTOS PACTO</span>
+                  <span style={{ display: 'block', fontSize: '0.6rem', color: 'var(--text-muted)' }}>VOTOS PACTO</span>
                   <strong style={{ fontSize: '0.85rem', color: 'var(--primary)' }}>~{barr.votosPH.toLocaleString()}</strong>
                 </div>
               </div>

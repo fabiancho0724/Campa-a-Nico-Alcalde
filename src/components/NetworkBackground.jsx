@@ -28,20 +28,24 @@ export default function NetworkBackground() {
       particles = [];
       const particleCount = Math.min((width * height) / 15000, 150); // Ajusta la densidad
       
+      const isDark = document.documentElement.classList.contains('dark');
+      const colorPrimary = isDark ? '59, 130, 246' : '15, 76, 129';
+      const colorSecondary = isDark ? '6, 182, 212' : '0, 184, 217';
+
       for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+        particles.push(new Particle(colorPrimary, colorSecondary));
       }
     };
 
     class Particle {
-      constructor() {
+      constructor(c1, c2) {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
         this.vx = (Math.random() - 0.5) * 0.8;
         this.vy = (Math.random() - 0.5) * 0.8;
         this.radius = Math.random() * 2 + 0.5;
-        // Colores que encajan con la identidad: Tonos azules y verdes sutiles
-        const colors = ['rgba(15, 76, 129, 0.4)', 'rgba(34, 197, 94, 0.3)', 'rgba(255, 255, 255, 0.2)'];
+        // Colores más visibles y corporativos
+        const colors = [`rgba(${c1}, 0.6)`, `rgba(${c1}, 0.4)`, `rgba(${c2}, 0.5)`];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
 
@@ -58,14 +62,14 @@ export default function NetworkBackground() {
           let dy = mouse.y - this.y;
           let distance = Math.sqrt(dx * dx + dy * dy);
           
-          // Efecto de conexión con el cursor
           if (distance < mouse.radius) {
+            // Tympanus style effect where particles are pushed or pulled slightly
+            // We'll just push them gently
             const forceDirectionX = dx / distance;
             const forceDirectionY = dy / distance;
             const force = (mouse.radius - distance) / mouse.radius;
-            // Alejar levemente las partículas del cursor
-            this.x -= forceDirectionX * force * 1.5;
-            this.y -= forceDirectionY * force * 1.5;
+            this.x -= forceDirectionX * force * 2;
+            this.y -= forceDirectionY * force * 2;
           }
         }
       }
@@ -80,22 +84,24 @@ export default function NetworkBackground() {
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
+
+      const isDark = document.documentElement.classList.contains('dark');
+      const strokeColor = isDark ? '59, 130, 246' : '15, 76, 129';
       
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();
         particles[i].draw();
         
-        // Conexiones entre partículas
-        for (let j = i; j < particles.length; j++) {
+        // Conexiones
+        for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 120) {
+          if (distance < 140) {
             ctx.beginPath();
-            // Opacidad basada en la distancia
-            const opacity = 1 - (distance / 120);
-            ctx.strokeStyle = `rgba(15, 76, 129, ${opacity * 0.15})`; // --primary
+            const opacity = (1 - (distance / 140)) * 0.4;
+            ctx.strokeStyle = `rgba(${strokeColor}, ${opacity})`;
             ctx.lineWidth = 1;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -109,11 +115,11 @@ export default function NetworkBackground() {
             const dy = particles[i].y - mouse.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < 150) {
+            if (distance < 180) {
                ctx.beginPath();
-               const opacity = 1 - (distance / 150);
-               ctx.strokeStyle = `rgba(109, 93, 252, ${opacity * 0.3})`;
-               ctx.lineWidth = 1.5;
+               const opacity = (1 - (distance / 180)) * 0.5;
+               ctx.strokeStyle = `rgba(${strokeColor}, ${opacity})`;
+               ctx.lineWidth = 1;
                ctx.moveTo(particles[i].x, particles[i].y);
                ctx.lineTo(mouse.x, mouse.y);
                ctx.stroke();

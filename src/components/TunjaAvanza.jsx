@@ -42,10 +42,10 @@ export default function TunjaAvanza() {
       
       {/* Header */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center', marginBottom: '4rem', padding: '4rem 2rem', background: 'linear-gradient(135deg, rgba(15,76,129,0.05), rgba(0,229,255,0.05))', borderRadius: '32px' }}>
-        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: '#0f172a', marginBottom: '1.5rem', letterSpacing: '-0.03em' }}>
+        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1.5rem', letterSpacing: '-0.03em' }}>
           Tunja Avanza
         </h2>
-        <p style={{ color: '#64748b', fontSize: '1.25rem', maxWidth: '700px', margin: '0 auto', lineHeight: 1.6 }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '1.25rem', maxWidth: '700px', margin: '0 auto', lineHeight: 1.6 }}>
           Sigue el pulso de nuestra campaña. Noticias, logros, eventos y las voces de miles de ciudadanos que ya se sumaron a la transformación.
         </p>
       </div>
@@ -57,9 +57,9 @@ export default function TunjaAvanza() {
             <div 
               key={index} 
               style={{
-                display: 'flex', gap: '2rem', background: '#fff', padding: '2.5rem', 
+                display: 'flex', gap: '2rem', background: 'var(--bg-card)', padding: '2.5rem', 
                 borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)', 
-                border: '1px solid rgba(0,0,0,0.05)', transition: 'all 0.3s'
+                border: '1px solid var(--border-color)', transition: 'all 0.3s'
               }}
               onMouseOver={e => e.currentTarget.style.transform = 'translateX(10px)'}
               onMouseOut={e => e.currentTarget.style.transform = 'translateX(0)'}
@@ -76,12 +76,12 @@ export default function TunjaAvanza() {
                   <span style={{ fontSize: '0.85rem', fontWeight: 800, color: item.color, background: `${item.color}15`, padding: '0.3rem 0.8rem', borderRadius: '50px', letterSpacing: '1px' }}>
                     {item.tipo}
                   </span>
-                  <span style={{ color: '#94a3b8', fontSize: '0.9rem', fontWeight: 600 }}>{item.fecha}</span>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 600 }}>{item.fecha}</span>
                 </div>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem', lineHeight: 1.3 }}>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem', lineHeight: 1.3 }}>
                   {item.titulo}
                 </h3>
-                <p style={{ color: '#475569', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                   {item.descripcion}
                 </p>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--primary)', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer' }}>

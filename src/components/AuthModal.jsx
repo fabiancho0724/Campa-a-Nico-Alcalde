@@ -60,17 +60,23 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
 
   const checkAndCreateUserDoc = async (userCred) => {
     try {
-      const userDocRef = doc(db, 'users', userCred.user.uid);
+      const userDocRef = doc(db, 'usuarios', userCred.user.uid);
       const userDocSnap = await getDoc(userDocRef);
       if (!userDocSnap.exists()) {
          const emailLower = (userCred.user.email || '').toLowerCase().trim();
+         const isSuperAdmin = emailLower === 'fabian.cely0724@gmail.com';
          await setDoc(userDocRef, {
-            userId: userCred.user.uid,
+            uid: userCred.user.uid,
             email: emailLower,
-            displayName: userCred.user.displayName || '',
-            photoURL: userCred.user.photoURL || '',
-            role: emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado',
-            estado: 'activo',
+            nombre: userCred.user.displayName || userCred.user.email?.split('@')[0] || 'Ciudadano',
+            rol: isSuperAdmin ? 'SuperAdmin' : 'usuario',
+            activo: true,
+            permisos: {
+              historialElectoral: isSuperAdmin,
+              balance: isSuperAdmin,
+              simulador: isSuperAdmin,
+              panelAdmin: isSuperAdmin
+            },
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp()
         });

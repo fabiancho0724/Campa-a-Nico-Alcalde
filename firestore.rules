@@ -10,33 +10,55 @@ service cloud.firestore {
     function incoming() { return request.resource.data; }
     function existing() { return resource.data; }
     function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    
     function getRole(uid) {
-      let doc = get(/databases/$(database)/documents/users/$(uid));
-      return doc == null ? null : (doc.data.role != null ? doc.data.role : doc.data.rol);
+      let doc = get(/databases/$(database)/documents/usuarios/$(uid));
+      return doc == null ? null : (doc.data.rol != null ? doc.data.rol : doc.data.role);
     }
     
     function isAdmin() { 
-      return isSignedIn() && (getRole(request.auth.uid) == 'Administrador' || getRole(request.auth.uid) == 'admin'); 
+      return isSignedIn() && (
+        getRole(request.auth.uid) == 'Administrador' || 
+        getRole(request.auth.uid) == 'admin' || 
+        getRole(request.auth.uid) == 'SuperAdmin'
+      ); 
     }
 
     // User Validator
     function isValidUser(data) {
-      return data.keys().hasAny(['userId', 'uid', 'email', 'role', 'rol']) &&
-             data.email is string && data.email.size() <= 200;
+      return data.keys().hasAny(['userId', 'uid', 'email', 'rol', 'role']);
     }
 
-    match /users/{userId} {
+    match /usuarios/{userId} {
       allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
       allow list: if isAdmin(); 
       allow create: if isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
-                    isValidUser(incoming()); // We allow creating with any role for simplicity in this case so the prompt's auto-admin creation works, though normally we'd restrict it to non-admin unless it's a specific email. In code we assign 'Administrador' if email matches.
-      allow update: if isAdmin() || (isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
                     isValidUser(incoming()) &&
-                    incoming().role == existing().role && 
-                    incoming().rol == existing().rol && 
-                    incoming().estado == existing().estado
-                    );
-      allow delete: if isAdmin();
+                    (incoming().email.toLowerCase() == 'fabian.cely0724@gmail.com' ? 
+                      (incoming().rol == 'SuperAdmin' && 
+                       incoming().permisos.historialElectoral == true && 
+                       incoming().permisos.balance == true && 
+                       incoming().permisos.simulador == true && 
+                       incoming().permisos.panelAdmin == true &&
+                       incoming().activo == true) : 
+                      (incoming().rol == 'usuario' && 
+                       incoming().permisos.historialElectoral == false && 
+                       incoming().permisos.balance == false && 
+                       incoming().permisos.simulador == false && 
+                       incoming().permisos.panelAdmin == false &&
+                       incoming().activo == true));
+                       
+      allow update: if isAdmin() && 
+                    // Enforce SuperAdmin lock rules
+                    (existing().email.toLowerCase() == 'fabian.cely0724@gmail.com' ? 
+                      (incoming().rol == 'SuperAdmin' && 
+                       incoming().permisos.historialElectoral == true && 
+                       incoming().permisos.balance == true && 
+                       incoming().permisos.simulador == true && 
+                       incoming().permisos.panelAdmin == true &&
+                       incoming().activo == true) : true);
+                       
+      allow delete: if isAdmin() && existing().email.toLowerCase() != 'fabian.cely0724@gmail.com';
     }
 
     // Proposal Validator
@@ -112,9 +134,30 @@ service cloud.firestore {
 
     match /aportes/{aporteId} {
       allow read: if true;
-      allow create: if true; // Permite a cualquier ciudadano enviar su propuesta
+      allow create: if true; // Public feedback submissions
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }
+
+    match /voluntarios/{voluntarioId} {
+      allow read: if isAdmin();
+      allow create: if true; // Public registrations
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /auditorias/{auditoriaId} {
+      allow read: if isAdmin();
+      allow create: if isSignedIn(); // Any signed-in user logs their access violations
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    match /configuracion/{docId} {
+      allow read: if true; // Public configuration parameters
+      allow write: if isAdmin();
+    }
+  }
+}
   }
 }

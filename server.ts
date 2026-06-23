@@ -9,6 +9,15 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Cabeceras de seguridad básicas (Mitigación OWASP)
+  app.use((req, res, next) => {
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    next();
+  });
+
   // API status route
   app.get('/api/status', (req, res) => {
     res.json({ status: 'live', database: 'firebase_direct' });

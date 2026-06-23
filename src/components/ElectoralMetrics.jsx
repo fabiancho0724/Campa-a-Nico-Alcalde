@@ -1,14 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { electoralData } from '../data/campaignData';
 import { Users, TrendingUp, UserCheck, MapPin, Sparkles, AlertCircle } from 'lucide-react';
 
 export default function ElectoralMetrics() {
   const { censoElectoral, historico2023, campanaActual } = electoralData;
+  const [campanaSettings, setCampanaSettings] = useState({
+    metaVotos: campanaActual.metaVotos,
+    votosProyectadosActual: campanaActual.votosProyectadosActual,
+    voluntariosMeta: 5000
+  });
+  
   const [selectedCommune, setSelectedCommune] = useState(campanaActual.comunas[0]);
   const [searchQuery, setSearchQuery] = useState('');
   const [voluntarios, setVoluntarios] = useState(campanaActual.voluntariosRegistrados);
   const [visitas, setVisitas] = useState(campanaActual.visitasPuertaAPuerta);
-  
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const docSnap = await getDoc(doc(db, 'configuracion', 'global'));
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setCampanaSettings({
+            metaVotos: Number(data.metaVotos) || campanaActual.metaVotos,
+            votosProyectadosActual: Number(data.votosProyectados) || campanaActual.votosProyectadosActual,
+            voluntariosMeta: Number(data.voluntariosMeta) || 5000
+          });
+        }
+      } catch (e) {
+        console.warn("Could not fetch remote campana settings:", e.message);
+      }
+    };
+    loadSettings();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Filtrar comunas por búsqueda
   const filteredCommunes = campanaActual.comunas.filter(c => 
     c.nombre.toLowerCase().includes(searchQuery.toLowerCase())
@@ -31,7 +58,7 @@ export default function ElectoralMetrics() {
   const abstDash = circumference - partDash;
 
   // Progreso de meta actual
-  const avanceMetaVotos = ((campanaActual.votosProyectadosActual / campanaActual.metaVotos) * 100).toFixed(1);
+  const avanceMetaVotos = ((campanaSettings.votosProyectadosActual / campanaSettings.metaVotos) * 100).toFixed(1);
 
   return (
     
@@ -73,7 +100,7 @@ export default function ElectoralMetrics() {
           </div>
           <div>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>Meta Votos 2026</p>
-            <h3 style={{ fontSize: '1.5rem', marginTop: '0.25rem' }}>{campanaActual.metaVotos.toLocaleString()}</h3>
+            <h3 style={{ fontSize: '1.5rem', marginTop: '0.25rem' }}>{campanaSettings.metaVotos.toLocaleString()}</h3>
             <p style={{ fontSize: '0.75rem', color: 'var(--primary)', marginTop: '0.1rem' }}>{avanceMetaVotos}% Proyectado</p>
           </div>
         </div>
@@ -199,7 +226,7 @@ export default function ElectoralMetrics() {
           <div className="glass-card" style={{ background: 'rgba(0, 0, 0,0.02)', border: 'none', padding: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
             <AlertCircle size={20} style={{ color: 'var(--secondary)', flexShrink: 0, marginTop: '2px' }} />
             <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>
-              <strong>Estrategia de Victoria:</strong> En 2023, el alcalde fue electo con 27.330 votos en un escenario de alta dispersión. Para 2026, establecemos la meta en <strong>{campanaActual.metaVotos.toLocaleString()} votos</strong> para consolidar una mayoría sólida e incontestable.
+              <strong>Estrategia de Victoria:</strong> En 2023, el alcalde fue electo con 27.330 votos en un escenario de alta dispersión. Para 2026, establecemos la meta en <strong>{campanaSettings.metaVotos.toLocaleString()} votos</strong> para consolidar una mayoría sólida e incontestable.
             </p>
           </div>
         </div>

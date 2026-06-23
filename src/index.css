@@ -1,21 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
-/* Sistema de diseño moderno interactivo - TUNJA 2.0 */
-:root {
+/* Sistema de diseño moderno interactivo - TUNJA 2.0 */:root {
   /* Fondo principal y secundarios - Light Mode */
   --bg-primary: #F7F9FC;       
   --bg-dark: #0A0C10;          
   --bg-secondary: #FFFFFF;     
-  --bg-overlay: rgba(10, 12, 16, 0.6);
+  --bg-overlay: rgba(10, 12, 16, 0.05);
   --bg-card: #FFFFFF;
   --bg-card-hover: #F8FAFC;
   --border-color: rgba(15, 23, 42, 0.08); 
   
-  --primary: #4A0072;          
-  --primary-hover: #360053;
+  /* Escala principal - Light Mode (basada en #4A0072) */
+  --primary-50: #f5ecfc;
+  --primary-100: #ead5f8;
+  --primary-200: #d4aaee;
+  --primary-300: #bd7be4;
+  --primary-400: #a14cd6;
+  --primary-500: #4A0072;
+  --primary-600: #3f0062;
+  --primary-700: #33004f;
+  --primary-800: #26003b;
+  --primary-900: #1b002a;
+
+  --primary: var(--primary-500);          
+  --primary-hover: var(--primary-600);
   --primary-glow: rgba(74, 0, 114, 0.15);
   
+  /* Colores auxiliares - Light Mode */
   --secondary: #00B8D9;        
   --secondary-hover: #00A0BE;
   --secondary-glow: rgba(0, 184, 217, 0.15);
@@ -37,8 +49,8 @@
   --bg-glass: rgba(255, 255, 255, 0.9);
   
   --text-primary: #0F172A;     
-  --text-secondary: #475569;   
-  --text-muted: #94A3B8;       
+  --text-secondary: #334155;   
+  --text-muted: #57657A;       
   
   --font-heading: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
@@ -56,15 +68,28 @@
   /* Fondo principal y secundarios - Dark Mode */
   --bg-primary: #0A0C10;       
   --bg-secondary: #111827;     
-  --bg-overlay: rgba(0, 0, 0, 0.8);
+  --bg-overlay: rgba(255, 255, 255, 0.05);
   --bg-card: #111827;
   --bg-card-hover: #1F2937;
   --border-color: rgba(255, 255, 255, 0.1); 
   
-  --primary: #3B82F6;          
-  --primary-hover: #60A5FA;
-  --primary-glow: rgba(59, 130, 246, 0.25);
+  /* Escala principal - Dark Mode */
+  --primary-50: #1b002a;
+  --primary-100: #26003b;
+  --primary-200: #33004f;
+  --primary-300: #3f0062;
+  --primary-400: #4A0072;
+  --primary-500: #bd7be4;
+  --primary-600: #ead5f8;
+  --primary-700: #d4aaee;
+  --primary-800: #f5ecfc;
+  --primary-900: #ffffff;
+
+  --primary: var(--primary-500);          
+  --primary-hover: var(--primary-600);
+  --primary-glow: rgba(189, 123, 228, 0.25);
   
+  /* Colores auxiliares - Dark Mode */
   --secondary: #06B6D4;        
   --secondary-hover: #22D3EE;
   --secondary-glow: rgba(6, 182, 212, 0.25);
@@ -85,8 +110,8 @@
   --bg-glass: rgba(15, 23, 42, 0.85);
   
   --text-primary: #F8FAFC;     
-  --text-secondary: #94A3B8;   
-  --text-muted: #64748B;       
+  --text-secondary: #CBD5E1;   
+  --text-muted: #94A3B8;       
   
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
@@ -161,6 +186,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
+  min-height: 44px; /* WCAG 2.2 Target Size */
   border-radius: 8px; /* More modern than rounded-full or 12px */
   font-family: var(--font-heading);
   font-weight: 600;
@@ -222,6 +248,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-tab {
   padding: 0.5rem 1rem;
+  min-height: 44px; /* WCAG 2.2 Target Size */
   border: none;
   background: transparent;
   color: rgba(255, 255, 255, 0.8);
@@ -245,6 +272,12 @@ h1, h2, h3, h4, h5, h6 {
   color: #4A0072;
   background: #FFFFFF;
   font-weight: 600;
+}
+
+/* Foco de teclado accesible (WCAG 2.2) */
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* Textos Especiales */

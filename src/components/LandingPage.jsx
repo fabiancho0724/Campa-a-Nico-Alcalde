@@ -39,21 +39,39 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
         const emailLower = (currentUser.email || '').toLowerCase().trim();
         try {
           const { doc, getDoc } = await import('firebase/firestore');
-          const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+          const userDoc = await getDoc(doc(db, 'usuarios', currentUser.uid));
           if (userDoc.exists()) {
             const data = userDoc.data();
             if (emailLower === 'fabian.cely0724@gmail.com') {
-              data.role = 'Administrador';
+              data.rol = 'SuperAdmin';
             }
             setUserProfile(data);
           } else {
-            const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado';
-            setUserProfile({ role: defaultRole, email: currentUser.email });
+            const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'SuperAdmin' : 'usuario';
+            setUserProfile({ 
+              rol: defaultRole, 
+              email: currentUser.email,
+              permisos: {
+                historialElectoral: emailLower === 'fabian.cely0724@gmail.com',
+                balance: emailLower === 'fabian.cely0724@gmail.com',
+                simulador: emailLower === 'fabian.cely0724@gmail.com',
+                panelAdmin: emailLower === 'fabian.cely0724@gmail.com'
+              }
+            });
           }
         } catch (e) {
           console.warn("Could not fetch user profile (using defaults):", e.message);
-          const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'Administrador' : 'Usuario Registrado';
-          setUserProfile({ role: defaultRole, email: currentUser.email });
+          const defaultRole = emailLower === 'fabian.cely0724@gmail.com' ? 'SuperAdmin' : 'usuario';
+          setUserProfile({ 
+            rol: defaultRole, 
+            email: currentUser.email,
+            permisos: {
+              historialElectoral: emailLower === 'fabian.cely0724@gmail.com',
+              balance: emailLower === 'fabian.cely0724@gmail.com',
+              simulador: emailLower === 'fabian.cely0724@gmail.com',
+              panelAdmin: emailLower === 'fabian.cely0724@gmail.com'
+            }
+          });
         }
       } else {
         setUserProfile(null);
@@ -155,7 +173,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                       {user.displayName || user.email?.split('@')[0]}
                     </span>
                     <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      {userProfile?.role || 'Usuario Registrado'}
+                      {userProfile?.rol || userProfile?.role || 'Usuario Registrado'}
                     </span>
                   </div>
                 </div>

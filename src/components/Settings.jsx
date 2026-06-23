@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, Lock, Globe, Moon, Monitor, Paintbrush } from 'lucide-react';
+import { Bell, Lock, Globe, Moon, Monitor, Paintbrush, Sun } from 'lucide-react';
 
 export default function Settings({ theme, changeTheme }) {
   const [notifications, setNotifications] = useState({
@@ -29,12 +29,12 @@ export default function Settings({ theme, changeTheme }) {
               <Paintbrush size={20} color="var(--primary)" /> Apariencia y Preferencias
             </h3>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
               <button 
                 onClick={() => changeTheme('light')}
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '1.5rem', borderRadius: '16px', border: `2px solid ${theme === 'light' ? 'var(--primary)' : 'var(--border-color)'}`, background: theme === 'light' ? 'var(--primary-glow)' : 'transparent', cursor: 'pointer', transition: 'all 0.2s' }}
               >
-                <Monitor size={32} color={theme === 'light' ? 'var(--primary)' : 'var(--text-muted)'} />
+                <Sun size={32} color={theme === 'light' ? 'var(--primary)' : 'var(--text-muted)'} />
                 <span style={{ fontWeight: '700', color: theme === 'light' ? 'var(--primary)' : 'var(--text-secondary)' }}>Claro</span>
               </button>
               <button 
@@ -43,6 +43,13 @@ export default function Settings({ theme, changeTheme }) {
               >
                 <Moon size={32} color={theme === 'dark' ? 'var(--primary)' : 'var(--text-muted)'} />
                 <span style={{ fontWeight: '700', color: theme === 'dark' ? 'var(--primary)' : 'var(--text-secondary)' }}>Oscuro</span>
+              </button>
+              <button 
+                onClick={() => changeTheme('system')}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', padding: '1.5rem', borderRadius: '16px', border: `2px solid ${theme === 'system' ? 'var(--primary)' : 'var(--border-color)'}`, background: theme === 'system' ? 'var(--primary-glow)' : 'transparent', cursor: 'pointer', transition: 'all 0.2s' }}
+              >
+                <Monitor size={32} color={theme === 'system' ? 'var(--primary)' : 'var(--text-muted)'} />
+                <span style={{ fontWeight: '700', color: theme === 'system' ? 'var(--primary)' : 'var(--text-secondary)' }}>Sistema</span>
               </button>
             </div>
           </div>

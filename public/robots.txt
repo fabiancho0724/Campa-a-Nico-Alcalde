@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.nicoalcaldetunja.co/sitemap.xml

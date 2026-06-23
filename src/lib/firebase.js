@@ -1,10 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDLS2LYNJypvGovQoiteLEUjsQ3MGwaftE",
   authDomain: "nico-alcalde.firebaseapp.com",
@@ -19,7 +18,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const analytics = null;
+// Initialize Analytics safely
+let analyticsInstance = null;
+try {
+  analyticsInstance = getAnalytics(app);
+} catch (e) {
+  console.warn("Analytics failed to initialize:", e.message);
+}
+
+export const analytics = analyticsInstance;
 
 // Initialize Auth
 export const auth = getAuth(app);
@@ -27,4 +34,4 @@ export const auth = getAuth(app);
 // Initialize Firestore
 export const db = getFirestore(app);
 
-// IndexedDB persistence removed for iframe compatibility
+export { app };

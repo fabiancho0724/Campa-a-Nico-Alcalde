@@ -12,6 +12,9 @@ import Settings from './components/Settings';
 import NicoMascot from './components/NicoMascot';
 import { NicoProvider } from './state/nicoStore';
 import { useNicoEvents } from './hooks/useNicoEvents';
+import { eventBus } from './core/eventBus';
+import { useSoundFX } from './hooks/useSoundFX';
+import FloatingWorld from './components/FloatingWorld';
 
 // Carga perezosa (lazy loading) para componentes pesados
 const ElectoralMetrics = lazy(() => import('./components/ElectoralMetrics'));
@@ -29,6 +32,7 @@ import { auth, db } from './lib/firebase';
 
 function AppContent() {
   useNicoEvents();
+  const { play } = useSoundFX();
 
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
 
@@ -279,8 +283,39 @@ function AppContent() {
   const isAdmin = role === 'SuperAdmin' || role === 'Administrador' || role === 'admin';
   const canViewReports = isAdmin || role === 'Editor' || role === 'Analista';
 
+  const handleGlobalClick = (e) => {
+    const target = e.target;
+    if (target) {
+      const isInteractive = target.tagName === 'BUTTON' || 
+                            target.closest('button') || 
+                            target.classList?.contains('nav-tab') ||
+                            target.closest('.nav-tab') ||
+                            target.tagName === 'A' ||
+                            target.closest('a');
+
+      if (isInteractive) {
+        eventBus.emit({ type: 'CLICK' });
+        play('click');
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleGlobalError = () => {
+      eventBus.emit({ type: 'ERROR' });
+      play('error');
+    };
+    window.addEventListener('error', handleGlobalError);
+    return () => window.removeEventListener('error', handleGlobalError);
+  }, [play]);
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg-primary)' }} className="animate-fade-in">
+    <div 
+      onClick={handleGlobalClick}
+      style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg-primary)', position: 'relative' }} 
+      className="animate-fade-in"
+    >
+      <FloatingWorld />
       
       {/* 1. Encabezado de Navegación Premium */}
       <header style={{

@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { Sparkles, X } from 'lucide-react';
 import { useNico } from '../state/nicoStore';
+import { useSoundFX } from '../hooks/useSoundFX';
 
 export default function NicoMascot({ activeTab }) {
-  const { emotion } = useNico();
+  const { emotion, brainState } = useNico();
+  const { play } = useSoundFX();
   const [isOpen, setIsOpen] = useState(true);
   const [bubbleText, setBubbleText] = useState('¡Hola! Soy tu asistente de campaña. ¿En qué te puedo ayudar hoy?');
   const [showBubble, setShowBubble] = useState(true);
@@ -17,8 +19,8 @@ export default function NicoMascot({ activeTab }) {
   // 👀 Motion values for smooth physical mouse-tracking
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 80, damping: 12 });
-  const springY = useSpring(y, { stiffness: 80, damping: 12 });
+  const springX = useSpring(x, { stiffness: 60, damping: 15 });
+  const springY = useSpring(y, { stiffness: 60, damping: 15 });
 
   // Tips suggested for each navigation tab
   const tabTips = {
@@ -44,8 +46,8 @@ export default function NicoMascot({ activeTab }) {
       const dy = e.clientY - centerY;
       const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
-      // Incline rotation max limits for head direction (12 degrees)
-      const maxTilt = 12;
+      // Incline rotation max limits for head direction (18 degrees max)
+      const maxTilt = 18;
       const rotY = (dx / dist) * maxTilt;
       const rotX = -(dy / dist) * maxTilt;
 
@@ -81,7 +83,7 @@ export default function NicoMascot({ activeTab }) {
     return () => clearInterval(interval);
   }, [isOpen]);
 
-  // Global mouseover detector to triggers nodules & speech reactions
+  // Global mouseover detector to trigger head-nod feedback
   useEffect(() => {
     if (!isOpen) return;
     
@@ -100,7 +102,6 @@ export default function NicoMascot({ activeTab }) {
 
       if (isInteractive) {
         // Physical quick head-nod feedback
-        const currentX = x.get();
         const currentY = y.get();
         y.set(currentY - 4);
         setTimeout(() => {
@@ -124,7 +125,7 @@ export default function NicoMascot({ activeTab }) {
 
     window.addEventListener('mouseover', handleMouseOver);
     return () => window.removeEventListener('mouseover', handleMouseOver);
-  }, [isOpen, x, y]);
+  }, [isOpen, y]);
 
   // Listen to celebration triggers for jumping & confeti
   useEffect(() => {
@@ -133,6 +134,7 @@ export default function NicoMascot({ activeTab }) {
       setBubbleText(msg);
       setShowBubble(true);
       setIsCelebrating(true);
+      play('success');
       
       const colors = ['#4A0072', '#00e5ff', '#ffb300', '#00e676', '#ff1744', '#d500f9'];
       const newParticles = Array.from({ length: 45 }).map((_, i) => ({
@@ -155,7 +157,7 @@ export default function NicoMascot({ activeTab }) {
 
     window.addEventListener('nico-celebrate', handleCelebrate);
     return () => window.removeEventListener('nico-celebrate', handleCelebrate);
-  }, []);
+  }, [play]);
 
   // Update Confetti physical movement frames
   useEffect(() => {
@@ -190,6 +192,7 @@ export default function NicoMascot({ activeTab }) {
   }, [particles]);
 
   const showRandomTip = () => {
+    play('click');
     const tips = [
       '¿Sabías que puedes ver el presupuesto proyectado de Tunja en la pestaña "Simulador"?',
       '¡Tu voz es clave! Envía una propuesta ciudadana en el apartado "Las 5 de Nico".',
@@ -285,7 +288,7 @@ export default function NicoMascot({ activeTab }) {
         ))}
       </div>
 
-      {/* 2. Speech Bubble with AnimatePresence */}
+      {/* 2. Speech Bubble with AnimatePresence & HUD bar */}
       <AnimatePresence>
         {showBubble && isOpen && (
           <motion.div
@@ -327,13 +330,30 @@ export default function NicoMascot({ activeTab }) {
 
             {/* Botón cerrar burbuja */}
             <button 
-              onClick={() => setShowBubble(false)}
+              onClick={() => { play('click'); setShowBubble(false); }}
               style={{ position: 'absolute', top: '6px', right: '6px', border: 'none', background: 'transparent', cursor: 'pointer', padding: '2px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center' }}
             >
               <X size={14} />
             </button>
 
             <p style={{ margin: '0 12px 0 0' }}>{bubbleText}</p>
+
+            {/* Living HUD metrics */}
+            <div style={{
+              marginTop: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              fontSize: '8px',
+              fontWeight: '800',
+              color: 'rgba(74, 0, 114, 0.65)',
+              borderTop: '1px solid rgba(74, 0, 114, 0.12)',
+              paddingTop: '6px',
+              letterSpacing: '0.04em'
+            }}>
+              <span>ENERGÍA: {brainState?.energy || 100}%</span>
+              <span style={{ textTransform: 'uppercase' }}>ESTADO: {emotion}</span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -365,9 +385,19 @@ export default function NicoMascot({ activeTab }) {
             }}
             onClick={showRandomTip}
           >
+            {/* Pulsing Aura Behind Mascot */}
+            <div style={{
+              position: 'absolute',
+              inset: '-12px',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0, 184, 217, 0.25) 0%, transparent 70%)',
+              zIndex: -1,
+              animation: 'aura-pulse-god 2.5s infinite ease-in-out'
+            }} />
+
             {/* Botón Minimizar */}
             <button
-              onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
+              onClick={(e) => { e.stopPropagation(); play('click'); setIsOpen(false); }}
               title="Minimizar mascota"
               style={{
                 position: 'absolute', top: '-4px', left: '-4px', width: '20px', height: '20px', borderRadius: '50%', background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', zIndex: 10
@@ -419,7 +449,7 @@ export default function NicoMascot({ activeTab }) {
           /* Collapsed version */
           <motion.button
             key="avatar-collapsed"
-            onClick={() => { setIsOpen(true); setShowBubble(true); }}
+            onClick={() => { play('click'); setIsOpen(true); setShowBubble(true); }}
             title="Abrir asistente Nico"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -452,6 +482,13 @@ export default function NicoMascot({ activeTab }) {
           </motion.button>
         )}
       </AnimatePresence>
+
+      <style>{`
+        @keyframes aura-pulse-god {
+          0%, 100% { transform: scale(1); opacity: 0.35; filter: blur(2px); }
+          50% { transform: scale(1.22); opacity: 0.65; filter: blur(4px); }
+        }
+      `}</style>
     </div>
   );
 }

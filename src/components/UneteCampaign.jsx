@@ -3,7 +3,7 @@ import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { Target, Search, Calendar, ChevronRight, User, Phone, Mail, MapPin, Briefcase } from 'lucide-react';
 
-export default function UneteCampaign() {
+export default function UneteCampaign({ onLegalClick }) {
   const [formData, setFormData] = useState({
     nombre: '',
     celular: '',
@@ -14,6 +14,7 @@ export default function UneteCampaign() {
     apoyo: 'Voluntariado',
     otroApoyo: ''
   });
+  const [aceptaDatos, setAceptaDatos] = useState(false);
   
   const [status, setStatus] = useState({ submitting: false, success: false, error: null });
 
@@ -24,17 +25,24 @@ export default function UneteCampaign() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!aceptaDatos) {
+      setStatus({ submitting: false, success: false, error: 'Debes autorizar el tratamiento de datos personales para continuar.' });
+      return;
+    }
     setStatus({ submitting: true, success: false, error: null });
     
     try {
       await addDoc(collection(db, 'voluntarios_campana'), {
         ...formData,
+        aceptaDatos: true,
+        autorizacionVersion: '1.0',
         fechaRegistro: serverTimestamp()
       });
       setStatus({ submitting: false, success: true, error: null });
       setFormData({
         nombre: '', celular: '', correo: '', barrio: '', edad: '', ocupacion: '', apoyo: 'Voluntariado', otroApoyo: ''
       });
+      setAceptaDatos(false);
     } catch (error) {
       console.error('Error guardando registro:', error);
       setStatus({ submitting: false, success: false, error: 'Hubo un error al guardar tu registro. Intenta de nuevo.' });
@@ -51,7 +59,7 @@ export default function UneteCampaign() {
           <div style={{ position: 'absolute', bottom: '-20%', right: '-5%', width: '250px', height: '250px', background: 'rgba(8, 145, 178, 0.2)', borderRadius: '50%', transform: 'scale(1.5)' }}></div>
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem', letterSpacing: '-0.02em' }}>Únete a la Campaña de Nico</h2>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem', letterSpacing: '-0.02em', color: '#ffffff' }}>Únete a la Campaña de Nico</h2>
             <p style={{ fontSize: '1.15rem', color: 'var(--bg-glass)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
               Permitir que ciudadanos, simpatizantes y voluntarios se vinculen a la campaña. Llenemos juntos de esperanza a Tunja.
             </p>
@@ -145,6 +153,28 @@ export default function UneteCampaign() {
                   <input type="text" name="otroApoyo" value={formData.otroApoyo} onChange={handleChange} style={{ ...inputStyle, paddingLeft: '1.25rem' }} placeholder="¿De qué otra forma deseas ayudar?" />
                 </div>
               )}
+
+              <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'flex-start', gap: '0.65rem', marginTop: '0.5rem', padding: '0.5rem 0' }}>
+                <input 
+                  required 
+                  type="checkbox" 
+                  id="aceptaDatos" 
+                  checked={aceptaDatos} 
+                  onChange={(e) => setAceptaDatos(e.target.checked)} 
+                  style={{ width: '18px', height: '18px', marginTop: '0.15rem', cursor: 'pointer', accentColor: 'var(--primary)' }}
+                />
+                <label htmlFor="aceptaDatos" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4', cursor: 'pointer', userSelect: 'none' }}>
+                  Acepto el uso de mis datos personales y autorizo su tratamiento de acuerdo con la{' '}
+                  <button 
+                    type="button" 
+                    onClick={() => onLegalClick ? onLegalClick('tratamiento') : window.dispatchEvent(new CustomEvent('navigateTab', { detail: 'legal' }))}
+                    style={{ background: 'none', border: 'none', padding: 0, color: 'var(--primary)', textDecoration: 'underline', cursor: 'pointer', font: 'inherit', fontWeight: '800' }}
+                  >
+                    Autorización de Tratamiento de Datos
+                  </button>{' '}
+                  *.
+                </label>
+              </div>
 
               {status.error && (
                 <div style={{ gridColumn: '1 / -1', background: '#fee2e2', color: '#b91c1c', padding: '1rem', borderRadius: '8px', fontSize: '0.95rem' }}>

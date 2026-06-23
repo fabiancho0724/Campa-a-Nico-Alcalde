@@ -438,7 +438,7 @@ export default function App() {
             }>
               {activeTab === 'joven' && <Joven20 />}
               {activeTab === 'tunja_avanza' && <TunjaAvanza />}
-              {activeTab === 'unete' && <UneteCampaign />}
+              {activeTab === 'unete' && <UneteCampaign onLegalClick={handleLegalClick} />}
               {activeTab === 'electoral' && hasPerm('balance') && <ElectoralMetrics />}
               {activeTab === 'budget' && hasPerm('simulador') && <BudgetVisualizer />}
               {activeTab === 'proposals' && <Proposals />}

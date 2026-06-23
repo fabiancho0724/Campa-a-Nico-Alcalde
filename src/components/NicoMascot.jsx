@@ -91,14 +91,16 @@ export default function NicoMascot({ activeTab }) {
       const target = e.target;
       if (!target) return;
 
-      const isInteractive = target.tagName === 'BUTTON' || 
-                            target.closest('button') || 
-                            target.classList?.contains('nav-tab') ||
-                            target.closest('.nav-tab') ||
-                            target.tagName === 'A' ||
-                            target.closest('a') ||
-                            target.classList?.contains('glass-card') ||
-                            target.closest('.glass-card');
+      const isInteractive = target.closest && (
+        target.tagName === 'BUTTON' || 
+        target.closest('button') || 
+        (target.classList?.contains && target.classList.contains('nav-tab')) ||
+        target.closest('.nav-tab') ||
+        target.tagName === 'A' ||
+        target.closest('a') ||
+        (target.classList?.contains && target.classList.contains('glass-card')) ||
+        target.closest('.glass-card')
+      );
 
       if (isInteractive) {
         // Physical quick head-nod feedback

@@ -9,12 +9,14 @@ export function useNicoEvents() {
     const handleGlobalClick = (e) => {
       const target = e.target;
       if (!target) return;
-      const isInteractive = target.tagName === 'BUTTON' || 
-                            target.closest('button') || 
-                            target.classList?.contains('nav-tab') ||
-                            target.closest('.nav-tab') ||
-                            target.tagName === 'A' ||
-                            target.closest('a');
+      const isInteractive = target.closest && (
+        target.tagName === 'BUTTON' || 
+        target.closest('button') || 
+        (target.classList?.contains && target.classList.contains('nav-tab')) ||
+        target.closest('.nav-tab') ||
+        target.tagName === 'A' ||
+        target.closest('a')
+      );
 
       if (isInteractive) {
         triggerEmotion('happy', 1200);

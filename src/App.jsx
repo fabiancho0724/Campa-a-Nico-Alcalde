@@ -286,12 +286,14 @@ function AppContent() {
   const handleGlobalClick = (e) => {
     const target = e.target;
     if (target) {
-      const isInteractive = target.tagName === 'BUTTON' || 
-                            target.closest('button') || 
-                            target.classList?.contains('nav-tab') ||
-                            target.closest('.nav-tab') ||
-                            target.tagName === 'A' ||
-                            target.closest('a');
+      const isInteractive = target.closest && (
+        target.tagName === 'BUTTON' || 
+        target.closest('button') || 
+        (target.classList?.contains && target.classList.contains('nav-tab')) ||
+        target.closest('.nav-tab') ||
+        target.tagName === 'A' ||
+        target.closest('a')
+      );
 
       if (isInteractive) {
         eventBus.emit({ type: 'CLICK' });

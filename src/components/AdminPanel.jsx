@@ -54,8 +54,8 @@ export default function AdminPanel() {
   const fetchAportes = async () => {
     setAportesLoading(true);
     try {
-      const snap = await getDocs(collection(db, 'aportes'));
-      const fetchedAportes = snap.docs.map(doc => {
+      const snap1 = await getDocs(collection(db, 'tu_voz_construye_tunja'));
+      const fetched1 = snap1.docs.map(doc => {
         const data = doc.data();
         let formattedDate = 'Sin fecha';
         if (data.createdAt) {
@@ -70,9 +70,33 @@ export default function AdminPanel() {
         return { 
           id: doc.id, 
           ...data,
+          collection: 'tu_voz_construye_tunja',
           dateStr: formattedDate 
         };
       });
+
+      const snap2 = await getDocs(collection(db, 'ecosistema_joven'));
+      const fetched2 = snap2.docs.map(doc => {
+        const data = doc.data();
+        let formattedDate = 'Sin fecha';
+        if (data.createdAt) {
+          if (data.createdAt.seconds) {
+            formattedDate = new Date(data.createdAt.seconds * 1000).toLocaleString('es-CO');
+          } else if (data.createdAt.toDate) {
+            formattedDate = data.createdAt.toDate().toLocaleString('es-CO');
+          } else {
+            formattedDate = new Date(data.createdAt).toLocaleString('es-CO');
+          }
+        }
+        return { 
+          id: doc.id, 
+          ...data,
+          collection: 'ecosistema_joven',
+          dateStr: formattedDate 
+        };
+      });
+
+      const fetchedAportes = [...fetched1, ...fetched2];
       fetchedAportes.sort((a, b) => {
         const secA = a.createdAt?.seconds || 0;
         const secB = b.createdAt?.seconds || 0;
@@ -175,10 +199,11 @@ export default function AdminPanel() {
     }
   };
 
-  const handleDeleteAporte = async (id) => {
+  const handleDeleteAporte = async (id, colName) => {
     if (!window.confirm('¿Estás seguro de eliminar este aporte de la base de datos?')) return;
     try {
-      await deleteDoc(doc(db, 'aportes', id));
+      const targetCol = colName || 'tu_voz_construye_tunja';
+      await deleteDoc(doc(db, targetCol, id));
       fetchAportes();
     } catch (err) {
       console.error(err);
@@ -564,7 +589,7 @@ export default function AdminPanel() {
                       </td>
                       <td style={{ padding: '1.25rem 1.5rem', verticalAlign: 'top', textAlign: 'right' }}>
                         <button 
-                          onClick={() => handleDeleteAporte(item.id)}
+                          onClick={() => handleDeleteAporte(item.id, item.collection)}
                           style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.35rem', borderRadius: '6px', transition: 'all 0.2s' }}
                           onMouseOver={e=>e.currentTarget.style.color='var(--accent-red)'}
                           onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}

@@ -38,12 +38,11 @@ export default function Proposals() {
     setLoadingAportes(true);
     try {
       const { getDocs, collection } = await import('firebase/firestore');
-      const snap = await getDocs(collection(db, 'aportes'));
+      const snap = await getDocs(collection(db, 'tu_voz_construye_tunja'));
       const items = snap.docs.map(doc => {
         const data = doc.data();
         return { id: doc.id, ...data };
       })
-      .filter(item => item.origen === 'Las 5 de Nico')
       .sort((a, b) => {
         const timeA = a.createdAt?.seconds || 0;
         const timeB = b.createdAt?.seconds || 0;
@@ -73,7 +72,7 @@ export default function Proposals() {
       const autorName = currentUser ? (currentUser.displayName || currentUser.email) : 'Ciudadano Tunja 2.0';
       const autorEmail = currentUser ? currentUser.email : 'anonimo@tunja.gov.co';
 
-      await addDoc(collection(db, 'aportes'), {
+      await addDoc(collection(db, 'tu_voz_construye_tunja'), {
         autor: autorName,
         email: autorEmail,
         titulo: 'Nueva propuesta ciudadana',

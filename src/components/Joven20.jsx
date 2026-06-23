@@ -50,12 +50,11 @@ export default function Joven20() {
     setLoadingAportes(true);
     try {
       const { getDocs, collection } = await import('firebase/firestore');
-      const snap = await getDocs(collection(db, 'aportes'));
+      const snap = await getDocs(collection(db, 'ecosistema_joven'));
       const items = snap.docs.map(doc => {
         const data = doc.data();
         return { id: doc.id, ...data };
       })
-      .filter(item => item.origen === 'Ecosistema Joven 2.0')
       .sort((a, b) => {
         const timeA = a.createdAt?.seconds || 0;
         const timeB = b.createdAt?.seconds || 0;
@@ -85,7 +84,7 @@ export default function Joven20() {
       const autorName = currentUser ? (currentUser.displayName || currentUser.email) : 'Joven Tunja 2.0';
       const autorEmail = currentUser ? currentUser.email : 'joven_anonimo@tunja.gov.co';
 
-      await addDoc(collection(db, 'aportes'), {
+      await addDoc(collection(db, 'ecosistema_joven'), {
         autor: autorName,
         email: autorEmail,
         titulo: 'Nueva idea ecosistema joven',

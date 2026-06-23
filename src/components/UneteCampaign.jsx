@@ -27,7 +27,7 @@ export default function UneteCampaign() {
     setStatus({ submitting: true, success: false, error: null });
     
     try {
-      await addDoc(collection(db, 'voluntarios'), {
+      await addDoc(collection(db, 'voluntarios_campana'), {
         ...formData,
         fechaRegistro: serverTimestamp()
       });

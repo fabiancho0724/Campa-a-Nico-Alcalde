@@ -19,18 +19,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Analytics safely
-let analytics = null;
-if (typeof window !== "undefined") {
-  import('firebase/analytics').then(({ isSupported, getAnalytics }) => {
-    isSupported().then(supported => {
-      if (supported) {
-        analytics = getAnalytics(app);
-      }
-    });
-  });
-}
-export { analytics };
+export const analytics = null;
 
 // Initialize Auth
 export const auth = getAuth(app);
@@ -38,13 +27,4 @@ export const auth = getAuth(app);
 // Initialize Firestore
 export const db = getFirestore(app);
 
-// Enable offline persistence (permite que la app funcione sin conexión)
-if (typeof window !== "undefined") {
-  try {
-    enableIndexedDbPersistence(db).catch((err) => {
-      console.warn("Firebase persistence error:", err.code);
-    });
-  } catch (err) {
-    console.warn("Firebase persistence sync error:", err);
-  }
-}
+// IndexedDB persistence removed for iframe compatibility

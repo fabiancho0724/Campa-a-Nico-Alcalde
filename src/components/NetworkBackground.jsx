@@ -135,7 +135,9 @@ export default function NetworkBackground() {
     };
     
     const resizeObserver = new ResizeObserver(() => {
-      init();
+      window.requestAnimationFrame(() => {
+        init();
+      });
     });
     
     if (canvas.parentElement) {

@@ -9,6 +9,7 @@ export default function NicoMascot({ activeTab }) {
   const [rot, setRot] = useState({ x: 0, y: 0 });
   const [isCelebrating, setIsCelebrating] = useState(false);
   const [particles, setParticles] = useState([]);
+  const [animationState, setAnimationState] = useState('idle'); // 'idle', 'blink', 'wink'
   
   const mascotRef = useRef(null);
 
@@ -52,13 +53,75 @@ export default function NicoMascot({ activeTab }) {
     setRot({ x: rotX, y: rotY });
   }, [mousePos, isOpen]);
 
-  // Actualizar burbuja de diálogo según la pestaña
+  // Sincronizar tips según pestaña
   useEffect(() => {
     if (tabTips[activeTab]) {
       setBubbleText(tabTips[activeTab]);
       setShowBubble(true);
     }
   }, [activeTab]);
+
+  // Guiño y parpadeo aleatorios controlados por estado
+  useEffect(() => {
+    if (!isOpen) return;
+    const interval = setInterval(() => {
+      const rand = Math.random();
+      if (rand < 0.22) {
+        // Guiño de ojo (Wink)
+        setAnimationState('wink');
+        setTimeout(() => setAnimationState('idle'), 500);
+      } else if (rand < 0.55) {
+        // Parpadeo (Blink)
+        setAnimationState('blink');
+        setTimeout(() => setAnimationState('idle'), 250);
+      }
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isOpen]);
+
+  // Detector global de hover para reaccionar a botones e inputs
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleMouseOver = (e) => {
+      const target = e.target;
+      if (!target) return;
+
+      const isInteractive = target.tagName === 'BUTTON' || 
+                            target.closest('button') || 
+                            target.classList?.contains('nav-tab') ||
+                            target.closest('.nav-tab') ||
+                            target.tagName === 'A' ||
+                            target.closest('a') ||
+                            target.classList?.contains('glass-card') ||
+                            target.closest('.glass-card');
+
+      if (isInteractive) {
+        // Reacción física: cabeceo rápido (nod)
+        setRot(prev => ({ ...prev, x: prev.x + 5 })); 
+        setTimeout(() => {
+          setRot(prev => ({ ...prev, x: prev.x - 5 }));
+        }, 180);
+
+        // Ocasionalmente muestra sugerencias rápidas sobre botones
+        const rand = Math.random();
+        if (rand < 0.15) {
+          const interactiveReplies = [
+            '¡Excelente iniciativa!',
+            '¡Súper! Presiona para interactuar.',
+            '¡Esa opción nos acerca a la Tunja 2.0!',
+            '¡Presiona con confianza!',
+            '¡Buen click para avanzar!'
+          ];
+          setBubbleText(interactiveReplies[Math.floor(Math.random() * interactiveReplies.length)]);
+          setShowBubble(true);
+        }
+      }
+    };
+
+    window.addEventListener('mouseover', handleMouseOver);
+    return () => window.removeEventListener('mouseover', handleMouseOver);
+  }, [isOpen]);
 
   // Manejar eventos de celebración (confeti y salto)
   useEffect(() => {
@@ -74,7 +137,7 @@ export default function NicoMascot({ activeTab }) {
         id: Date.now() + '-' + i,
         x: 0,
         y: 0,
-        vx: (Math.random() - 0.7) * 16 - 3, // sesgado hacia la izquierda (hacia el centro de la pantalla)
+        vx: (Math.random() - 0.7) * 16 - 3, 
         vy: -Math.random() * 15 - 12,
         color: colors[Math.floor(Math.random() * colors.length)],
         size: Math.random() * 8 + 6,
@@ -103,8 +166,8 @@ export default function NicoMascot({ activeTab }) {
       setParticles(prev => prev.map(p => {
         const nextY = p.y + p.vy;
         const nextX = p.x + p.vx;
-        const nextVy = p.vy + 0.6; // Gravedad
-        const nextVx = p.vx * 0.98; // Fricción aire
+        const nextVy = p.vy + 0.6; 
+        const nextVx = p.vx * 0.98; 
         return {
           ...p,
           x: nextX,
@@ -113,7 +176,7 @@ export default function NicoMascot({ activeTab }) {
           vx: nextVx,
           rotation: p.rotation + p.vRotation
         };
-      }).filter(p => p.y < 500 && Math.abs(p.x) < 600)); // Limitar rango
+      }).filter(p => p.y < 500 && Math.abs(p.x) < 600));
       
       requestAnimationFrame(updateParticles);
     };
@@ -136,6 +199,17 @@ export default function NicoMascot({ activeTab }) {
     const randomTip = tips[Math.floor(Math.random() * tips.length)];
     setBubbleText(randomTip);
     setShowBubble(true);
+  };
+
+  // Calcular la deformación facial según el estado
+  const getAvatarTransform = () => {
+    if (animationState === 'wink') {
+      return 'scaleY(0.12) rotate(6deg) skewX(5deg)'; // Simula un guiño con inclinación guiñada
+    }
+    if (animationState === 'blink') {
+      return 'scaleY(0.08)'; // Parpadeo completo
+    }
+    return 'scaleY(1) rotate(0deg)';
   };
 
   return (
@@ -168,7 +242,8 @@ export default function NicoMascot({ activeTab }) {
           color: 'var(--text-primary)',
           border: '2px solid rgba(74, 0, 114, 0.2)',
           boxShadow: '0 8px 32px rgba(74, 0, 114, 0.12)',
-          backdropFilter: 'blur(8px)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
           borderRadius: '16px',
           padding: '1rem',
           maxWidth: '280px',
@@ -218,7 +293,7 @@ export default function NicoMascot({ activeTab }) {
             padding: '3px',
             boxShadow: '0 10px 30px rgba(74, 0, 114, 0.25)',
             cursor: 'pointer',
-            transition: isCelebrating ? 'none' : 'transform 0.1s ease-out',
+            transition: isCelebrating ? 'none' : 'transform 0.12s ease-out',
             transform: isCelebrating 
               ? 'translateY(-20px) scale(1.1) rotate(360deg)' 
               : `perspective(300px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
@@ -250,7 +325,8 @@ export default function NicoMascot({ activeTab }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative'
+            position: 'relative',
+            animation: 'nico-breath 3s ease-in-out infinite' // Respiración suave
           }}>
             <img 
               src="/CaraNico.png" 
@@ -259,7 +335,8 @@ export default function NicoMascot({ activeTab }) {
                 width: '90%',
                 height: '90%',
                 objectFit: 'contain',
-                animation: 'nico-avatar-blink 5s ease-in-out infinite'
+                transition: 'transform 0.12s cubic-bezier(0.16, 1, 0.3, 1)',
+                transform: getAvatarTransform()
               }}
             />
           </div>
@@ -314,9 +391,9 @@ export default function NicoMascot({ activeTab }) {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-5px) rotate(1.5deg); }
         }
-        @keyframes nico-avatar-blink {
-          0%, 93%, 97%, 100% { transform: scaleY(1); }
-          95% { transform: scaleY(0.08); }
+        @keyframes nico-breath {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.025); }
         }
         @keyframes nico-jump {
           0%, 100% { transform: translateY(0) rotate(0); }

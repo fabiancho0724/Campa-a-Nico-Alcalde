@@ -3,21 +3,22 @@ import React from 'react';
 const urlLogosCombined = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/97dc30d90708e07f3362563c41396d379245a380/Logos.png";
 
 export default function BrandLogos({ variant = 'header' }) {
-  // Configuración de escalas según el modo
-  const scale = variant === 'footer' ? 1.4 : variant === 'hero' ? 1.2 : 1;
+  // Configuración de escalas según el modo (aumentado en 25%)
+  const scale = (variant === 'footer' ? 1.4 : variant === 'hero' ? 1.2 : 1) * 1.25;
   const isDark = true;
   
-  // Estilos del contenedor general
+  // Estilos del contenedor general (añadido animación flotante)
   const containerStyle = {
     display: 'flex',
     alignItems: 'center',
     padding: variant === 'hero' ? '0' : '0',
-    borderRadius: '0', // Quitar forma de píldora global
-    background: 'transparent', // Sin fondo global
+    borderRadius: '0', 
+    background: 'transparent', 
     border: 'none',
     boxShadow: 'none',
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    animation: 'brand-logo-float 4s ease-in-out infinite'
   };
 
   const imageStyle = {
@@ -31,11 +32,11 @@ export default function BrandLogos({ variant = 'header' }) {
 
   const interactiveProps = {
     onMouseOver: (e) => {
-      e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-      e.currentTarget.style.filter = 'brightness(1.1)';
+      e.currentTarget.style.transform = 'scale(1.1)';
+      e.currentTarget.style.filter = 'brightness(1.15)';
     },
     onMouseOut: (e) => {
-      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      e.currentTarget.style.transform = 'scale(1)';
       e.currentTarget.style.filter = 'brightness(1)';
     }
   };
@@ -48,6 +49,12 @@ export default function BrandLogos({ variant = 'header' }) {
         style={imageStyle}
         {...interactiveProps}
       />
+      <style>{`
+        @keyframes brand-logo-float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-4px); }
+        }
+      `}</style>
     </div>
   );
 }

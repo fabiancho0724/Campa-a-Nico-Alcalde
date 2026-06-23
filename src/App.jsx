@@ -36,7 +36,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('tunja-theme');
-    return storedTheme || 'dark';
+    return storedTheme || 'light';
   });
 
   // Helpers de rol y permisos
@@ -98,8 +98,8 @@ export default function App() {
         document.documentElement.classList.toggle('dark', storedTheme === 'dark');
       }
     } else {
-      setTheme('dark');
-      document.documentElement.classList.toggle('dark', true);
+      setTheme('light');
+      document.documentElement.classList.toggle('dark', false);
     }
 
     const handleNavigate = (e) => {

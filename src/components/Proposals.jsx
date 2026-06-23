@@ -146,19 +146,7 @@ export default function Proposals() {
       marginTop: '1rem'
     }}>
       
-      {/* LOGOS HEADER */}
-      <div style={{
-         width: '100%', 
-         background: '#4A0072',
-         borderBottom: '1px solid rgba(0,0,0,0.1)',
-         overflow: 'hidden'
-      }}>
-        <img 
-          src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/97dc30d90708e07f3362563c41396d379245a380/Franja%20de%20Logos.jpeg" 
-          alt="Alcalde Logos" 
-          style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', display: 'block' }} 
-        />
-      </div>
+
 
       {/* HERO SECTION */}
       <section style={{ 

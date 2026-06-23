@@ -1,6 +1,6 @@
 import React from 'react';
 
-const urlLogosCombined = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/046b55c06b084e0f640e6297111911cc7ff75c5a/Gemini_Generated_Image_ozkcccozkcccozkc.png";
+const urlLogosCombined = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/97dc30d90708e07f3362563c41396d379245a380/Logos.png";
 
 export default function BrandLogos({ variant = 'header' }) {
   // Configuración de escalas según el modo

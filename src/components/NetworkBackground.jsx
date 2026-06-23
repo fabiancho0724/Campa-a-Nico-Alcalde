@@ -29,7 +29,7 @@ export default function NetworkBackground() {
       const particleCount = Math.min((width * height) / 15000, 150); // Ajusta la densidad
       
       const isDark = document.documentElement.classList.contains('dark');
-      const colorPrimary = isDark ? '59, 130, 246' : '15, 76, 129';
+      const colorPrimary = isDark ? '59, 130, 246' : '74, 0, 114';
       const colorSecondary = isDark ? '6, 182, 212' : '0, 184, 217';
 
       for (let i = 0; i < particleCount; i++) {
@@ -86,7 +86,7 @@ export default function NetworkBackground() {
       ctx.clearRect(0, 0, width, height);
 
       const isDark = document.documentElement.classList.contains('dark');
-      const strokeColor = isDark ? '59, 130, 246' : '15, 76, 129';
+      const strokeColor = isDark ? '59, 130, 246' : '74, 0, 114';
       
       for (let i = 0; i < particles.length; i++) {
         particles[i].update();

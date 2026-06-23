@@ -439,7 +439,7 @@ export default function ElectoralHeatmap() {
                     cursor: 'pointer',
                     transition: 'all 0.2s',
                     borderColor: activeCategory === cat.id ? 'var(--primary)' : '#cbd5e1',
-                    background: activeCategory === cat.id ? 'rgba(15, 76, 129, 0.08)' : '#ffffff',
+                    background: activeCategory === cat.id ? 'rgba(74, 0, 114, 0.08)' : '#ffffff',
                     color: activeCategory === cat.id ? 'var(--primary)' : '#475569'
                   }}
                 >
@@ -689,7 +689,7 @@ export default function ElectoralHeatmap() {
                 <h4 style={{ fontWeight: 'bold', margin: 0, fontSize: '1rem' }}>Evolución Presidencial PH</h4>
                 <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Resultados históricos de Primera y Segunda Vuelta 2022 vs 2026 para {selectedZone.name}</p>
               </div>
-              <div style={{ background: 'rgba(15, 76, 129, 0.05)', borderRadius: '100px', padding: '4px 12px', fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 'bold' }}>
+              <div style={{ background: 'rgba(74, 0, 114, 0.05)', borderRadius: '100px', padding: '4px 12px', fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 'bold' }}>
                 Comparativo Directo
               </div>
             </div>
@@ -743,7 +743,7 @@ export default function ElectoralHeatmap() {
                     alignItems: 'center',
                     transition: 'all 0.2s',
                     borderColor: selectedZone.id === zone.id ? 'var(--primary)' : '#f1f5f9',
-                    background: selectedZone.id === zone.id ? 'rgba(15, 76, 129, 0.05)' : '#f8fafc',
+                    background: selectedZone.id === zone.id ? 'rgba(74, 0, 114, 0.05)' : '#f8fafc',
                   }}
                   onMouseOver={e => { if (selectedZone.id !== zone.id) e.currentTarget.style.background = '#f1f5f9'; }}
                   onMouseOut={e => { if (selectedZone.id !== zone.id) e.currentTarget.style.background = '#f8fafc'; }}
@@ -863,7 +863,7 @@ export default function ElectoralHeatmap() {
             <h4 style={{ fontWeight: 'bold', margin: '0 0 0.25rem 0', fontSize: '1rem' }}>Matriz de Distribución por Barrios (Treemap)</h4>
             <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Visualización de proporción del censo y afinidad histórica por barrios individuales en {selectedZone.name}</p>
           </div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--primary)', background: 'rgba(15, 76, 129, 0.08)', padding: '3px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
+          <div style={{ fontSize: '0.7rem', color: 'var(--primary)', background: 'rgba(74, 0, 114, 0.08)', padding: '3px 8px', borderRadius: '12px', fontWeight: 'bold' }}>
             Desglose Vecinal
           </div>
         </div>

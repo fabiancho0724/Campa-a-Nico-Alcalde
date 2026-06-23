@@ -268,7 +268,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              boxShadow: '0 4px 14px rgba(15, 76, 129, 0.3)'
+              boxShadow: '0 4px 14px rgba(74, 0, 114, 0.3)'
             }}
           >
             {loading ? <Loader className="animate-spin" size={20} /> : (mode === 'login' ? 'Iniciar Sesión' : mode === 'register' ? 'Crear Cuenta' : 'Enviar Enlace Mágico')}

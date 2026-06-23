@@ -8,7 +8,7 @@ export default function UserProfile({ user, userProfile }) {
       <div style={{ padding: '2rem', background: 'var(--bg-card)', borderRadius: '24px', boxShadow: '0 4px 25px rgba(0,0,0,0.03)', border: '1px solid var(--border-color)' }}>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', paddingBottom: '2rem', borderBottom: '1px solid #F4F4F5', marginBottom: '2rem' }}>
-          <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary) 0%, #0c3e6b 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '2.5rem', fontWeight: 'bold', boxShadow: '0 10px 25px rgba(15, 76, 129, 0.2)' }}>
+          <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--primary) 0%, #2D0046 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '2.5rem', fontWeight: 'bold', boxShadow: '0 10px 25px rgba(74, 0, 114, 0.2)' }}>
             {user?.displayName ? user.displayName.charAt(0).toUpperCase() : user?.email?.charAt(0).toUpperCase() || 'U'}
           </div>
           
@@ -20,7 +20,7 @@ export default function UserProfile({ user, userProfile }) {
               <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', fontSize: '1rem', background: '#F4F4F5', padding: '0.4rem 0.8rem', borderRadius: '100px' }}>
                 <Mail size={16} /> {user?.email}
               </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--primary)', fontSize: '0.9rem', background: 'rgba(15, 76, 129, 0.1)', padding: '0.4rem 0.8rem', borderRadius: '100px', fontWeight: '700', textTransform: 'uppercase' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--primary)', fontSize: '0.9rem', background: 'rgba(74, 0, 114, 0.1)', padding: '0.4rem 0.8rem', borderRadius: '100px', fontWeight: '700', textTransform: 'uppercase' }}>
                 <Shield size={16} /> {userProfile?.role || 'Ciudadano'}
               </span>
             </div>

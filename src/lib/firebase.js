@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 
@@ -20,8 +19,18 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Analytics (solo en el navegador, no en SSR)
-export const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
+// Initialize Analytics safely
+let analytics = null;
+if (typeof window !== "undefined") {
+  import('firebase/analytics').then(({ isSupported, getAnalytics }) => {
+    isSupported().then(supported => {
+      if (supported) {
+        analytics = getAnalytics(app);
+      }
+    });
+  });
+}
+export { analytics };
 
 // Initialize Auth
 export const auth = getAuth(app);
@@ -31,11 +40,11 @@ export const db = getFirestore(app);
 
 // Enable offline persistence (permite que la app funcione sin conexión)
 if (typeof window !== "undefined") {
-  enableIndexedDbPersistence(db).catch((err) => {
-    if (err.code === "failed-precondition") {
-      console.warn("Firebase: Persistencia offline no disponible (múltiples pestañas abiertas).");
-    } else if (err.code === "unimplemented") {
-      console.warn("Firebase: El navegador no soporta persistencia offline.");
-    }
-  });
+  try {
+    enableIndexedDbPersistence(db).catch((err) => {
+      console.warn("Firebase persistence error:", err.code);
+    });
+  } catch (err) {
+    console.warn("Firebase persistence sync error:", err);
+  }
 }

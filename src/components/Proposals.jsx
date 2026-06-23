@@ -142,6 +142,22 @@ export default function Proposals() {
       marginTop: '1rem'
     }}>
       
+      {/* LOGOS HEADER */}
+      <div style={{
+         width: '100%', 
+         padding: '1.5rem 2rem', 
+         display: 'flex', 
+         justifyContent: 'center', 
+         background: '#4A0072',
+         borderBottom: '1px solid rgba(0,0,0,0.1)'
+      }}>
+        <img 
+          src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/97dc30d90708e07f3362563c41396d379245a380/Franja%20de%20Logos.jpeg" 
+          alt="Alcalde Logos" 
+          style={{ height: '70px', objectFit: 'contain', borderRadius: '8px' }} 
+        />
+      </div>
+
       {/* HERO SECTION */}
       <section style={{ 
         position: 'relative', 
@@ -171,7 +187,6 @@ export default function Proposals() {
           <div style={{ 
             display: 'inline-flex', 
             alignItems: 'center', 
-            gap: '0.5rem', 
             gap: '0.5rem', 
             background: 'rgba(255,255,255,0.85)', 
             padding: '0.6rem 1.5rem', 
@@ -235,7 +250,7 @@ export default function Proposals() {
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              boxShadow: '0 15px 30px rgba(15, 76, 129, 0.4)',
+              boxShadow: '0 15px 30px rgba(74, 0, 114, 0.4)',
               transition: 'all 0.3s ease'
             }}
             onMouseOver={e => e.currentTarget.style.transform = 'translateY(-3px)'}
@@ -552,7 +567,7 @@ export default function Proposals() {
                 onMouseOver={e => e.currentTarget.style.transform = 'translateY(-10px)'}
                 onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
               >
-                <div style={{ color: 'var(--primary)', marginBottom: '1.5rem', background: 'rgba(15,76,129,0.05)', padding: '1.2rem', borderRadius: '50%' }}>{stat.icon}</div>
+                <div style={{ color: 'var(--primary)', marginBottom: '1.5rem', background: 'rgba(74,0,114,0.05)', padding: '1.2rem', borderRadius: '50%' }}>{stat.icon}</div>
                 <div style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1 }}>{stat.num}</div>
                 <div style={{ fontSize: '1.1rem', color: 'var(--text-muted)', fontWeight: 600, marginTop: '1rem' }}>{stat.label}</div>
               </div>
@@ -573,7 +588,7 @@ export default function Proposals() {
       {/* PARTICIPACIÓN CIUDADANA */}
       <section style={{ padding: '8rem 2rem', background: 'var(--bg-primary)', color: 'var(--text-primary)', textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(15,76,129,0.1)', color: 'var(--primary)', padding: '0.6rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '2rem', border: '1px solid rgba(15,76,129,0.2)' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(74,0,114,0.1)', color: 'var(--primary)', padding: '0.6rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '2rem', border: '1px solid rgba(74,0,114,0.2)' }}>
             PARTICIPA
           </div>
           <h2 style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>Tu Voz Construye Tunja</h2>

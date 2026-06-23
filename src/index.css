@@ -12,9 +12,9 @@
   --bg-card-hover: #F8FAFC;
   --border-color: rgba(15, 23, 42, 0.08); 
   
-  --primary: #0F4C81;          
-  --primary-hover: #0C3C66;
-  --primary-glow: rgba(15, 76, 129, 0.15);
+  --primary: #4A0072;          
+  --primary-hover: #360053;
+  --primary-glow: rgba(74, 0, 114, 0.15);
   
   --secondary: #00B8D9;        
   --secondary-hover: #00A0BE;
@@ -211,11 +211,11 @@ h1, h2, h3, h4, h5, h6 {
 /* Sistema de Navegación */
 .nav-tab-container {
   display: flex;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 0.35rem;
   border-radius: 12px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   gap: 0.25rem;
   max-width: max-content;
 }
@@ -224,7 +224,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0.5rem 1rem;
   border: none;
   background: transparent;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-heading);
   font-weight: 500;
   font-size: 0.9rem;
@@ -237,13 +237,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-tab:hover {
-  color: var(--text-primary);
-  background: rgba(0, 0, 0, 0.03);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .nav-tab.active {
-  color: var(--primary);
-  background: var(--primary-glow);
+  color: #4A0072;
+  background: #FFFFFF;
   font-weight: 600;
 }
 

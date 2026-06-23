@@ -250,7 +250,7 @@ export default function Joven20() {
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              boxShadow: '0 10px 25px rgba(15, 76, 129, 0.4)',
+              boxShadow: '0 10px 25px rgba(74, 0, 114, 0.4)',
               transition: 'all 0.3s ease'
             }}
             onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
@@ -426,7 +426,7 @@ export default function Joven20() {
       <section id="ecosistema" style={{ padding: '6rem 2rem', background: 'var(--bg-primary)', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <div style={{ display: 'inline-block', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.4rem 1.2rem', borderRadius: '50px', fontWeight: 700, fontSize: '0.85rem', marginBottom: '1rem' }}>Propuesta Programática</div>
+            <div style={{ display: 'inline-block', background: 'rgba(74, 0, 114, 0.1)', color: 'var(--primary)', padding: '0.4rem 1.2rem', borderRadius: '50px', fontWeight: 700, fontSize: '0.85rem', marginBottom: '1rem' }}>Propuesta Programática</div>
             <h2 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--text-primary)' }}>Ecosistema Joven 2.0</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '700px', margin: '0 auto' }}>
               Convertir a Tunja en la ciudad líder de Colombia en innovación, formación digital y generación de oportunidades.
@@ -680,7 +680,7 @@ export default function Joven20() {
       <section style={{ padding: '8rem 2rem', background: 'var(--bg-card)', textAlign: 'center', position: 'relative', backgroundImage: 'url(https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%202.png)', backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(255, 255, 255, 0.85)' }}></div>
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '800px', margin: '0 auto', background: 'var(--bg-card)', padding: '4rem 2rem', borderRadius: '32px', border: '1px solid var(--border-color)', boxShadow: '0 20px 50px rgba(0,0,0,0.1)' }}>
-          <div style={{ width: '70px', height: '70px', background: 'var(--primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem', color: '#fff', boxShadow: '0 10px 20px rgba(15, 76, 129, 0.2)' }}>
+          <div style={{ width: '70px', height: '70px', background: 'var(--primary)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem', color: '#fff', boxShadow: '0 10px 20px rgba(74, 0, 114, 0.2)' }}>
             <Compass size={36} />
           </div>
           
@@ -694,7 +694,7 @@ export default function Joven20() {
               <button 
               onClick={() => setTestStarted(true)}
               style={{
-                background: 'var(--bg-card)',
+                background: 'var(--primary)',
                 color: '#fff',
                 border: 'none',
                 padding: '1.25rem 3rem',
@@ -735,7 +735,7 @@ export default function Joven20() {
                     textAlign: 'center'
                   }}
                   onMouseOver={e => { e.currentTarget.style.borderColor = 'var(--primary)'; e.currentTarget.style.color = 'var(--primary)' }}
-                  onMouseOut={e => { e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)'; e.currentTarget.style.color = '#334155' }}
+                  onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.color = 'var(--text-primary)' }}
                   >
                     {opt.text}
                   </button>
@@ -744,17 +744,20 @@ export default function Joven20() {
             </div>
           ) : (
             <div className="animate-fade-in">
-              <div style={{ display: 'inline-block', background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.5rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '1.5rem' }}>Resultado</div>
+              <div style={{ display: 'inline-block', background: 'rgba(74, 0, 114, 0.1)', color: 'var(--primary)', padding: '0.5rem 1.5rem', borderRadius: '50px', fontWeight: 700, marginBottom: '1.5rem' }}>Resultado</div>
               <h2 style={{ fontSize: '3.5rem', fontWeight: 900, color: 'var(--text-primary)', marginBottom: '1rem' }}>{testResult}</h2>
               <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
                 ¡Excelente! Tu perfil encaja perfectamente. Participa en la Escuela de Liderazgo o solicita apoyo en nuestras líneas de talento.
               </p>
               <button 
-              onClick={() => alert(`Redirigiendo a las oportunidades para el perfil: ${testResult}`)}
+              onClick={() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.dispatchEvent(new CustomEvent('navigateTab', { detail: 'unete' }));
+              }}
               style={{
                 background: 'var(--primary)', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: '50px', fontSize: '1.1rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 10px 20px rgba(15,76,129,0.2)'
               }}>
-                Ver rutas de formación para mí
+                Únete al cambio
               </button>
               <div style={{ marginTop: '1.5rem' }}>
                 <button 

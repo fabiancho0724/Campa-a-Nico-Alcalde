@@ -14,11 +14,8 @@ export function useTheme() {
         document.documentElement.classList.remove('dark');
       }
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        setTheme('dark');
-        document.documentElement.classList.add('dark');
-      }
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 

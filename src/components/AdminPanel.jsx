@@ -512,7 +512,7 @@ export default function AdminPanel() {
               </button>
               <button 
                 onClick={handleSave}
-                style={{ background: 'var(--primary)', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', color: '#fff', fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(15, 76, 129, 0.2)' }}
+                style={{ background: 'var(--primary)', border: 'none', padding: '0.75rem 1.25rem', borderRadius: '8px', cursor: 'pointer', fontWeight: '700', color: '#fff', fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(74, 0, 114, 0.2)' }}
               >
                 Guardar Ajustes
               </button>

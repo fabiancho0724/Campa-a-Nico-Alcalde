@@ -41,13 +41,19 @@ export default function App() {
       setTheme(storedTheme);
       document.documentElement.classList.toggle('dark', storedTheme === 'dark');
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (prefersDark) {
-        setTheme('dark');
-        document.documentElement.classList.add('dark');
-      }
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
     }
-  }, []);
+
+    const handleNavigate = (e) => {
+      if (e.detail) {
+        setActiveTab(e.detail);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
+      }
+    };
+    window.addEventListener('navigateTab', handleNavigate);
+    return () => window.removeEventListener('navigateTab', handleNavigate);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const changeTheme = (newTheme) => {
     setTheme(newTheme);
@@ -121,10 +127,10 @@ export default function App() {
       
       {/* 1. Encabezado de Navegación Premium */}
       <header style={{
-        background: 'var(--bg-glass)',
+        background: '#4A0072',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid var(--border-color)',
+        borderBottom: '1px solid rgba(0,0,0,0.1)',
         position: 'sticky',
         top: 0,
         zIndex: 100,
@@ -174,7 +180,6 @@ export default function App() {
             <button 
               className={`nav-tab ${activeTab === 'unete' ? 'active' : ''}`}
               onClick={() => handleTabChange('unete')}
-              style={{ background: activeTab === 'unete' ? '#0f766e' : 'rgba(15, 118, 110, 0.05)', color: activeTab === 'unete' ? '#fff' : '#0f766e', borderColor: activeTab === 'unete' ? 'transparent' : 'rgba(15, 118, 110, 0.2)' }}
             >
               <UserPlus size={16} />
               Únete a la Campaña
@@ -210,7 +215,6 @@ export default function App() {
               <button 
                 className={`nav-tab ${activeTab === 'admin' ? 'active' : ''}`}
                 onClick={() => handleTabChange('admin')}
-                style={{ background: activeTab === 'admin' ? 'var(--primary)' : 'rgba(15, 76, 129, 0.05)', color: activeTab === 'admin' ? '#fff' : 'var(--primary)', borderColor: activeTab === 'admin' ? 'transparent' : 'rgba(15, 76, 129, 0.2)' }}
               >
                 <Shield size={16} />
                 Panel Admin
@@ -222,8 +226,22 @@ export default function App() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <button 
               onClick={() => setViewMode('landing')}
-              className="btn btn-secondary"
-              style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+              style={{ 
+                padding: '0.4rem 0.8rem', 
+                fontSize: '0.8rem', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '0.35rem',
+                background: 'rgba(255,255,255,0.1)',
+                color: '#FFFFFF',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                fontWeight: 500
+              }}
+              onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+              onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
             >
               <ArrowLeft size={14} />
               Salir al inicio
@@ -260,12 +278,12 @@ export default function App() {
 
       {/* 4. Pie de Página */}
       <footer style={{
-        background: 'var(--bg-card)',
-        borderTop: '1px solid var(--border-color)',
+        background: '#4A0072',
+        borderTop: '1px solid rgba(0,0,0,0.1)',
         padding: '3rem 0 2rem',
         marginTop: 'auto',
         fontSize: '0.85rem',
-        color: 'var(--text-muted)'
+        color: 'rgba(255,255,255,0.7)'
       }}>
         <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', margin: '0 auto', maxWidth: '1400px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
@@ -273,11 +291,11 @@ export default function App() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
                 <BrandLogos variant="header" />
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                 Plataforma de transparencia en gestión pública y desarrollo urbano.
               </p>
               <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
-                <a href="mailto:info@nicoalcaldetunja.co" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 500 }}>
+                <a href="mailto:info@nicoalcaldetunja.co" style={{ color: '#FFFFFF', textDecoration: 'none', fontWeight: 500 }}>
                   info@nicoalcaldetunja.co
                 </a>
               </div>
@@ -285,34 +303,34 @@ export default function App() {
             
             <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Políticas</h4>
-                <button onClick={() => handleLegalClick('tratamiento')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                <h4 style={{ color: '#FFFFFF', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Políticas</h4>
+                <button onClick={() => handleLegalClick('tratamiento')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                   Autorización de Tratamiento de Datos
                 </button>
-                <button onClick={() => handleLegalClick('privacidad')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                <button onClick={() => handleLegalClick('privacidad')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                   Política de Privacidad
                 </button>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Avisos Legales</h4>
-                <button onClick={() => handleLegalClick('aviso')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                <h4 style={{ color: '#FFFFFF', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Avisos Legales</h4>
+                <button onClick={() => handleLegalClick('aviso')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                   Aviso de Privacidad
                 </button>
-                <button onClick={() => handleLegalClick('cookies')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                <button onClick={() => handleLegalClick('cookies')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                   Uso de Cookies
                 </button>
               </div>
             </div>
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
             <p style={{ marginTop: '0.25rem', fontSize: '0.85rem' }}>
               &copy; 2026 Nicolás Cortés - Alcalde Tunja 2026. Diseñado para liderar.
             </p>
             <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Facebook size={20} /></a>
-              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Twitter size={20} /></a>
-              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Instagram size={20} /></a>
+              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Facebook size={20} /></a>
+              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Twitter size={20} /></a>
+              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Instagram size={20} /></a>
             </div>
           </div>
         </div>

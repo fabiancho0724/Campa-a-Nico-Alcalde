@@ -166,7 +166,7 @@ export default function UneteCampaign() {
                     fontSize: '1.1rem',
                     fontWeight: 'bold',
                     cursor: status.submitting ? 'not-allowed' : 'pointer',
-                    boxShadow: '0 8px 25px rgba(15, 76, 129, 0.25)',
+                    boxShadow: '0 8px 25px rgba(74, 0, 114, 0.25)',
                     transition: 'all 0.3s ease',
                     opacity: status.submitting ? 0.7 : 1
                   }}

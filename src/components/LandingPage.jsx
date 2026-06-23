@@ -118,10 +118,10 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
       
       {/* HEADER ELEGANTE Y CLARO (Como la app) */}
       <header style={{
-        background: 'var(--bg-glass)',
+        background: '#4A0072',
         backdropFilter: 'blur(20px)',
         WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid var(--border-color)',
+        borderBottom: '1px solid rgba(0,0,0,0.1)',
         position: 'fixed',
         top: 0,
         zIndex: 100,
@@ -145,16 +145,16 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
               <div style={{ position: 'relative' }}>
                 <div 
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', background: 'rgba(0,0,0,0.03)', padding: '0.4rem 0.75rem', borderRadius: '100px', border: '1px solid var(--border-color)', transition: 'all 0.2s' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', background: 'rgba(255,255,255,0.1)', padding: '0.4rem 0.75rem', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.2)', transition: 'all 0.2s' }}
                 >
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '14px', fontWeight: 'bold' }}>
                     {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-primary)', lineHeight: '1.2' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: '600', color: '#FFFFFF', lineHeight: '1.2' }}>
                       {user.displayName || user.email?.split('@')[0]}
                     </span>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                       {userProfile?.role || 'Usuario Registrado'}
                     </span>
                   </div>
@@ -179,8 +179,19 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
               <div style={{ display: 'flex', gap: '0.75rem' }}>
                 <button 
                   onClick={() => openAuth('login')}
-                  className="nav-clean-btn-light"
-                  style={{ padding: '0.5rem 1rem' }}
+                  style={{ 
+                    padding: '0.5rem 1rem', 
+                    background: 'transparent',
+                    color: '#FFFFFF',
+                    border: 'none',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    transition: 'all 0.2s',
+                    borderRadius: '8px'
+                  }}
+                  onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+                  onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; }}
                 >
                   Iniciar Sesión
                 </button>
@@ -197,7 +208,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                     cursor: 'pointer',
                     fontFamily: 'var(--font-heading)',
                     transition: 'all 0.2s',
-                    boxShadow: '0 4px 14px rgba(15, 76, 129, 0.3)'
+                    boxShadow: '0 4px 14px rgba(74, 0, 114, 0.3)'
                   }}
                   onMouseOver={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; }}
                   onMouseOut={(e) => { e.currentTarget.style.transform = 'translateY(0)'; }}
@@ -229,7 +240,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
           </div>
 
           {/* Glows Decorativos Modernos */}
-          <div style={{ position: 'absolute', top: '10%', left: '-10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(15, 76, 129, 0.15) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(60px)', zIndex: 0, animation: 'pulseGlow 8s infinite alternate' }}></div>
+          <div style={{ position: 'absolute', top: '10%', left: '-10%', width: '40vw', height: '40vw', background: 'radial-gradient(circle, rgba(74, 0, 114, 0.15) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(60px)', zIndex: 0, animation: 'pulseGlow 8s infinite alternate' }}></div>
           <div style={{ position: 'absolute', bottom: '10%', right: '30%', width: '30vw', height: '30vw', background: 'radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%)', borderRadius: '50%', filter: 'blur(60px)', zIndex: 0, animation: 'pulseGlow 6s infinite alternate-reverse' }}></div>
 
           <div className="container" style={{ position: 'relative', zIndex: 2, padding: '4rem 1.5rem 2rem 1.5rem', width: '100%', maxWidth: '1400px', margin: '0 auto' }}>
@@ -237,7 +248,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
               
               <div style={{ animation: 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
                  {/* Sello de campaña */}
-                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'var(--bg-glass)', border: '1px solid rgba(15, 76, 129, 0.2)', padding: '8px 18px', borderRadius: '100px', marginBottom: '2rem', boxShadow: '0 8px 16px rgba(0,0,0,0.06)', backdropFilter: 'blur(10px)' }}>
+                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'var(--bg-glass)', border: '1px solid rgba(74, 0, 114, 0.2)', padding: '8px 18px', borderRadius: '100px', marginBottom: '2rem', boxShadow: '0 8px 16px rgba(0,0,0,0.06)', backdropFilter: 'blur(10px)' }}>
                     <span className="live-dot-pulse" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', display: 'inline-block' }}></span>
                     <span style={{ color: 'var(--primary)', fontSize: '0.8rem', fontWeight: '850', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Campaña Alcaldía Tunja 2026</span>
                  </div>
@@ -255,7 +266,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                  
                  {/* Call to Actions - Botones Imposibles de Ignorar */}
                  <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
-                   <button onClick={() => handleEnterClick('unete')} className="btn-hero-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.1rem', fontWeight: '800', background: 'linear-gradient(135deg, var(--primary) 0%, #0c3e6b 100%)', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: '100px', cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', boxShadow: '0 10px 25px rgba(15, 76, 129, 0.3)' }}>
+                   <button onClick={() => handleEnterClick('unete')} className="btn-hero-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.1rem', fontWeight: '800', background: 'linear-gradient(135deg, var(--primary) 0%, #2D0046 100%)', color: '#fff', border: 'none', padding: '1rem 2.5rem', borderRadius: '100px', cursor: 'pointer', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)', boxShadow: '0 10px 25px rgba(74, 0, 114, 0.3)' }}>
                       🔥 Únete al Movimiento <ArrowUpRight size={22} className="hidden-mobile" />
                    </button>
                    <button onClick={() => handleEnterClick('proposals')} className="btn-hero-secondary" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.1rem', fontWeight: '700', background: 'var(--bg-glass)', color: 'var(--primary)', border: '1px solid rgba(15,76,129,0.2)', padding: '1rem 2rem', borderRadius: '100px', cursor: 'pointer', transition: 'all 0.3s', backdropFilter: 'blur(10px)', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
@@ -301,7 +312,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
           </div>
 
           <style>{`
-            .btn-hero-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(15, 76, 129, 0.4) !important; }
+            .btn-hero-primary:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(74, 0, 114, 0.4) !important; }
             .btn-hero-primary:active { transform: translateY(0) scale(0.98); }
             .btn-hero-secondary:hover { background: #fff !important; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.1) !important; border-color: rgba(15,76,129,0.3) !important; color: #0c3e6b !important; }
             .btn-hero-secondary:active { transform: translateY(0); }
@@ -348,9 +359,9 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                   <button 
                     onClick={() => setActivePillarTab('data')}
                     style={{
-                      background: activePillarTab === 'data' ? 'rgba(15, 76, 129, 0.08)' : 'transparent',
+                      background: activePillarTab === 'data' ? 'rgba(74, 0, 114, 0.08)' : 'transparent',
                       border: '1px solid',
-                      borderColor: activePillarTab === 'data' ? 'rgba(15, 76, 129, 0.2)' : 'rgba(0,0,0,0.04)',
+                      borderColor: activePillarTab === 'data' ? 'rgba(74, 0, 114, 0.2)' : 'rgba(0,0,0,0.04)',
                       borderRadius: '14px',
                       padding: '1.25rem 1.5rem',
                       textAlign: 'left',
@@ -535,7 +546,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                     { phase: 3, title: "Fase 4: Despliegue de Código", icon: <Cpu size={18} />, color: '#10b981', label: "Mes 4", desc: "Mes 4: Acciones Ejecutables" }
                   ].map((step) => {
                     const isActive = activeTimelinePhase === step.phase;
-                    const rgbColor = step.phase === 0 ? 'rgba(15, 76, 129' : step.phase === 1 ? 'rgba(0, 184, 217' : step.phase === 2 ? 'rgba(109, 93, 252' : 'rgba(16, 185, 129';
+                    const rgbColor = step.phase === 0 ? 'rgba(74, 0, 114' : step.phase === 1 ? 'rgba(0, 184, 217' : step.phase === 2 ? 'rgba(109, 93, 252' : 'rgba(16, 185, 129';
                     const activePulsingClass = step.phase === 0 ? 'pulsing-border-tech' : step.phase === 1 ? 'pulsing-border-tech-cyan' : step.phase === 2 ? 'pulsing-border-tech-purple' : '';
 
                     return (
@@ -604,7 +615,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(15, 76, 129, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(74, 0, 114, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {activeTimelinePhase === 0 && <Layers style={{ color: 'var(--primary)' }} size={24} />}
                       {activeTimelinePhase === 1 && <Users style={{ color: '#10b981' }} size={24} />}
                       {activeTimelinePhase === 2 && <BarChart3 style={{ color: '#f59e0b' }} size={24} />}
@@ -692,7 +703,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
       </main>
 
       {/* FOOTER ULTRA MODERNO CLARO */}
-      <footer style={{ background: 'var(--bg-card)', color: 'var(--text-primary)', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid var(--border-color)', position: 'relative', zIndex: 10 }}>
+      <footer style={{ background: '#4A0072', color: 'rgba(255,255,255,0.7)', padding: '6rem 2rem 2rem 2rem', borderTop: '1px solid rgba(0,0,0,0.1)', position: 'relative', zIndex: 10 }}>
          <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', flexDirection: 'column' }}>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem', marginBottom: '4rem' }}>
@@ -700,11 +711,11 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
                     <BrandLogos variant="header" />
                   </div>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>
                     Plataforma de transparencia en gestión pública y desarrollo urbano.
                   </p>
                   <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
-                    <a href="mailto:info@nicoalcaldetunja.co" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: 500 }}>
+                    <a href="mailto:info@nicoalcaldetunja.co" style={{ color: '#FFFFFF', textDecoration: 'none', fontWeight: 500 }}>
                       info@nicoalcaldetunja.co
                     </a>
                   </div>
@@ -712,32 +723,32 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
                
                <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Políticas</h4>
-                    <button onClick={() => onLegalClick('tratamiento')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                    <h4 style={{ color: '#FFFFFF', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Políticas</h4>
+                    <button onClick={() => onLegalClick('tratamiento')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                       Autorización de Tratamiento de Datos
                     </button>
-                    <button onClick={() => onLegalClick('privacidad')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                    <button onClick={() => onLegalClick('privacidad')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                       Política de Privacidad
                     </button>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                    <h4 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Avisos Legales</h4>
-                    <button onClick={() => onLegalClick('aviso')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                    <h4 style={{ color: '#FFFFFF', fontWeight: 700, marginBottom: '0.5rem', fontSize: '1rem' }}>Avisos Legales</h4>
+                    <button onClick={() => onLegalClick('aviso')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                       Aviso de Privacidad
                     </button>
-                    <button onClick={() => onLegalClick('cookies')} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-primary transition-colors">
+                    <button onClick={() => onLegalClick('cookies')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.7)', textAlign: 'left', cursor: 'pointer', padding: 0, fontSize: '0.9rem' }} className="hover:text-white transition-colors">
                       Uso de Cookies
                     </button>
                   </div>
                </div>
             </div>
 
-            <div style={{ width: '100%', borderTop: '1px solid var(--border-color)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+            <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>
                <span>&copy; 2026 Nicolás Cortés - Alcalde Tunja 2026. Diseñado para liderar.</span>
                <div style={{ display: 'flex', gap: '1.5rem' }}>
-                  <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Facebook size={20} /></a>
-                  <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Twitter size={20} /></a>
-                  <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='var(--primary)'} onMouseOut={e=>e.currentTarget.style.color='var(--text-muted)'}><Instagram size={20} /></a>
+                  <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Facebook size={20} /></a>
+                  <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Twitter size={20} /></a>
+                  <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Instagram size={20} /></a>
                </div>
             </div>
          </div>
@@ -790,7 +801,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
             {activeModal === 'acuerdo' && (
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                  <div style={{ background: 'rgba(15, 76, 129, 0.1)', color: 'var(--primary)', padding: '0.5rem', borderRadius: '8px' }}>
+                  <div style={{ background: 'rgba(74, 0, 114, 0.1)', color: 'var(--primary)', padding: '0.5rem', borderRadius: '8px' }}>
                      <Target size={24} />
                   </div>
                   <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Arquitectura Estratégica</h2>
@@ -1046,8 +1057,8 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
         }
         .premium-interactive-hover-card:hover {
           transform: translateY(-6px) scale(1.02) !important;
-          box-shadow: 0 15px 35px rgba(15, 76, 129, 0.08), 0 4px 15px rgba(0,0,0,0.03) !important;
-          border-color: rgba(15, 76, 129, 0.3) !important;
+          box-shadow: 0 15px 35px rgba(74, 0, 114, 0.08), 0 4px 15px rgba(0,0,0,0.03) !important;
+          border-color: rgba(74, 0, 114, 0.3) !important;
         }
         .premium-interactive-hover-card-large {
           position: relative;
@@ -1055,7 +1066,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
         }
         .premium-interactive-hover-card-large:hover {
           transform: translateY(-6px) scale(1.01) !important;
-          box-shadow: 0 20px 45px rgba(15, 76, 129, 0.28) !important;
+          box-shadow: 0 20px 45px rgba(74, 0, 114, 0.28) !important;
         }
         .premium-interactive-hover-card-large:hover .zoom-bg {
           transform: scale(1.08);
@@ -1072,7 +1083,7 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
 
         /* Pulsing states */
         .live-dot-pulse {
-          box-shadow: 0 0 0 0 rgba(15, 76, 129, 0.7);
+          box-shadow: 0 0 0 0 rgba(74, 0, 114, 0.7);
           animation: radialPulse 1.8s infinite;
         }
         @keyframes radialPulse {
@@ -1109,11 +1120,11 @@ export default function LandingPage({ onEnterApp, onLegalClick }) {
         .tech-stat-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-          border-color: rgba(15, 76, 129, 0.15);
+          border-color: rgba(74, 0, 114, 0.15);
         }
 
         .pulsing-border-tech {
-          box-shadow: 0 0 15px rgba(15, 76, 129, 0.12) !important;
+          box-shadow: 0 0 15px rgba(74, 0, 114, 0.12) !important;
           border-color: var(--primary) !important;
         }
         .pulsing-border-tech-cyan {

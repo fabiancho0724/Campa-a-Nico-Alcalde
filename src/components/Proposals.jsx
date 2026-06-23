@@ -149,16 +149,14 @@ export default function Proposals() {
       {/* LOGOS HEADER */}
       <div style={{
          width: '100%', 
-         padding: '1.5rem 2rem', 
-         display: 'flex', 
-         justifyContent: 'center', 
          background: '#4A0072',
-         borderBottom: '1px solid rgba(0,0,0,0.1)'
+         borderBottom: '1px solid rgba(0,0,0,0.1)',
+         overflow: 'hidden'
       }}>
         <img 
           src="https://raw.githubusercontent.com/fabiancho0724/Prueba-123/97dc30d90708e07f3362563c41396d379245a380/Franja%20de%20Logos.jpeg" 
           alt="Alcalde Logos" 
-          style={{ height: '70px', objectFit: 'contain', borderRadius: '8px' }} 
+          style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', display: 'block' }} 
         />
       </div>
 

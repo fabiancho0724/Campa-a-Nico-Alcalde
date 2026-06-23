@@ -93,6 +93,11 @@ export default function Joven20() {
         createdAt: serverTimestamp()
       });
 
+      window.dispatchEvent(new CustomEvent('nico-celebrate', { 
+        detail: { 
+          message: '¡Excelente propuesta! Tu aporte ha sido enviado con éxito al Laboratorio del Ecosistema Joven 2.0.' 
+        } 
+      }));
       alert('¡Propuesta enviada con éxito al Laboratorio del Ecosistema!');
       setShowProposalForm(false);
       setProposalText('');
@@ -298,7 +303,12 @@ export default function Joven20() {
                   onClick={handleSubmitProposal}
                   disabled={isSubmitting}
                   style={{ background: 'var(--primary)', color: '#fff', padding: '0.8rem 2rem', borderRadius: '50px', border: 'none', fontWeight: 600, cursor: isSubmitting ? 'not-allowed' : 'pointer', boxShadow: '0 4px 15px rgba(15,76,129,0.2)', opacity: isSubmitting ? 0.7 : 1 }}>
-                  {isSubmitting ? 'Enviando...' : 'Enviar Propuesta'}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.65rem' }}>
+                    <div className="nico-btn-avatar-container" style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#fff', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', transition: 'transform 0.3s ease' }}>
+                      <img className="nico-btn-avatar" src="/CaraNico.png" alt="Nico" style={{ width: '90%', height: '90%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
+                    </div>
+                    <span>{isSubmitting ? 'Enviando...' : 'Enviar Propuesta'}</span>
+                  </div>
                 </button>
               </div>
 

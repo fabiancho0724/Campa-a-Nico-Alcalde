@@ -9,6 +9,7 @@ import TunjaAvanza from './components/TunjaAvanza';
 import LegalPolicies from './components/LegalPolicies';
 import UserProfile from './components/UserProfile';
 import Settings from './components/Settings';
+import NicoMascot from './components/NicoMascot';
 
 // Carga perezosa (lazy loading) para componentes pesados
 const ElectoralMetrics = lazy(() => import('./components/ElectoralMetrics'));
@@ -515,6 +516,7 @@ export default function App() {
         </div>
       </footer>
 
+      <NicoMascot activeTab={activeTab} />
     </div>
   );
 }

@@ -98,10 +98,20 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
       if (mode === 'login') {
         const userCred = await signInWithEmailAndPassword(auth, emailLower, password);
         await checkAndCreateUserDoc(userCred);
+        window.dispatchEvent(new CustomEvent('nico-celebrate', { 
+          detail: { 
+            message: '¡Qué bueno verte de nuevo! Bienvenido a la plataforma inteligente Nico Alcalde.' 
+          } 
+        }));
         onClose();
       } else if (mode === 'register') {
         const userCred = await createUserWithEmailAndPassword(auth, emailLower, password);
         await checkAndCreateUserDoc(userCred);
+        window.dispatchEvent(new CustomEvent('nico-celebrate', { 
+          detail: { 
+            message: '¡Excelente! Te has registrado con éxito. Bienvenido al cambio inteligente.' 
+          } 
+        }));
         onClose();
       } else if (mode === 'reset') {
         await sendPasswordResetEmail(auth, emailLower);
@@ -136,6 +146,11 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
       
       const userCred = await signInWithPopup(auth, provider);
       await checkAndCreateUserDoc(userCred);
+      window.dispatchEvent(new CustomEvent('nico-celebrate', { 
+        detail: { 
+          message: '¡Bienvenido! Has ingresado correctamente a la plataforma inteligente.' 
+        } 
+      }));
       onClose();
     } catch (err) {
       console.error(err);
@@ -276,7 +291,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
               boxShadow: '0 4px 14px rgba(74, 0, 114, 0.3)'
             }}
           >
-            {loading ? <Loader className="animate-spin" size={20} /> : (mode === 'login' ? 'Iniciar Sesión' : mode === 'register' ? 'Crear Cuenta' : 'Enviar Enlace Mágico')}
+            {loading ? <Loader className="animate-spin" size={20} /> : (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.65rem' }}>
+                <div className="nico-btn-avatar-container" style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#fff', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', transition: 'transform 0.3s ease' }}>
+                  <img className="nico-btn-avatar" src="/CaraNico.png" alt="Nico" style={{ width: '90%', height: '90%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
+                </div>
+                <span>{mode === 'login' ? 'Iniciar Sesión' : mode === 'register' ? 'Crear Cuenta' : 'Enviar Enlace Mágico'}</span>
+              </div>
+            )}
           </button>
         </form>
 

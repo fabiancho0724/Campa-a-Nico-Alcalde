@@ -39,6 +39,11 @@ export default function UneteCampaign({ onLegalClick }) {
         fechaRegistro: serverTimestamp()
       });
       setStatus({ submitting: false, success: true, error: null });
+      window.dispatchEvent(new CustomEvent('nico-celebrate', { 
+        detail: { 
+          message: '¡Excelente decisión! Bienvenido al equipo de voluntarios de Nico. Juntos avanzamos.' 
+        } 
+      }));
       setFormData({
         nombre: '', celular: '', correo: '', barrio: '', edad: '', ocupacion: '', apoyo: 'Voluntariado', otroApoyo: ''
       });
@@ -203,7 +208,12 @@ export default function UneteCampaign({ onLegalClick }) {
                   onMouseOver={(e) => !status.submitting && (e.currentTarget.style.transform = 'translateY(-2px)')}
                   onMouseOut={(e) => !status.submitting && (e.currentTarget.style.transform = 'translateY(0)')}
                 >
-                  {status.submitting ? 'Enviando registro...' : 'Inscribirme ahora'}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.65rem' }}>
+                    <div className="nico-btn-avatar-container" style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#fff', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', transition: 'transform 0.3s ease' }}>
+                      <img className="nico-btn-avatar" src="/CaraNico.png" alt="Nico" style={{ width: '90%', height: '90%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
+                    </div>
+                    <span>{status.submitting ? 'Enviando registro...' : 'Inscribirme ahora'}</span>
+                  </div>
                 </button>
               </div>
 

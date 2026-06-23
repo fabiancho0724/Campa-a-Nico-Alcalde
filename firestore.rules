@@ -18,6 +18,7 @@ service cloud.firestore {
     
     function isAdmin() { 
       return isSignedIn() && (
+        (request.auth.token.email != null && request.auth.token.email.toLowerCase() == 'fabian.cely0724@gmail.com') ||
         getRole(request.auth.uid) == 'Administrador' || 
         getRole(request.auth.uid) == 'admin' || 
         getRole(request.auth.uid) == 'SuperAdmin'

@@ -21,7 +21,7 @@ import {
   Facebook, Twitter, Instagram, Map, Target, UserPlus
 } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, collection, addDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from './lib/firebase';
 
 export default function App() {
@@ -180,28 +180,59 @@ export default function App() {
           if (userDoc.exists()) {
             const data = userDoc.data();
             if (emailLower === 'fabian.cely0724@gmail.com') {
-              data.rol = 'SuperAdmin';
-              data.permisos = {
-                historialElectoral: true,
-                balance: true,
-                simulador: true,
-                panelAdmin: true
-              };
+              const needsUpdate = data.rol !== 'SuperAdmin' || 
+                                  !data.permisos?.panelAdmin || 
+                                  !data.permisos?.historialElectoral || 
+                                  !data.permisos?.balance || 
+                                  !data.permisos?.simulador;
+              if (needsUpdate) {
+                try {
+                  await updateDoc(doc(db, 'usuarios', currentUser.uid), {
+                    rol: 'SuperAdmin',
+                    permisos: {
+                      historialElectoral: true,
+                      balance: true,
+                      simulador: true,
+                      panelAdmin: true
+                    },
+                    updatedAt: new Date()
+                  });
+                } catch (updateErr) {
+                  console.warn("Could not update SuperAdmin permissions in Firestore:", updateErr.message);
+                }
+                data.rol = 'SuperAdmin';
+                data.permisos = {
+                  historialElectoral: true,
+                  balance: true,
+                  simulador: true,
+                  panelAdmin: true
+                };
+              }
             }
             setUserProfile(data);
           } else {
             const isSA = emailLower === 'fabian.cely0724@gmail.com';
-            setUserProfile({ 
+            const defaultProfile = { 
+              uid: currentUser.uid,
+              nombre: currentUser.displayName || currentUser.email?.split('@')[0] || 'Ciudadano',
               rol: isSA ? 'SuperAdmin' : 'usuario', 
-              email: currentUser.email,
+              email: emailLower,
               activo: true,
               permisos: {
                 historialElectoral: isSA,
                 balance: isSA,
                 simulador: isSA,
                 panelAdmin: isSA
-              }
-            });
+              },
+              createdAt: new Date(),
+              updatedAt: new Date()
+            };
+            try {
+              await setDoc(doc(db, 'usuarios', currentUser.uid), defaultProfile);
+            } catch (setErr) {
+              console.warn("Could not create user document in Firestore:", setErr.message);
+            }
+            setUserProfile(defaultProfile);
           }
         } catch (e) {
           console.warn("Could not fetch user profile (using defaults):", e.message);

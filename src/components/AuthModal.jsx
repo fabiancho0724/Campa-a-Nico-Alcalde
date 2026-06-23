@@ -19,7 +19,7 @@ const defaultInputStyle = {
   padding: '0.8rem 1rem',
   borderRadius: '8px',
   border: '1px solid var(--border-color)',
-  backgroundColor: '#F9FAFB',
+  backgroundColor: 'var(--bg-primary)',
   outline: 'none',
   fontSize: '0.95rem',
   transition: 'border-color 0.2s, box-shadow 0.2s',
@@ -161,11 +161,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
     onClick={onClose}
     >
       <div style={{
-        background: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(20px)',
+        background: 'var(--bg-card)',
         color: 'var(--text-primary)',
-        border: '1px solid rgba(255,255,255,0.2)',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        border: '1px solid var(--border-color)',
+        boxShadow: 'var(--shadow-lg)',
         borderRadius: '24px',
         width: '100%',
         maxWidth: '440px',
@@ -180,7 +179,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
           style={{
             position: 'absolute', top: '1.25rem', right: '1.25rem', background: 'transparent', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', cursor: 'pointer', transition: 'background 0.2s'
           }}
-          onMouseOver={e=>e.currentTarget.style.background='#F4F4F5'}
+          onMouseOver={e=>e.currentTarget.style.background='var(--bg-overlay)'}
           onMouseOut={e=>e.currentTarget.style.background='transparent'}
         >
           <X size={20} />
@@ -248,14 +247,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
           )}
 
           {mode === 'login' && (
-             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
-               <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                 <input type="checkbox" style={{ accentColor: 'var(--primary)' }} /> Recordarme
-               </label>
-               <button type="button" onClick={() => setMode('reset')} style={{ background: 'transparent', border: 'none', color: '#0F4C81', fontWeight: '500', cursor: 'pointer', padding: 0 }}>
-                 ¿Olvidaste tu contraseña?
-               </button>
-             </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                <input type="checkbox" style={{ accentColor: 'var(--primary)' }} /> Recordarme
+              </label>
+              <button type="button" onClick={() => setMode('reset')} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '500', cursor: 'pointer', padding: 0 }}>
+                ¿Olvidaste tu contraseña?
+              </button>
+            </div>
           )}
 
           <button 
@@ -291,12 +290,13 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
 
             <div style={providersStyle}>
               {/* Google */}
+              {/* Google */}
               <button 
                 type="button" 
                 onClick={() => handleProviderAuth('google')}
                 style={providerBtnStyle}
-                onMouseOver={(e) => e.currentTarget.style.background = '#F4F4F5'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#FFFFFF'}
+                onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-overlay)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'var(--bg-card)'}
               >
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style={{ width: '20px' }} />
               </button>
@@ -306,8 +306,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
                 type="button" 
                 onClick={() => handleProviderAuth('microsoft')}
                 style={providerBtnStyle}
-                onMouseOver={(e) => e.currentTarget.style.background = '#F4F4F5'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#FFFFFF'}
+                onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-overlay)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'var(--bg-card)'}
               >
                 <img src="https://www.svgrepo.com/show/448239/microsoft.svg" alt="Microsoft" style={{ width: '20px' }} />
               </button>
@@ -317,10 +317,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
                 type="button" 
                 onClick={() => handleProviderAuth('github')}
                 style={providerBtnStyle}
-                onMouseOver={(e) => e.currentTarget.style.background = '#F4F4F5'}
-                onMouseOut={(e) => e.currentTarget.style.background = '#FFFFFF'}
+                onMouseOver={(e) => e.currentTarget.style.background = 'var(--bg-overlay)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'var(--bg-card)'}
               >
-                <Github size={20} color="#171717" />
+                <Github size={20} color="var(--text-primary)" />
               </button>
             </div>
           </>
@@ -329,14 +329,14 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
           {mode === 'login' ? (
             <>
-              ¿No tienes una cuenta? <button type="button" onClick={() => { setMode('register'); setError(null); }} style={{ background: 'transparent', border: 'none', color: '#0F4C81', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Regístrate</button>
+              ¿No tienes una cuenta? <button type="button" onClick={() => { setMode('register'); setError(null); }} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Regístrate</button>
             </>
           ) : mode === 'register' ? (
             <>
-              ¿Ya tienes una cuenta? <button type="button" onClick={() => { setMode('login'); setError(null); }} style={{ background: 'transparent', border: 'none', color: '#0F4C81', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Inicia sesión</button>
+              ¿Ya tienes una cuenta? <button type="button" onClick={() => { setMode('login'); setError(null); }} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Inicia sesión</button>
             </>
           ) : (
-            <button type="button" onClick={() => { setMode('login'); setError(null); }} style={{ background: 'transparent', border: 'none', color: '#0F4C81', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Volver a iniciar sesión</button>
+            <button type="button" onClick={() => { setMode('login'); setError(null); }} style={{ background: 'transparent', border: 'none', color: 'var(--primary)', fontWeight: '600', cursor: 'pointer', padding: 0 }}>Volver a iniciar sesión</button>
           )}
         </div>
       </div>

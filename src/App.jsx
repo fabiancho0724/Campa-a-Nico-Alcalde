@@ -34,7 +34,10 @@ export default function App() {
   const [activeLegalDoc, setActiveLegalDoc] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [user, setUser] = useState(null);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    const storedTheme = localStorage.getItem('tunja-theme');
+    return storedTheme || 'dark';
+  });
 
   // Helpers de rol y permisos
   const isSuperAdmin = userProfile?.rol === 'SuperAdmin' || user?.email?.toLowerCase().trim() === 'fabian.cely0724@gmail.com';
@@ -85,13 +88,18 @@ export default function App() {
   // Inicializar y detectar tema (manual y automático)
   useEffect(() => {
     const storedTheme = localStorage.getItem('tunja-theme');
-    if (storedTheme && storedTheme !== 'system') {
-      setTheme(storedTheme);
-      document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+    if (storedTheme) {
+      if (storedTheme === 'system') {
+        setTheme('system');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.classList.toggle('dark', prefersDark);
+      } else {
+        setTheme(storedTheme);
+        document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+      }
     } else {
-      setTheme('system');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.classList.toggle('dark', prefersDark);
+      setTheme('dark');
+      document.documentElement.classList.toggle('dark', true);
     }
 
     const handleNavigate = (e) => {

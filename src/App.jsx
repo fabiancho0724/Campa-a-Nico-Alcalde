@@ -10,6 +10,8 @@ import LegalPolicies from './components/LegalPolicies';
 import UserProfile from './components/UserProfile';
 import Settings from './components/Settings';
 import NicoMascot from './components/NicoMascot';
+import { NicoProvider } from './state/nicoStore';
+import { useNicoEvents } from './hooks/useNicoEvents';
 
 // Carga perezosa (lazy loading) para componentes pesados
 const ElectoralMetrics = lazy(() => import('./components/ElectoralMetrics'));
@@ -25,7 +27,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, collection, addDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from './lib/firebase';
 
-export default function App() {
+function AppContent() {
+  useNicoEvents();
 
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
 
@@ -518,6 +521,14 @@ export default function App() {
 
       <NicoMascot activeTab={activeTab} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <NicoProvider>
+      <AppContent />
+    </NicoProvider>
   );
 }
 

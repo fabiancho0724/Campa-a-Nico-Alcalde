@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const urlLogosCombined = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/97dc30d90708e07f3362563c41396d379245a380/Logos.png";
+const urlLogosCombined = "/LogosMod.png";
 
 export default function BrandLogos({ variant = 'header' }) {
   // Configuración de escalas según el modo (aumentado en 25%)
@@ -21,11 +21,9 @@ export default function BrandLogos({ variant = 'header' }) {
       style={{
         display: 'flex',
         alignItems: 'center',
-        background: 'rgba(255, 255, 255, 0.92)',
-        padding: '0.4rem 1rem',
-        borderRadius: '12px',
-        boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-        border: '1px solid rgba(255,255,255,0.2)',
+        background: 'transparent',
+        border: 'none',
+        boxShadow: 'none',
         maxWidth: '100%'
       }}
     >

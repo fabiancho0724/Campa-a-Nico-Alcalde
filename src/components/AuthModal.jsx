@@ -293,8 +293,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }) {
           >
             {loading ? <Loader className="animate-spin" size={20} /> : (
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.65rem' }}>
-                <div className="nico-btn-avatar-container" style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#fff', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-color)', transition: 'transform 0.3s ease' }}>
-                  <img className="nico-btn-avatar" src="/CaraNico.png" alt="Nico" style={{ width: '90%', height: '90%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
+                <div className="nico-btn-avatar-container" style={{ width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.3s ease' }}>
+                  <img className="nico-btn-avatar" src="/CaraNico.png" alt="Nico" style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'all 0.3s ease' }} />
                 </div>
                 <span>{mode === 'login' ? 'Iniciar Sesión' : mode === 'register' ? 'Crear Cuenta' : 'Enviar Enlace Mágico'}</span>
               </div>

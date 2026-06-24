@@ -264,6 +264,15 @@ function AppContent() {
     return () => unsubscribe();
   }, [viewMode]);
 
+  useEffect(() => {
+    const handleGlobalError = () => {
+      eventBus.emit({ type: 'ERROR' });
+      play('error');
+    };
+    window.addEventListener('error', handleGlobalError);
+    return () => window.removeEventListener('error', handleGlobalError);
+  }, [play]);
+
   // Si estamos en modo Portada, renderizamos la portada premium
   if (viewMode === 'landing') {
     return <LandingPage 
@@ -301,15 +310,6 @@ function AppContent() {
       }
     }
   };
-
-  useEffect(() => {
-    const handleGlobalError = () => {
-      eventBus.emit({ type: 'ERROR' });
-      play('error');
-    };
-    window.addEventListener('error', handleGlobalError);
-    return () => window.removeEventListener('error', handleGlobalError);
-  }, [play]);
 
   return (
     <div 

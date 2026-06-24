@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, X, Award } from 'lucide-react';
 import { useNico } from '../state/nicoStore';
@@ -34,7 +35,9 @@ export default function NicoFloatingWidget({ activeTab }) {
     setIsProfileOpen(!isProfileOpen);
   };
 
-  return (
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <div style={{
       position: 'fixed',
       bottom: '24px',
@@ -215,6 +218,7 @@ export default function NicoFloatingWidget({ activeTab }) {
           </motion.button>
         )}
       </AnimatePresence>
-    </div>
+    </div>,
+    document.body
   );
 }

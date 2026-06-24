@@ -3,45 +3,46 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, X, CheckSquare } from 'lucide-react';
 import { useNico } from '../state/nicoStore';
 
+const stepsData = {
+  1: {
+    title: "¡Hola de nuevo! 🤝",
+    text: "Te guiaré paso a paso por la plataforma. Aquí aprenderás a registrar propuestas y participar.",
+    tab: null
+  },
+  2: {
+    title: "Las 5 de Nico 🎯",
+    text: "En esta pestaña puedes leer los 5 ejes principales del programa y añadir tus propios aportes.",
+    tab: "proposals"
+  },
+  3: {
+    title: "Laboratorio Joven 2.0 ⚡",
+    text: "¡El corazón digital! Vota ideas de otros jóvenes o propone tus proyectos tecnológicos para Tunja.",
+    tab: "joven"
+  },
+  4: {
+    title: "Únete a la Campaña 🌟",
+    text: "Sé parte activa del cambio. Regístrate como voluntario para acompañar a Nico en las calles.",
+    tab: "unete"
+  },
+  5: {
+    title: "¡Todo Listo! 🏆",
+    text: "Completaste la inducción. Has ganado +50 XP y desbloqueado la insignia 'Bienvenida Nico'. ¡A construir ciudad!",
+    tab: "proposals"
+  }
+};
+
 export default function NicoTutorial() {
   const { onboardingStep, nextOnboardingStep, prevOnboardingStep, endOnboarding } = useNico();
-
-  const stepsData = {
-    1: {
-      title: "¡Hola de nuevo! 🤝",
-      text: "Te guiaré paso a paso por la plataforma. Aquí aprenderás a registrar propuestas y participar.",
-      tab: null
-    },
-    2: {
-      title: "Las 5 de Nico 🎯",
-      text: "En esta pestaña puedes leer los 5 ejes principales del programa y añadir tus propios aportes.",
-      tab: "proposals"
-    },
-    3: {
-      title: "Laboratorio Joven 2.0 ⚡",
-      text: "¡El corazón digital! Vota ideas de otros jóvenes o propone tus proyectos tecnológicos para Tunja.",
-      tab: "joven"
-    },
-    4: {
-      title: "Únete a la Campaña 🌟",
-      text: "Sé parte activa del cambio. Regístrate como voluntario para acompañar a Nico en las calles.",
-      tab: "unete"
-    },
-    5: {
-      title: "¡Todo Listo! 🏆",
-      text: "Completaste la inducción. Has ganado +50 XP y desbloqueado la insignia 'Bienvenida Nico'. ¡A construir ciudad!",
-      tab: "proposals"
-    }
-  };
 
   const currentStepData = stepsData[onboardingStep];
 
   // Auto-navigate tabs based on step tab trigger
   useEffect(() => {
-    if (currentStepData && currentStepData.tab) {
-      window.dispatchEvent(new CustomEvent('navigateTab', { detail: currentStepData.tab }));
+    const stepData = stepsData[onboardingStep];
+    if (stepData && stepData.tab) {
+      window.dispatchEvent(new CustomEvent('navigateTab', { detail: stepData.tab }));
     }
-  }, [onboardingStep, currentStepData]);
+  }, [onboardingStep]);
 
   if (onboardingStep === null) return null;
 

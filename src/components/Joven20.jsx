@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { db, auth } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useNico } from '../state/nicoStore';
 
 import jovenHero from '../assets/images/juventud_hero_bg_1781796298041.jpg';
 import saberPlus from '../assets/images/saber_plus_education_1780673508458.png';
@@ -37,6 +38,7 @@ import imgJovenesBienestar from '../assets/images/jovenes_bienestar_178179481101
 import imgEscuelaLiderazgo from '../assets/images/escuela_liderazgo_1781794823224.jpg';
 
 export default function Joven20() {
+  const { completeTask } = useNico();
   const [activeTabDiagnostico, setActiveTabDiagnostico] = useState('ciudad');
   
   const [activeEcosystem, setActiveEcosystem] = useState('coworking');
@@ -92,6 +94,8 @@ export default function Joven20() {
         origen: 'Ecosistema Joven 2.0',
         createdAt: serverTimestamp()
       });
+
+      completeTask('first_proposal');
 
       window.dispatchEvent(new CustomEvent('nico-celebrate', { 
         detail: { 

@@ -9,8 +9,8 @@ import TunjaAvanza from './components/TunjaAvanza';
 import LegalPolicies from './components/LegalPolicies';
 import UserProfile from './components/UserProfile';
 import Settings from './components/Settings';
-import NicoMascot from './components/NicoMascot';
-import { NicoProvider } from './state/nicoStore';
+import NicoFloatingWidget from './components/NicoFloatingWidget';
+import { NicoProvider, useNico } from './state/nicoStore';
 import { useNicoEvents } from './hooks/useNicoEvents';
 import { eventBus } from './core/eventBus';
 import { useSoundFX } from './hooks/useSoundFX';
@@ -31,6 +31,7 @@ import { doc, getDoc, collection, addDoc, serverTimestamp, setDoc, updateDoc } f
 import { auth, db } from './lib/firebase';
 
 function AppContent() {
+  const { completeTask } = useNico();
   useNicoEvents();
   const { play } = useSoundFX();
 
@@ -257,6 +258,7 @@ function AppContent() {
             }
           });
         }
+        completeTask('profile_completed');
       } else {
         setUserProfile(null);
       }
@@ -565,7 +567,7 @@ function AppContent() {
         </div>
       </footer>
 
-      <NicoMascot activeTab={activeTab} />
+      <NicoFloatingWidget activeTab={activeTab} />
     </div>
   );
 }

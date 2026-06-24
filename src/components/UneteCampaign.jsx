@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { Target, Search, Calendar, ChevronRight, User, Phone, Mail, MapPin, Briefcase } from 'lucide-react';
+import { useNico } from '../state/nicoStore';
 
 export default function UneteCampaign({ onLegalClick }) {
+  const { completeTask } = useNico();
   const [formData, setFormData] = useState({
     nombre: '',
     celular: '',
@@ -39,11 +41,7 @@ export default function UneteCampaign({ onLegalClick }) {
         fechaRegistro: serverTimestamp()
       });
       setStatus({ submitting: false, success: true, error: null });
-      window.dispatchEvent(new CustomEvent('nico-celebrate', { 
-        detail: { 
-          message: '¡Excelente decisión! Bienvenido al equipo de voluntarios de Nico. Juntos avanzamos.' 
-        } 
-      }));
+      completeTask('volunteer');
       setFormData({
         nombre: '', celular: '', correo: '', barrio: '', edad: '', ocupacion: '', apoyo: 'Voluntariado', otroApoyo: ''
       });

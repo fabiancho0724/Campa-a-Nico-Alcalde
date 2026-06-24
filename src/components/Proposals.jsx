@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { db, auth } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useNico } from '../state/nicoStore';
 
 const img1 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%201.png';
 const img2 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%202.png';
@@ -28,6 +29,7 @@ const img5 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0
 const img6 = 'https://raw.githubusercontent.com/fabiancho0724/Prueba-123/0ad66b0d183c79dd1a572cdb0be638e0369c01a2/Tunja%206.png';
 
 export default function Proposals() {
+  const { completeTask } = useNico();
   const [activeBandera, setActiveBandera] = useState(null);
   const [proposalText, setProposalText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -80,6 +82,8 @@ export default function Proposals() {
         origen: 'Las 5 de Nico',
         createdAt: serverTimestamp()
       });
+
+      completeTask('first_proposal');
 
       window.dispatchEvent(new CustomEvent('nico-celebrate', { 
         detail: { 

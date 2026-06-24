@@ -21,9 +21,11 @@ export default function BrandLogos({ variant = 'header' }) {
       style={{
         display: 'flex',
         alignItems: 'center',
-        background: 'transparent',
-        border: 'none',
-        boxShadow: 'none',
+        background: 'rgba(255, 255, 255, 0.92)',
+        padding: '0.4rem 1rem',
+        borderRadius: '12px',
+        boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+        border: '1px solid rgba(255,255,255,0.2)',
         maxWidth: '100%'
       }}
     >

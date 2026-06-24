@@ -24,7 +24,7 @@ const AdminPanel = lazy(() => import('./components/AdminPanel'));
 import { 
   Vote, Sliders, GraduationCap, Shield, 
   MapPin, CheckSquare, Sparkles, Building, BarChart3, ArrowLeft, Calendar,
-  Facebook, Twitter, Instagram, Map, Target, UserPlus
+  Facebook, Instagram, Map, Target, UserPlus
 } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, collection, addDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
@@ -547,10 +547,19 @@ function AppContent() {
             <p style={{ marginTop: '0.25rem', fontSize: '0.85rem' }}>
               &copy; 2026 Nicolás Cortés - Alcalde Tunja 2026. Diseñado para liderar.
             </p>
-            <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Facebook size={20} /></a>
-              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Twitter size={20} /></a>
-              <a href="https://linktr.ee/nicoalcalde2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn-2dyyhDYCs75XGQkKUDXRGwRC0HyjmGIPxD86ozrmR1ozmRNPaN6ZOm5oIs_aem_3_xAabWQSDx9KHpdgUy6dw" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'}><Instagram size={20} /></a>
+            <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+              <a href="https://www.facebook.com/profile.php?id=61590899663005&mibextid=wwXIfr&rdid=Vi1gH6cPjSKxOTAf&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18j5J1LUz8%2F%3Fmibextid%3DwwXIfr#" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'} title="Facebook"><Facebook size={20} /></a>
+              <a href="https://www.instagram.com/nicolas__cortes_" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'} title="Instagram"><Instagram size={20} /></a>
+              <a href="https://www.tiktok.com/@nicolascortes_60" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'} title="TikTok">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="none" style={{ display: 'block' }}>
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.85.96 1.99 1.63 3.25 1.95v3.91c-1.32-.01-2.61-.31-3.79-.88-.73-.34-1.38-.83-1.92-1.43v5.82c0 2.2-.82 4.31-2.29 5.92-1.74 1.83-4.22 2.87-6.81 2.87-2.31 0-4.54-.83-6.28-2.35C.42 18.25-.32 15.69-.17 13.06c.21-2.9 2.18-5.46 4.96-6.39 1.15-.36 2.37-.44 3.56-.23v4.06c-.84-.33-1.77-.32-2.6.02-.91.38-1.63 1.13-1.93 2.05-.41 1.25-.09 2.63.82 3.56.88.94 2.16 1.39 3.44 1.2 1.48-.18 2.68-1.28 2.94-2.75.07-.38.09-.76.09-1.14V0h1.39z"/>
+                </svg>
+              </a>
+              <a href="https://api.whatsapp.com/send?phone=573228554050" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s', display: 'flex', alignItems: 'center' }} onMouseOver={e=>e.currentTarget.style.color='#FFFFFF'} onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,0.5)'} title="WhatsApp">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="none" style={{ display: 'block' }}>
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 11.966.01c3.178.001 6.169 1.24 8.424 3.496 2.254 2.256 3.491 5.253 3.49 8.434-.003 6.616-5.34 11.954-11.91 11.954-.002 0-.005 0-.007 0-2.008-.002-3.98-.51-5.733-1.474L0 24zm6.59-4.846c1.6.95 3.18 1.448 4.773 1.449 5.432 0 9.851-4.417 9.854-9.851.002-2.633-1.02-5.107-2.877-6.967-1.857-1.86-4.333-2.883-6.974-2.884-5.438 0-9.86 4.418-9.863 9.852-.001 1.702.449 3.366 1.306 4.806l-.99 3.614 3.708-.973zm12.183-6.852c-.29-.145-1.714-.847-1.98-.943-.264-.097-.457-.145-.65.145-.19.29-.74.943-.907 1.133-.166.19-.333.215-.623.07-1.36-.682-2.28-1.21-3.155-2.71-.24-.412.24-.383.687-1.275.074-.15.037-.28-.018-.39-.056-.113-.457-1.1-.626-1.506-.164-.397-.333-.342-.457-.348-.12-.006-.257-.007-.394-.007-.137 0-.36.05-.55.263-.19.213-.726.71-.726 1.73s.74 2.002.84 2.137c.103.136 1.458 2.227 3.532 3.12 1.57.674 2.164.717 2.935.602.433-.064 1.714-.7 1.954-1.378.24-.678.24-1.26.17-1.378-.074-.117-.267-.193-.557-.338z"/>
+                </svg>
+              </a>
             </div>
           </div>
         </div>

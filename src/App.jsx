@@ -30,6 +30,14 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, collection, addDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from './lib/firebase';
 
+const getLegalDocFromPath = (path) => {
+  if (path === '/Aviso_de_Privacidad') return 'aviso';
+  if (path === '/privacidad') return 'privacidad';
+  if (path === '/tratamiento') return 'tratamiento';
+  if (path === '/cookies') return 'cookies';
+  return null;
+};
+
 function AppContent() {
   const { completeTask } = useNico();
   useNicoEvents();
@@ -37,10 +45,13 @@ function AppContent() {
 
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
 
+  // Inicializar estados basados en la URL actual (soporte para enlaces directos)
+  const initialLegalDoc = getLegalDocFromPath(window.location.pathname);
+
   // viewMode puede ser 'landing' (portada) o 'dashboard' (interfaz principal)
-  const [viewMode, setViewMode] = useState('landing');
-  const [activeTab, setActiveTab] = useState('proposals'); // Default to a public tab
-  const [activeLegalDoc, setActiveLegalDoc] = useState(null);
+  const [viewMode, setViewMode] = useState(initialLegalDoc ? 'dashboard' : 'landing');
+  const [activeTab, setActiveTab] = useState(initialLegalDoc ? 'legal' : 'proposals'); // Default to a public tab
+  const [activeLegalDoc, setActiveLegalDoc] = useState(initialLegalDoc);
   const [userProfile, setUserProfile] = useState(null);
   const [user, setUser] = useState(null);
   const [theme, setTheme] = useState(() => {
@@ -90,8 +101,26 @@ function AppContent() {
   };
 
   const handleLegalClick = (docId) => {
+    setViewMode('dashboard');
     setActiveLegalDoc(docId);
     handleTabChange('legal');
+
+    // Mapeo de identificadores a rutas URL amigables
+    const paths = {
+      aviso: '/Aviso_de_Privacidad',
+      privacidad: '/privacidad',
+      tratamiento: '/tratamiento',
+      cookies: '/cookies'
+    };
+
+    if (paths[docId]) {
+      window.history.pushState(null, '', paths[docId]);
+    }
+  };
+
+  const handleBackToLanding = () => {
+    setViewMode('landing');
+    window.history.pushState(null, '', '/');
   };
 
   // Inicializar y detectar tema (manual y automático)
@@ -136,6 +165,19 @@ function AppContent() {
   // Escuchar cambios de URL (hash o query params) para protección de rutas
   useEffect(() => {
     const handleUrlChange = () => {
+      const currentPath = window.location.pathname;
+      const legalDoc = getLegalDocFromPath(currentPath);
+
+      if (legalDoc) {
+        setViewMode('dashboard');
+        setActiveLegalDoc(legalDoc);
+        setActiveTab('legal');
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
+        return;
+      } else if (currentPath === '/' && activeTab === 'legal') {
+        setViewMode('landing');
+      }
+
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get('tab');
       const hashParam = window.location.hash.replace('#', '');
@@ -282,11 +324,7 @@ function AppContent() {
         setViewMode('dashboard');
         handleTabChange(targetTab);
       }} 
-      onLegalClick={(docId) => {
-        setViewMode('dashboard');
-        setActiveLegalDoc(docId);
-        handleTabChange('legal');
-      }}
+      onLegalClick={handleLegalClick}
     />;
   }
 
@@ -336,7 +374,7 @@ function AppContent() {
           
           {/* Logos Header - Click para volver a la portada */}
           <div 
-            onClick={() => setViewMode('landing')}
+            onClick={handleBackToLanding}
             style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', cursor: 'pointer' }}
             title="Volver a la portada"
           >
@@ -424,7 +462,7 @@ function AppContent() {
           {/* Botones de Control / Portada */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <button 
-              onClick={() => setViewMode('landing')}
+              onClick={handleBackToLanding}
               style={{ 
                 padding: '0.4rem 0.8rem', 
                 fontSize: '0.8rem', 

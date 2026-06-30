@@ -30,11 +30,18 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, collection, addDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from './lib/firebase';
 
-const getLegalDocFromPath = (path) => {
-  if (path === '/Aviso_de_Privacidad') return 'aviso';
-  if (path === '/privacidad') return 'privacidad';
-  if (path === '/tratamiento') return 'tratamiento';
-  if (path === '/cookies') return 'cookies';
+const getLegalDocFromPathOrHash = () => {
+  const path = window.location.pathname;
+  const hash = window.location.hash.replace('#', '');
+  
+  // Soporta tanto rutas directas (ej: /Aviso_de_Privacidad) como hashes para GitHub Pages (ej: /#Aviso_de_Privacidad)
+  const cleanHash = hash.startsWith('/') ? hash.substring(1) : hash;
+  const target = cleanHash || path;
+
+  if (target === '/Aviso_de_Privacidad' || target === 'Aviso_de_Privacidad') return 'aviso';
+  if (target === '/privacidad' || target === 'privacidad') return 'privacidad';
+  if (target === '/tratamiento' || target === 'tratamiento') return 'tratamiento';
+  if (target === '/cookies' || target === 'cookies') return 'cookies';
   return null;
 };
 
@@ -45,8 +52,8 @@ function AppContent() {
 
   const urlNicoPhoto = "https://raw.githubusercontent.com/fabiancho0724/Prueba-123/e7fcca3daefa398a6c43271a5c7b379f7ab7ddbf/682871269_3927799717353938_6204895979427810843_n.jpg";
 
-  // Inicializar estados basados en la URL actual (soporte para enlaces directos)
-  const initialLegalDoc = getLegalDocFromPath(window.location.pathname);
+  // Inicializar estados basados en la URL actual (soporte para enlaces directos y hashes)
+  const initialLegalDoc = getLegalDocFromPathOrHash();
 
   // viewMode puede ser 'landing' (portada) o 'dashboard' (interfaz principal)
   const [viewMode, setViewMode] = useState(initialLegalDoc ? 'dashboard' : 'landing');
@@ -105,12 +112,12 @@ function AppContent() {
     setActiveLegalDoc(docId);
     handleTabChange('legal');
 
-    // Mapeo de identificadores a rutas URL amigables
+    // Mapeo de identificadores a rutas URL amigables (usando hash para compatibilidad con GitHub Pages)
     const paths = {
-      aviso: '/Aviso_de_Privacidad',
-      privacidad: '/privacidad',
-      tratamiento: '/tratamiento',
-      cookies: '/cookies'
+      aviso: '#Aviso_de_Privacidad',
+      privacidad: '#privacidad',
+      tratamiento: '#tratamiento',
+      cookies: '#cookies'
     };
 
     if (paths[docId]) {
@@ -165,8 +172,7 @@ function AppContent() {
   // Escuchar cambios de URL (hash o query params) para protección de rutas
   useEffect(() => {
     const handleUrlChange = () => {
-      const currentPath = window.location.pathname;
-      const legalDoc = getLegalDocFromPath(currentPath);
+      const legalDoc = getLegalDocFromPathOrHash();
 
       if (legalDoc) {
         setViewMode('dashboard');
@@ -174,7 +180,7 @@ function AppContent() {
         setActiveTab('legal');
         setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
         return;
-      } else if (currentPath === '/' && activeTab === 'legal') {
+      } else if (window.location.pathname === '/' && !window.location.hash && activeTab === 'legal') {
         setViewMode('landing');
       }
 
